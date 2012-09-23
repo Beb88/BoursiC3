@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SecondViewController : UIViewController
-
+@interface SecondViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+{
+NSArray *_listVal;
+    
+}
+@property (weak, nonatomic) IBOutlet UITableView *TableListVAL;
+@property (nonatomic, retain) NSArray *listVal;
 @end

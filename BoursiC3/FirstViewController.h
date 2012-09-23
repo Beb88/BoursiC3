@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FirstViewController : UIViewController
+@interface FirstViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+{
+NSArray *_ArraylistPTF;
+}
+@property (weak, nonatomic) IBOutlet UITableView *ListPTF;
+@property (nonatomic, retain) NSArray *ArraylistPTF;
 
 @end
