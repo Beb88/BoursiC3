@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LOGINViewController : UIViewController
-@property (strong, nonatomic) IBOutlet UITextField *TextLOG;
+@interface LOGINViewController : UIViewController<UITextFieldDelegate>
 
+@property (strong, nonatomic) IBOutlet UITextField *TextLOG;
 @property (strong, nonatomic) IBOutlet UITextField *TextPWD;
+
 @property (strong, nonatomic) NSString *TextID;
 
 @property (strong,nonatomic) NSString *LOGID;

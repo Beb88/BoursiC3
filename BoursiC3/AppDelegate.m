@@ -10,11 +10,59 @@
 
 @implementation AppDelegate
 
-@synthesize window = _window;
+@synthesize window = _window,ValeursArray;
+
+
+
+- (NSString *) getDBPath {
+	
+    
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
+	NSString *documentsDir = [paths objectAtIndex:0];
+	return [documentsDir stringByAppendingPathComponent:@"BCC.sqlite"];
+}
+
+
+- (void) copyDatabaseIfNeeded {
+	
+	//Using NSFileManager we can perform many file system operations.
+    
+    //PERMET DE MANIPULER DES FICHIERS
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	NSError *error;
+    
+    
+	NSString *dbPath = [self getDBPath];
+	BOOL success = [fileManager fileExistsAtPath:dbPath];
+	
+	if(!success) {
+		//RECUPERE LE CHEMIN DE LA BASE QUI EST AVEC LES FICHIERS SOURCES
+		NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"BCC.sqlite"];
+		success = [fileManager copyItemAtPath:defaultDBPath toPath:dbPath error:&error];
+		
+		if (!success)
+			NSAssert1(0, @"Failed to create writable database file with message '%@'.", [error localizedDescription]);
+	}
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    ValeursArray = [NSMutableArray new ];
+    
+    //JE VERIFIE SI LA DB EST COPIE OU PAS DS L'APPLICATION
+    [self copyDatabaseIfNeeded];
+    
+    Valeurs  *uneValeur = [Valeurs new];
+    
+    
+    //JE CHARGE LE CONTENU DE LA DB DANS L OBJET Valeurs
+    [Valeurs getInitialDataToDisplay:[self getDBPath]];
+    
+    NSLog(@" Base Locale sqlite BCC  RAMENE %i Valeurs", ValeursArray.count);
+
     return YES;
 }
 							

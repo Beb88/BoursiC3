@@ -27,12 +27,13 @@
       NSLog(@"PWD=%@",TextPWD.text);
     
   
-    //NSURL *url = [NSURL URLWithString:@"http://192.168.1.46:8888/wsLogin.php"];
+    //NSURL *url = [NSURL URLWithString:@"http://192.168.0.14:8888/wsLogin.php"];
     // CHEZ FLO 192.168.0.14
     // CHEZ WAM 192.168.1.46
+    // FROM TGV 10.164.10.149
     //NSURL *url = [NSURL URLWithString:@"http://192.168.0.14:8888/wsLogin.php"];
     
-    NSURL *url = [NSURL URLWithString:@"http://192.168.1.46:8888/wslogin.php"];
+    NSURL *url = [NSURL URLWithString:@"http://192.168.0.14:8888/wslogin.php"];
     
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
 
@@ -43,7 +44,7 @@
                             nil];
 
     
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://192.168.1.46:8888/wslogin.php"parameters:params];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://192.168.0.14:8888/wslogin.php"parameters:params];
     //[httpClient release];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
@@ -65,36 +66,9 @@
     
     [operation start];
     
+    [self performSegueWithIdentifier:@"ShowScreen1" sender:nil];
     
-
-    
-    ////
-  /*  NSURL *url = [[NSURL alloc] initWithString:@"http://192.168.1.46:8888/webservicelog.php"];
-    
-    //http://192.168.1.46:8888/login_GET.Php?nom=beb&mdp=beb"
-    
-    //http://itunes.apple.com/search?term=harry&country=us&entity=movie
-    
-    
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    //[AFJSONRequestOperation addAcceptableContentTypes:@"text/plain"];
-    
-    // AFJSONParameterEncoding
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-      //  self.movies = [JSON objectForKey:@"NOMVALEUR"];
-        NSLog(@"REQUEST OK JSON");
-        
-       // [self.activityIndicatorView stopAnimating];
-       // [self.tableView setHidden:NO];
-       // [self.tableView reloadData];
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
-    }];
-    
-    [operation start];
-*/
-    
+      
     
   }
 
@@ -112,6 +86,13 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSLog(@"retour clavier");
+    [textField resignFirstResponder];
+    return YES;
 }
 
 - (void)viewDidUnload

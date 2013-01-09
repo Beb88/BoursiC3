@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "BoursiC3/LOGINViewController.m"
-         timestampString = "369859623.258782"
+         timestampString = "373465014.873621"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "53"
-         endingLineNumber = "53"
+         startingLineNumber = "54"
+         endingLineNumber = "54"
          landmarkName = "-Action_Connect:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,13 +34,26 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "BoursiC3/SecondViewController.m"
-         timestampString = "369861928.24016"
+         timestampString = "377369733.260677"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "115"
-         endingLineNumber = "115"
+         startingLineNumber = "180"
+         endingLineNumber = "180"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "BoursiC3/Valeurs.m"
+         timestampString = "373467599.109094"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "16"
+         endingLineNumber = "16"
+         landmarkName = "@implementation Valeurs"
+         landmarkType = "3">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>
