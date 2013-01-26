@@ -17,8 +17,12 @@
 	NSString *cotation;
     NSString *devise;
     NSString *codeBourso; //(ISIN)
+    NSString *codeIsin;
     NSInteger idValeur;
 	NSInteger idCompo;
+    NSString *place;
+    NSString *codif;
+    NSInteger *nb_alertes;
     
     
 }
@@ -27,8 +31,11 @@
 @property (nonatomic, retain) NSString *cotation;
 @property (nonatomic, retain) NSString *devise;
 @property (nonatomic, retain) NSString *codeBourso;
+@property (nonatomic, retain) NSString *place;
+@property (nonatomic, retain) NSString *codif;
 @property  NSInteger idValeur;
 @property  NSInteger idCompo;
+@property  NSInteger nb_alertes;
 
 //Static methods.
 + (void) getInitialDataToDisplay:(NSString *)dbPath;
