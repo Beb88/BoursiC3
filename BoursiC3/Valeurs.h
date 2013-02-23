@@ -7,14 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <sqlite3.h>
+/*#import <sqlite3.h>
 #import "AppDelegate.h"
-
-@interface Valeurs : NSObject{
+*/
+@interface Valeurs : NSObject<NSCoding>{
     
 	
 	NSString *nom;
 	NSString *cotation;
+    NSString *variation;
+    NSString *volumEnc;
     NSString *devise;
     NSString *codeBourso; //(ISIN)
     NSString *codeIsin;
@@ -22,13 +24,16 @@
 	NSInteger idCompo;
     NSString *place;
     NSString *codif;
-    NSInteger *nb_alertes;
+    NSInteger nb_alertes;
+   
     
     
 }
 
 @property (nonatomic, retain) NSString *nom;
 @property (nonatomic, retain) NSString *cotation;
+@property (nonatomic, retain) NSString *volumeEnc;
+@property (nonatomic, retain) NSString *variation;
 @property (nonatomic, retain) NSString *devise;
 @property (nonatomic, retain) NSString *codeBourso;
 @property (nonatomic, retain) NSString *place;
@@ -36,15 +41,17 @@
 @property  NSInteger idValeur;
 @property  NSInteger idCompo;
 @property  NSInteger nb_alertes;
+@property (nonatomic, strong) NSMutableArray *listeAlertes;
+
 
 //Static methods.
-+ (void) getInitialDataToDisplay:(NSString *)dbPath;
-+ (void) finalizeStatements;
+//+ (void) getInitialDataToDisplay:(NSString *)dbPath;
+//+ (void) finalizeStatements;
 
 //Instance methods.
-- (id) initWithPrimaryKey:(NSInteger)pk;
-- (void) ajoutValeur;
-- (void) deleteValeur;
+//- (id) initWithPrimaryKey:(NSInteger)pk;
+//- (void) ajoutValeur;
+//- (void) deleteValeur;
 
 
 @end

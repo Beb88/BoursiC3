@@ -50,7 +50,7 @@
 {
     // Override point for customization after application launch.
     
-    ValeursArray = [NSMutableArray new ];
+    /*ValeursArray = [NSMutableArray new ];
     
     //JE VERIFIE SI LA DB EST COPIE OU PAS DS L'APPLICATION
     [self copyDatabaseIfNeeded];
@@ -62,7 +62,28 @@
     [Valeurs getInitialDataToDisplay:[self getDBPath]];
     
     NSLog(@" Base Locale sqlite BCC  RAMENE %i Valeurs", ValeursArray.count);
-
+*/
+    
+    //CUSTO NAVIGATIONBAR
+    UIImage *navBarImage = [UIImage imageNamed:@"nav-bar.png"];
+    
+    [[UINavigationBar appearance] setBackgroundImage:navBarImage
+                                       forBarMetrics:UIBarMetricsDefault];
+    //CUSTO BOUTON NAVIGATIONBAR
+    UIImage *barButton = [[UIImage imageNamed:@"bar-button.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
+    
+    [[UIBarButtonItem appearance] setBackgroundImage:barButton forState:UIControlStateNormal
+                                          barMetrics:UIBarMetricsDefault];
+    
+    UIImage *backButton = [[UIImage imageNamed:@"back-button.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0,15,0,6)];
+    
+    
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButton forState:UIControlStateNormal
+                                                    barMetrics:UIBarMetricsDefault];
+    
+    
+    
+    
     return YES;
 }
 							

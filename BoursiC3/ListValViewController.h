@@ -8,22 +8,29 @@
 
 #import <UIKit/UIKit.h>
 #import "CorePlot-CocoaTouch.h"
+#import "AjoutValeurViewController.h"
 
 @class Valeurs;
 
-@interface SecondViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, CPTPlotDataSource >
+@interface ListValViewController : UIViewController <AjoutValeurViewControllerDelegate,UITableViewDelegate, UITableViewDataSource, CPTPlotDataSource >
 {
-NSArray *_listVal;
+NSMutableArray *_listValJSON;
 //COREPLOT
 NSMutableArray *dataForPlot;
 
     CPTXYGraph *graph;
 }
-@property (nonatomic, strong) Valeurs *valeurs;
+@property (nonatomic, strong) Valeurs *valeur;
+
 @property (weak, nonatomic) IBOutlet UITableView *TableListVAL;
-@property (nonatomic, retain) NSArray *listVal;
+@property (nonatomic, retain) NSMutableArray *listValJSON;
 @property (weak, nonatomic) IBOutlet UILabel *textdetailcell;
 
 @property(readwrite, retain, nonatomic) NSMutableArray *dataForPlot;
 @property(weak, nonatomic) IBOutlet UIView *hostingView;
+
+
+
+- (IBAction)ajoutValeur;
+
 @end

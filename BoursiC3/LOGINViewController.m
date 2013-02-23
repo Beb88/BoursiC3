@@ -8,7 +8,7 @@
 
 #import "LOGINViewController.h"
 #import "AFNetworking.h"
-#import "SecondViewController.h"
+#import "ListValViewController.h"
 
 @interface LOGINViewController ()
 
@@ -27,25 +27,72 @@
       NSLog(@"PWD=%@",TextPWD.text);
     
   
-    //NSURL *url = [NSURL URLWithString:@"http://192.168.0.14:8888/wsLogin.php"];
+    //NSURL *url = [NSURL URLWithString:@"http://192.168.1.46:8888/wsLogin.php"];
     // CHEZ FLO 192.168.0.14
     // CHEZ WAM 192.168.1.46
     // FROM TGV 10.164.10.149
-    //NSURL *url = [NSURL URLWithString:@"http://192.168.0.14:8888/wsLogin.php"];
+    //NSURL *url = [NSURL URLWithString:@"http://192.168.1.46:8888/wsLogin.php"];
+    //CHE WAM
+    //NSURL *url = [NSURL URLWithString:@"http://192.168.1.46:8888/wslogin.php"];
+  
     
-    NSURL *url = [NSURL URLWithString:@"http://192.168.0.14:8888/wslogin.php"];
     
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+   // VERSION LOCALE MAMP
+    //FLO
+    //NSURL *url = [NSURL URLWithString:@"http://192.168.0.12:8888/wslogin.php"];
+    
+    //WAM
+    NSURL *url = [NSURL URLWithString:@"http://192.168.1.146:8888/wslogin.php"];
+    
+    //ARKKOX
+    //NSURL *url = [NSURL URLWithString:@"http://arkkox.free.fr/Boursicoincoin/wslogin.php"];
 
-       
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+    
+    //LES PARAM PASSES EN POST
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             TextLOG.text, @"nom",
                             TextPWD.text, @"mdp",
                             nil];
 
+    //CHEWAM
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://192.168.1.46:8888/wslogin.php"parameters:params];
     
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://192.168.0.14:8888/wslogin.php"parameters:params];
-    //[httpClient release];
+    //FLO
+   //NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://192.168.0.12:8888/wslogin.php"parameters:params];
+    
+    //ARKKOX
+   // NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://arkkox.free.fr/Boursicoincoin/wslogin.php"parameters:params];
+   
+    
+    
+    
+    
+    
+    //VERSION SERVEUR YANNICK
+   
+    //FLO
+  /*  NSURL *url = [NSURL URLWithString:@"http://92.161.60.212:8080/jsonConnect.php"];
+    
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+    
+    //LES PARAM PASSES EN POST
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            
+                            TextLOG.text, @"nom",
+                            TextPWD.text, @"mdp",
+                            nil];
+    
+    
+    //FLO
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://92.161.60.212:8080/jsonConnect.php"parameters:params];
+
+    */
+    ////////////////////////////////////////
+    ///FIN VERSION SERVEUR YANNICK
+    
+    
+    
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         //  self.movies = [JSON objectForKey:@"NOMVALEUR"];
@@ -60,6 +107,14 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Réseau non disponible"
+                                                            message:@""
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];                   
+        [alertView show];
+        
     }];
     
     
@@ -106,7 +161,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return YES;
+	return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 @end
