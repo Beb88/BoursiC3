@@ -7,11 +7,14 @@
 //
 
 #import "AppDelegate.h"
-
+#import "AFNetworking.h"
+#import "SBJson.h"
+#import "MBProgressHUD.h"
 @implementation AppDelegate
 
 @synthesize window = _window,ValeursArray;
 
+static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoincoin/Send_id.php";
 
 
 - (NSString *) getDBPath {
@@ -65,22 +68,38 @@
 */
     
     //CUSTO NAVIGATIONBAR
-    UIImage *navBarImage = [UIImage imageNamed:@"nav-bar.png"];
+    //UIImage *navBarImage = [UIImage imageNamed:@"nav-bar.png"];
+      //[[UINavigationBar appearance] setBackgroundImage:navBarImage
+        //                               forBarMetrics:UIBarMetricsDefault];
     
-    [[UINavigationBar appearance] setBackgroundImage:navBarImage
-                                       forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBackgroundColor:[UIColor blackColor]];
+                                     
     //CUSTO BOUTON NAVIGATIONBAR
-    UIImage *barButton = [[UIImage imageNamed:@"bar-button.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
+   // UIImage *barButton = [[UIImage imageNamed:@"bar-button.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
     
-    [[UIBarButtonItem appearance] setBackgroundImage:barButton forState:UIControlStateNormal
-                                          barMetrics:UIBarMetricsDefault];
+    //[[UIBarButtonItem appearance] setBackgroundImage:barButton forState:UIControlStateNormal
+      //                                    barMetrics:UIBarMetricsDefault];
     
-    UIImage *backButton = [[UIImage imageNamed:@"back-button.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0,15,0,6)];
+    //UIImage *backButton = [[UIImage imageNamed:@"back-button.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0,15,0,6)];
     
     
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButton forState:UIControlStateNormal
-                                                    barMetrics:UIBarMetricsDefault];
+    //[[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButton forState:UIControlStateNormal
+      //                                              barMetrics:UIBarMetricsDefault];
     
+    // Pour definir que l'appli veut recevoir des push notifications
+    
+    
+    NSLog(@"DEMANDE D'autorisation pour notiification");
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
+    NSLog(@"DEMANDE faite D'autorisation pour notiification");
+    
+    // self.window.rootViewController = self.viewController;
+	[self.window makeKeyAndVisible];
+    
+	// Let the device know we want to receive push notifications
+	    
     
     
     
@@ -113,5 +132,52 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
+
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+	NSLog(@"My token is: %@", deviceToken);
+    
+    //ENVOI ID AU SERVEUR
+    
+     NSURL *url = [NSURL URLWithString: URLServeurString ];
+     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+     //On construit les parametres qui vont etre passes en POST de la requete
+     //VERSION UTILISATEUR FLO  Parametre passé : idPtf =1
+     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+     @"beb", @"user",
+     @"beb", @"password",
+     @"Send_ID", @"action",
+     deviceToken,@"token",
+      nil];
+     
+     //On interroge le serveur avec la requete
+     //CHEWAM
+     NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:URLServeurString parameters:params];
+     
+     
+     //On recupere la reponse du serveur
+     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+     
+     NSLog(@"ENVOI ID MOBILE OK");
+     //NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
+     NSLog(@"RESULT json ENVOI ID MOBILE:  %@", JSON);
+     
+     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+     NSLog(@"Request ENVOI ID MOBILE Failed with Error: %@, %@", error, error.userInfo);
+     }];
+     
+     
+     [operation start];
+    
+    
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+	NSLog(@"Failed to get token, error: %@", error);
+}
+
 
 @end

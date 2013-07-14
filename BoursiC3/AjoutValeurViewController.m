@@ -8,7 +8,8 @@
 
 #import "AjoutValeurViewController.h"
 #import "AFNetworking.h"
-
+#import "SBJson.h"
+#import "MBProgressHUD.h"
 @interface AjoutValeurViewController ()
 
 @end
@@ -20,6 +21,7 @@
 
 @synthesize delegate, TableListVAL, listValJSON,SearchBarValeurs;
 
+static NSString *yahooSymbolSearchURLString = @"http://d.yimg.com/autoc.finance.yahoo.com/autoc?query=%@&callback=YAHOO.Finance.SymbolSuggest.ssCallback";
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -39,39 +41,12 @@
     self.listValJSON = [[NSMutableArray alloc] init];
     NSLog(@"COIN");
      listVal = [[NSMutableArray alloc] initWithCapacity:20];
-    
-  /*
-    //FLO
-    NSURL *url = [NSURL URLWithString:@"http://192.168.0.12:8888/wsgetValeurs.php"];
-    //WAM
-    //NSURL *url = [NSURL URLWithString:@"http://192.168.1.46:8888/wsgetValeurs.php"];
-    // ARKKOX
-    //NSURL *url = [NSURL URLWithString:@"http://arkkox.free.fr/Boursicoincoin/wsgetValeurs.php"];
-    
-    
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
-    
-    //On construit les parametres qui vont etre passes en POST de la requete
-    //VERSION UTILISATEUR FLO  Parametre passé : idPtf =1
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @"1", @"idPtf",
-                            nil];
-    
-    //On interroge le serveur avec la requete
-    //CHEWAM
-    //NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://192.168.1.46:8888/wsgetValeurs.php"parameters:params];
-    //FLO
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://192.168.0.12:8888/wsgetValeurs.php"parameters:params];
-    //ARKKOX
-    //NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://arkkox.free.fr/Boursicoincoin/wsgetValeurs.php"parameters:params];
-    
-   */ 
-    
+      
     
     
     ///// NEW VERSION SERVEUR AVEC JSONCONNECT et sqlfunction.php
     
-  
+  /*
     //FLO
     //NSURL *url = [NSURL URLWithString:@"http://192.168.0.12:8888/jsonConnect.php"];
     //WAM
@@ -79,10 +54,7 @@
     // ARKKOX
     //NSURL *url = [NSURL URLWithString:@"http://arkkox.free.fr/Boursicoincoin/wsgetValeurs.php"];
     
-    
-    
-    
-    
+   
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
     
     //On construit les parametres qui vont etre passes en POST de la requete
@@ -105,17 +77,7 @@
     //NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://arkkox.free.fr/Boursicoincoin/wsgetValeurs.php"parameters:params];
 
     
-    
-    
-    ///END OF SERVEUR BCC VERSION
-    
-    
-    //YAHOO VERSION
-    
-    
-    //END OF YAHOO VERSION 
-    
-    
+  
     
     //On recupere la reponse du serveur
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
@@ -129,16 +91,12 @@
         self.listValJSON = JSON;
         
         NSLog(@"listVal (OBJET VALEURS EST MERE : %@", self.listValJSON);
-        
-        
+   
         [self TransfertJSON_Vers_Objet_ListVal];
-        
         
         // [self.activityIndicatorView stopAnimating];
         [self.TableListVAL setHidden:NO];
         [self.TableListVAL reloadData];
-        
-        
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
@@ -146,6 +104,46 @@
     
     
     [operation start];
+    
+    */
+    
+    
+    //YAHOO VERSION
+ /*   NSString* URLString = [NSString stringWithFormat:@"%@%@", yahooSymbolSearchURLString,@"UBI"];
+    NSLog(@"ON BALANCE l URL : %@",URLString);
+    //On execute la requete URL
+   NSURLRequest* requestB = [NSURLRequest requestWithURL:[NSURL URLWithString:URLString]];
+    // On récupère le résultat de la requête JSON ( avec 6 lignes vides avt)
+    NSData* responseB = [NSURLConnection sendSynchronousRequest:requestB returningResponse:nil error:nil];
+    // On transforme le résultat en String de type NSASCII (TRAITEMENT SPECIFIQUE pour source leschos)
+    NSString* jsonStringB = [[NSString alloc] initWithData:responseB encoding:NSASCIIStringEncoding];
+        NSLog(@"REQUEST OK JSON");
+        //NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
+      NSLog(@"json: %@", jsonStringB);
+        
+        //On recupere l'objet MERE du JSON Renvoyé par le SERVEUR
+        //self.listValJSON = [JSON objectForKey:@"VALEURS"];
+    
+        //self.listValJSON = JSON;
+        
+       // NSLog(@"listVal (OBJET VALEURS EST MERE : %@", self.listValJSON);
+        
+        
+       // [self TransfertJSON_Vers_Objet_ListVal];
+        
+        
+        // [self.activityIndicatorView stopAnimating];
+        [self.TableListVAL setHidden:NO];
+        [self.TableListVAL reloadData];
+  */      
+        
+        
+   
+    
+    
+   // [operation start];
+    
+    //END OF YAHOO VERSION
 
     
 
@@ -196,18 +194,12 @@
 
 {
     ///// NEW VERSION SERVEUR AVEC JSONCONNECT et sqlfunction.php
+    /*
     
-    
-    //FLO
-    //NSURL *url = [NSURL URLWithString:@"http://192.168.0.12:8888/jsonConnect.php"];
+   
     //WAM
     NSURL *url = [NSURL URLWithString:@"http://192.168.1.46:8888/jssonConnect.php"];
-    // ARKKOX
-    //NSURL *url = [NSURL URLWithString:@"http://arkkox.free.fr/Boursicoincoin/wsgetValeurs.php"];
-    
-    
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
-    
     //On construit les parametres qui vont etre passes en POST de la requete
     //VERSION UTILISATEUR FLO  Parametre passé : idPtf =1
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -228,36 +220,20 @@
     
     
     
-    
-    ///
-    
-    
-    
     //On recupere la reponse du serveur
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         
         NSLog(@"REQUEST OK JSON");
         //NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
         NSLog(@"json: %@", JSON);
-        
-        
-       //   NSLog(@"json count: %i, key: %@", [JSON count], [JSON valueLists] );
-        
-        //NSLog(@"json countForIbject : %i", [JSON countForObject:@"nomvaleur"]);
-
-   
-             self.listValJSON = JSON;
-        
+        self.listValJSON = JSON;
         NSLog(@"listVal (OBJET VALEURS EST MERE : %@", self.listValJSON);
         
-        
         [self TransfertJSON_Vers_Objet_ListVal];
-        
         
         // [self.activityIndicatorView stopAnimating];
         [self.TableListVAL setHidden:NO];
         [self.TableListVAL reloadData];
-        
         
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
@@ -266,10 +242,159 @@
     
     
     [operation start];
+*/
+    
+    
+    
+    //YAHOO VERSION
+    
+    
+  
+   
+    NSString* URLString = [NSString stringWithFormat:@"http://d.yimg.com/autoc.finance.yahoo.com/autoc?query=%@&callback=YAHOO.Finance.SymbolSuggest.ssCallback",SearchBarValeurs.text];
+    NSLog(@"ON BALANCE l URL : %@",URLString);
+    
+    /////////////////
+    //ON MET L ECHANGE CLIENT SERVEUR DANS LE MIDDLE THREAD 
+    /////////////////
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+    
+    //On execute la requete URL
+    NSURLRequest* requestB = [NSURLRequest requestWithURL:[NSURL URLWithString:URLString]];
+    // On récupère le résultat de la requête JSON ( avec 6 lignes vides avt)
+   
+    NSData* responseB = [NSURLConnection sendSynchronousRequest:requestB returningResponse:nil error:nil];
+    // On transforme le résultat en String de type NSASCII (TRAITEMENT SPECIFIQUE pour source leschos)
+    NSString* jsonStringB = [[NSString alloc] initWithData:responseB encoding:NSASCIIStringEncoding];
+    // Remove the jsonp callback
+    NSString *cleanJson = [jsonStringB substringFromIndex:39];
+	cleanJson = [cleanJson substringToIndex:[cleanJson length]-1];
+    NSLog(@"REQUEST OK JSON");
+    NSLog(@"json: %@", jsonStringB);
+    // On met le resultat en string et purgé des lignes vides dans un NSdictionnaire JSON
+    NSDictionary *jsonResults= [jsonStringB JSONValue];
+    NSLog(@"jsonResults : %@", jsonResults);
+    SBJsonParser *parser = [SBJsonParser new];
+	NSDictionary *parsedDictionary = [parser objectWithString:cleanJson];
+	NSMutableArray *JSON = [[parsedDictionary objectForKey:@"ResultSet"] objectForKey:@"Result"];
+    
+    self.listValJSON = JSON;
+    
+     NSLog(@"listVal (OBJET VALEURS EST MERE : %@", self.listValJSON);
+    
+    
+     [self TransfertJSONYAHOO_Vers_Objet_ListVal];
+    
+      /////////////////
+      //ON GARDE L AFFICHAGE DANS LE MAIN THREAD
+     /////////////////
+        dispatch_async(dispatch_get_main_queue(), ^{
+          // [self.activityIndicatorView stopAnimating];
+          [self.TableListVAL setHidden:NO];
+          [self.TableListVAL reloadData];
+        });
+   
+    });
+    
+    
+    
+    
+    // [operation start];
+    
+    //END OF YAHOO VERSION
 
+    // ESSAI ASYNCHRONE
+  /*
+    NSString* URLString = [NSString stringWithFormat:@"http://d.yimg.com/autoc.finance.yahoo.com/autoc?query=%@&callback=YAHOO.Finance.SymbolSuggest.ssCallback",SearchBarValeurs.text];
+    NSLog(@"ON BALANCE l URL : %@",URLString);
+    
+    
+    //On execute la requete URL
+    NSURLRequest* requestB = [NSURLRequest requestWithURL:[NSURL URLWithString:URLString]];
+    // On récupère le résultat de la requête JSON ( avec 6 lignes vides avt)
+   
+    
+    [NSURLConnection sendAsynchronousRequest:requestB
+                                       queue:[[NSOperationQueue alloc] init]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+                               // do something with data or handle error
+                            
+                               
+                              
+                               NSString* jsonStringB = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+                               // Remove the jsonp callback
+                               NSString *cleanJson = [jsonStringB substringFromIndex:39];
+                               cleanJson = [cleanJson substringToIndex:[cleanJson length]-1];
+                               NSLog(@"REQUEST OK JSON");
+                               NSLog(@"CLEANjson: %@", cleanJson);
+                               // On met le resultat en string et purgé des lignes vides dans un NSdictionnaire JSON
+                               NSDictionary *jsonResults= [cleanJson JSONValue];
+                               NSLog(@"jsonResults : %@", jsonResults);
+                               
+                               NSMutableArray *JSON = [[jsonResults objectForKey:@"ResultSet"] objectForKey:@"Result"];
+                               
+                               self.listValJSON = JSON;
+                               
+                               NSLog(@"listVal (OBJET VALEURS EST MERE : %@", self.listValJSON);
+                               
+                               
+                               [self TransfertJSONYAHOO_Vers_Objet_ListVal];
+                               
+                               
+                               // [self.activityIndicatorView stopAnimating];
+                               [self.TableListVAL setHidden:NO];
+                               [self.TableListVAL reloadData];
+                               
+
+                               
+                               
+                           }];
+
+   // [self.TableListVAL setHidden:NO];
+   // [self.TableListVAL reloadData];
+    
+   */ 
+    
+    
 }
 
 
+-(void) TransfertJSONYAHOO_Vers_Objet_ListVal
+{
+    
+    //codeBourso = UBI;
+    //codeIsin = FR0000054470;
+    //deviseValeur = EUR;
+    //idCompo = 1;
+    //idValeur = 1;
+    //nomValeur = UBISOFT
+    
+    //listVal = [[NSMutableArray alloc] initWithCapacity:20];
+    [listVal removeAllObjects];
+    
+    
+    
+    for ( int i=0; i< [self.listValJSON count]; i=i+1)
+    {
+        Valeurs *valeur = [Valeurs new];
+        NSDictionary *listValDict3 = [self.listValJSON objectAtIndex:i];
+        valeur.codeBourso = [listValDict3 objectForKey:@"symbol"];
+        valeur.nom = [listValDict3 objectForKey:@"name"];
+        valeur.codif = @"TICK";
+       
+        //symbol.symbol = [[symbols objectAtIndex:i] objectForKey:@"symbol"];
+        //symbol.name = [[symbols objectAtIndex:i] objectForKey:@"name"];
+        
+        
+        [listVal addObject:valeur];
+        NSLog(@"On ajoute %@ A listVal",valeur.nom);
+        
+        
+    }
+    
+}
 
 - (IBAction)cancel
 {
@@ -355,8 +480,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
     }
     
-    NSLog(@"IN TABLEVIEW AJOUT VALEUR");
-    NSLog(@"CONTENU LISTVAL = %@",listVal );
+    //NSLog(@"IN TABLEVIEW AJOUT VALEUR");
+    //NSLog(@"CONTENU LISTVAL = %@",listVal );
     
     
     Valeurs *valeur = [listVal objectAtIndex:indexPath.row];
@@ -366,7 +491,7 @@
     //UILabel *labelEvo = (UILabel *)[cell viewWithTag:3000];
     UILabel *labelISIN = (UILabel *)[cell viewWithTag:4000];
     
-    NSLog(@"VALEUR pour AJOUTVALEUR= %@", valeur);
+    //NSLog(@"VALEUR pour AJOUTVALEUR= %@", valeur.nom);
     labelValeur.text =  valeur.nom;
     labelISIN.text = valeur.codeBourso;
     
@@ -375,7 +500,7 @@
     
     //labelEvo.backgroundColor = [UIColor redColor];
     
-    NSLog(@"OUT TABLEVIEW AJOUT VALEUR");
+   // NSLog(@"OUT TABLEVIEW AJOUT VALEUR");
     return cell;
 }
 
@@ -446,7 +571,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     NSLog(@"On envoit la cellule: %@", cell);
     
-    valeur  = [listVal objectAtIndex:indexPath.row];
+    valeur  = [listVal objectAtIndex:indexPath.row]; 
     
 
     

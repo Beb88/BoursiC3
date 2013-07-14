@@ -14,7 +14,7 @@
 
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-    [aCoder encodeInt:self.id_alerte forKey:@"id_alerte"];
+    [aCoder encodeObject:self.id_alerte forKey:@"id_alerte"];
     [aCoder encodeInt:self.id_Valeur forKey:@"id_Valeur"];
     [aCoder encodeObject:self.nom_alerte forKey:@"nom_alerte"];
     [aCoder encodeObject:self.param1 forKey:@"param1"];
@@ -23,7 +23,7 @@
 
 -(id)initWithCoder:(NSCoder *)aDecoder {
     if ((self = [super init])) {
-        self.id_alerte = [aDecoder decodeIntForKey:@"id_alerte"];
+        self.id_alerte = [aDecoder decodeObjectForKey:@"id_alerte"];
         self.id_Valeur = [aDecoder decodeIntForKey:@"id_Valeur"];
         self.nom_alerte = [aDecoder decodeObjectForKey:@"nom_alerte"];
         self.param1 = [aDecoder decodeObjectForKey:@"param1"];

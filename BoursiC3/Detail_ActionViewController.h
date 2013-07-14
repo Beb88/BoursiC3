@@ -11,13 +11,26 @@
 #import "Valeurs_Alertes.h"
 #import "IndicateursViewController.h" //pour delegate
 #import "AlerteSeuilViewController.h"//pour delegate
+//#import "ListValViewController.h" //pour delegate
 #import "ListeIndicTableViewController.h"
 
 @class Valeurs;
 @class Valeurs_Alertes;
 @class ListValViewController;
+@class Detail_ActionViewController;
+
+//DECLARATION D UN PROTOCOLE POUR LE DELEGATE (APELLANT)
+@protocol Detail_ActionViewControllerDelegate <NSObject>
+- (void)SAV_ALERT:(Detail_ActionViewController *)controller;
+
+@end
+
 
 @interface Detail_ActionViewController : UIViewController<UITableViewDelegate, UITableViewDataSource,IndicateursViewControllerDelegate, AlerteSeuilViewControllerDelegate, AlerteVolumeViewControllerDelegate, ListeIndicTableViewControllerDelegate>
+
+//PROPRIETE DELEGATE
+
+@property (nonatomic, weak) id <Detail_ActionViewControllerDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UITextField *te;
 

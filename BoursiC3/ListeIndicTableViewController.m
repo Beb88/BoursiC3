@@ -313,21 +313,19 @@ if (1==1)
    
     [self.delegateListeIndic listeIndicTableView:self didFinishAddingAlertlist:newAlert];
     
-    //[self dismissViewControllerAnimated:YES completion:nil];
-    
-    
-    //[self.delegateAlertSeuil alertSeuilViewController:self didFinishAddingAlertlist:(Valeurs_Alertes *)alerte];
-    // NSLog(@"ON RECOIT LA NOUVELLE ALERTE : %@",newAlert);
-   // int newRowIndex = [self.valeurRecue.listeAlertes count];
-   // NSLog(@"list alert count =  %i",newRowIndex);
-   // [self.valeurRecue.listeAlertes addObject:newAlert];
-  //
-   // NSIndexPath *indexPath = [NSIndexPath indexPathForRow:newRowIndex inSection:0];
-   // NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
-   // [self.TableListAlert insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-    
+       
     
 }
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//  METHODES DELEGATE VENANT DU PROTOCOLE DE L ECRAN ALERTE VOLUMETRIE  IMPLEMENTEES ICI
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -339,19 +337,7 @@ if (1==1)
     
     [self.delegateListeIndic listeIndicTableView:self didFinishAddingAlertlist:newAlert];
     
-    //[self dismissViewControllerAnimated:YES completion:nil];
-    
-    
-    //[self.delegateAlertSeuil alertSeuilViewController:self didFinishAddingAlertlist:(Valeurs_Alertes *)alerte];
-    // NSLog(@"ON RECOIT LA NOUVELLE ALERTE : %@",newAlert);
-    // int newRowIndex = [self.valeurRecue.listeAlertes count];
-    // NSLog(@"list alert count =  %i",newRowIndex);
-    // [self.valeurRecue.listeAlertes addObject:newAlert];
-    //
-    // NSIndexPath *indexPath = [NSIndexPath indexPathForRow:newRowIndex inSection:0];
-    // NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
-    // [self.TableListAlert insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-    
+       
     
 }
 

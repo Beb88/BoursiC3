@@ -19,6 +19,11 @@
 @synthesize TextPWD;
 @synthesize TextID, LOGID;
 
+
+static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoincoin/jsonConnect.php";
+
+
+
 - (IBAction)Action_Connect:(id)sender {
     
     NSLog(@"CONNECT");
@@ -42,21 +47,21 @@
     //NSURL *url = [NSURL URLWithString:@"http://192.168.0.12:8888/wslogin.php"];
     
     //WAM
-    NSURL *url = [NSURL URLWithString:@"http://192.168.1.146:8888/wslogin.php"];
+    //NSURL *url = [NSURL URLWithString:@"http://192.168.1.146:8888/wslogin.php"];
     
     //ARKKOX
     //NSURL *url = [NSURL URLWithString:@"http://arkkox.free.fr/Boursicoincoin/wslogin.php"];
 
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+   // AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
     
     //LES PARAM PASSES EN POST
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            TextLOG.text, @"nom",
-                            TextPWD.text, @"mdp",
-                            nil];
+    //NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+    //                        TextLOG.text, @"nom",
+    //                        TextPWD.text, @"mdp",
+    //                        nil];
 
     //CHEWAM
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://192.168.1.46:8888/wslogin.php"parameters:params];
+    //NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://192.168.1.46:8888/wslogin.php"parameters:params];
     
     //FLO
    //NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://192.168.0.12:8888/wslogin.php"parameters:params];
@@ -92,7 +97,7 @@
     ///FIN VERSION SERVEUR YANNICK
     
     
-    
+   /*  MISE EN COMMENTAIRE EN VUE DE SUPPRESSION DE LECRAN et DU LOG
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         //  self.movies = [JSON objectForKey:@"NOMVALEUR"];
@@ -120,10 +125,48 @@
     
     
     [operation start];
+    */
+    
+    
+    NSURL *url = [NSURL URLWithString: URLServeurString ];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+    //On construit les parametres qui vont etre passes en POST de la requete
+    //VERSION UTILISATEUR FLO  Parametre passé : idPtf =1
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            TextLOG.text, @"user",
+                            TextPWD.text, @"password",
+                            @"getLogin", @"action",
+                            nil];
+    
+    //On interroge le serveur avec la requete
+  
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:URLServeurString parameters:params];
+    
+    
+    //On recupere la reponse du serveur
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        NSLog(@"ENVOI LOG  OK");
+        NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
+        NSLog(@"RESULT DU json DU LOG: %@", JSON);
+        // self.listValJSON = JSON;
+        //NSLog(@"listVal (OBJET VALEURS EST MERE : %@", self.listValJSON);
+        
+        // [self TransfertJSON_Vers_Objet_ListVal];
+        
+        // [self.activityIndicatorView stopAnimating];
+        // [self.TableListVAL setHidden:NO];
+        // [self.TableListVAL reloadData];
+        
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"Request ENVOI LOG Failed with Error: %@, %@", error, error.userInfo);
+    }];
+    
+    
+    [operation start];
     
     [self performSegueWithIdentifier:@"ShowScreen1" sender:nil];
-    
-      
     
   }
 
@@ -141,6 +184,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    //[self performSegueWithIdentifier:@"ShowScreen1" sender:nil];
+    NSLog(@"vue chargee");
+    //[self Action_Connect:(this) ];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -157,6 +203,9 @@
    
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+    
+    // on passe directement a l ecran ACTIONS
+    // [self performSegueWithIdentifier:@"ShowScreen1" sender:nil];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

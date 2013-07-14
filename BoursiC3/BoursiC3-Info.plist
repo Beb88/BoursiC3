@@ -14,6 +14,8 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
+				<string>icon2</string>
+				<string>icon</string>
 				<string>icon.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
@@ -21,7 +23,7 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>FBY.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>FBY2.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -36,9 +38,9 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSMainNibFile~ipad</key>
+	<string>MainStoryboard_iPhone-iPad</string>
 	<key>UIMainStoryboardFile</key>
-	<string>MainStoryboard_iPhone</string>
-	<key>UIMainStoryboardFile~ipad</key>
 	<string>MainStoryboard_iPhone</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
@@ -49,8 +51,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

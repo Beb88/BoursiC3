@@ -23,6 +23,8 @@
 @interface AjoutValeurViewController : UITableViewController<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>{
 NSMutableArray *_listValJSON;
 }
+
+
 @property (weak, nonatomic) IBOutlet UISearchBar *SearchBarValeurs;
 
 //@property (weak, nonatomic) IBOutlet UISearchBar *IBSearchBarValeur;

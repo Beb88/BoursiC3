@@ -18,8 +18,9 @@
     NSString *variation;
     NSString *volumEnc;
     NSString *devise;
-    NSString *codeBourso; //(ISIN)
+    NSString *codeBourso; //(ISIN OU TICK)
     NSString *codeIsin;
+    
     NSInteger idValeur;
 	NSInteger idCompo;
     NSString *place;

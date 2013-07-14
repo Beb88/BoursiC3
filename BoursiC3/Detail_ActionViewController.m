@@ -11,9 +11,6 @@
 #import "SBJson.h"
 
 
-
-
-
 @interface Detail_ActionViewController ()
 {
 NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
@@ -24,7 +21,7 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
 
 @implementation Detail_ActionViewController
 
-@synthesize TableListAlert,TextNomAlert;
+@synthesize TableListAlert,TextNomAlert,delegate;
 
 @synthesize TextValo,TextVolumeEnc,TextEvo,TextNomValeur;
 @synthesize  valeurRecue,alertes_valeur;
@@ -49,41 +46,7 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     NSLog(@"%@",self.valeurRecue.cotation);
     NSLog(@"%@",self.valeurRecue.volumeEnc);
     
-    
-       /*
-    NSString* URLString = [NSString stringWithFormat:@"%@%@%@", @"http://bourse.lesechos.fr/bourse/streaming/fiches/getHeader.jsp?code=", self.valeurs.codeBourso,@"&place=XPAR&codif=ISIN"];*/
-    
-    // MARCHE US place =XNAS  codif=TICK
-    
-    //On construit la requete URL en fonction de la valeur passée
-  /*  NSString* URLString = [NSString stringWithFormat:@"%@%@%@%@%@%@", @"http://bourse.lesechos.fr/bourse/streaming/fiches/getHeader.jsp?code=",self.valeurRecue.codeBourso,@"&place=",self.valeurRecue.place,@"&codif=",self.valeurRecue.codif];
-    NSLog(@"ON BALANCE l URL : %@",URLString);
-    //On execute la requete URL
-    NSURLRequest* requestB = [NSURLRequest requestWithURL:[NSURL URLWithString:URLString]];
-    // On récupère le résultat de la requête JSON ( avec 6 lignes vides avt)
-    NSData* responseB = [NSURLConnection sendSynchronousRequest:requestB returningResponse:nil error:nil];
   
-    // On transforme le résultat en String de type NSASCII (TRAITEMENT SPECIFIQUE pour source leschos)
-    NSString* jsonStringB = [[NSString alloc] initWithData:responseB encoding:NSASCIIStringEncoding];
-    
-    //Suppression des lignes vides
-    NSString *trimmedText = [jsonStringB stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    
-    // On met le resultat en string et purgé des lignes vides dans un NSdictionnaire JSON
-    NSDictionary *jsonResults= [trimmedText JSONValue];
-    NSLog(@"jsonResults : %@", jsonResults);
-    
-    //1er niveau du JSON
-    NSDictionary *cotation = [ jsonResults objectForKey:@"cotation" ];
-    
-    //second niveau du JSON on recupere les données de l'action
-    NSLog(@"Valo : %@", [ cotation objectForKey:@"valorisationEnc" ]);
-	NSLog(@"heure : %@", [ cotation objectForKey:@"heure" ]);
-   */
-    //On met à jour l'affichage
-    
-  //  TextValo.text = [ cotation objectForKey:@"valorisationEnc" ];
-   // TextEvo.text = [ cotation objectForKey:@"variation" ];
     
     TextValo.text = self.valeurRecue.cotation;
     TextEvo.text = self.valeurRecue.variation;
@@ -197,6 +160,79 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
 }
 
 
+-(void)Desinscription_Alerte_Serveur:(Valeurs_Alertes *)del_alert
+{
+    //1&1
+    NSURL *url = [NSURL URLWithString:@"http://s454555776.onlinehome.fr/boursicoincoin/jsonConnect.php"];
+    
+    
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+    
+    
+    // new_alert.id_Valeur
+    //new_alert.id_alerte
+    // new_alert.param1
+    // new_alert.nom_alerte
+    
+    //LES PARAM PASSES EN POST
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @"beb", @"user",
+                            @"beb", @"password",
+                            @"deleteAlert",@"action",
+                            del_alert.id_alerte,@"idalert",
+                            nil];// Autre param a envoyer
+    
+    
+    
+    
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://s454555776.onlinehome.fr/boursicoincoin/jsonConnect.php"parameters:params];
+    
+    //MISE EN COMMENTAIRE EN VUE DE SUPPRESSION DE LECRAN et DU LOG
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        //  self.movies = [JSON objectForKey:@"NOMVALEUR"];
+        NSLog(@"DESNSCRIPTION ALERTE OK SUR  SERVEUR");
+        NSLog(@"REQUEST OK JSON");
+        NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
+        NSLog(@"json: %@", JSON);
+        
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Synchro serveur OK"
+                                                            message:@"Desinscrition alerte"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
+        NSLog(@"ERREUR DESINCRIPTION ALERTE SUR SERVEUR");
+        NSLog(@"BAD REQUEST JSON");
+        NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
+        NSLog(@"json: %@", JSON);
+        
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Réseau non disponible"
+                                                            message:@""
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        
+    }];
+    
+    
+    
+    [operation start];
+    
+    
+    
+    
+}
+
+
+
 
 //////////////////////////////////////////////////////////////
 //          Table View Data Source Methods
@@ -212,13 +248,31 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
 }
 
 
+
+//SUPPRESSSION D UNE ALERTE
 -(void)tableView:(UITableView *)tableView commitEditingStyle: (UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    Valeurs_Alertes *alert_sup = [self.valeurRecue.listeAlertes objectAtIndex:indexPath.row];
+    
+    
+    NSLog(@"ENVOIE AU SERVEUR SUPPRESSION ALERTE : ID_VAL =%i,  ID_ALERTE=%@,   NOM_ALERTE =%@, PARAM1 =%@ ", alert_sup.id_Valeur, alert_sup.id_alerte, alert_sup.nom_alerte, alert_sup.param1);
+   
+   [self Desinscription_Alerte_Serveur:alert_sup];
+    
     [self.valeurRecue.listeAlertes removeObjectAtIndex:indexPath.row];
     
     //[self savelistValeurs];
     
     NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
     [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    
+   
+    
+  //  [self DESi]
+    
+    
 }
 
 
@@ -253,6 +307,7 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     
     
     
+    
     UILabel *labelalert = (UILabel *)[cell viewWithTag:1000];
     UILabel *labelParam1 = (UILabel *)[cell viewWithTag:2000];
     //UILabel *labelParam2 = (UILabel *)[cell viewWithTag:3000];
@@ -263,6 +318,8 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     ///NSLog(@"VALEUR = %@", valeur);
     labelalert.text =  alerte_valeur.nom_alerte;
     labelParam1.text =   compo;
+    
+    NSLog(@"contenant la valeur= %@", alerte_valeur.id_alerte);
     // labelParam2.text = alerte_valeur.param2;
     // labelParam3.text = alerte_valeur.param3;
     
@@ -430,12 +487,15 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     int newRowIndex = [self.valeurRecue.listeAlertes count];
     NSLog(@"list alert count =  %i",newRowIndex);
     [self.valeurRecue.listeAlertes addObject:newAlert];
+  
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:newRowIndex inSection:0];
     NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
     [self.TableListAlert insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
     
     [self dismissViewControllerAnimated:YES completion:nil];
+    
+    
 }
 
 
@@ -458,11 +518,11 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     [self.valeurRecue.listeAlertes addObject:newAlert];
     
     NSLog(@"SAV");
-
     
     
+    [self.delegate SAV_ALERT:self];
     
-    
+  
     // cell.detailTextLabel.text.floatValue = newAlert.param1;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -484,7 +544,16 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     NSLog(@"ON RECOIT DE LISTE INDIC LA NOUVELLE ALERTE : %@",newAlert);
     int newRowIndex = [self.valeurRecue.listeAlertes count];
     NSLog(@"list alert count =  %i",newRowIndex);
+   
     [self.valeurRecue.listeAlertes addObject:newAlert];
+    
+    [self.delegate SAV_ALERT:self];
+    
+    [self INSCRIPTION_ALERT:self envoiDemandeAlerte:newAlert]; // user, pwd, action, ticker, typealert, typenotif, tableauparam
+    
+   // user, passwd, action, ticker, typealert, typenotif, tableauparam
+    
+   // user, pwd, action, codeyf, idalert(2 = Seuil) , typealert(mail ,sms ou phone), seuil(numerique), sens(h ou b)
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:newRowIndex inSection:0];
     NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
@@ -492,11 +561,233 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
    
     
     [self dismissViewControllerAnimated:YES completion:nil];
+    
+   
+}
+
+
+- (void)INSCRIPTION_ALERT:(Detail_ActionViewController *)controller envoiDemandeAlerte:(Valeurs_Alertes *)newAlert
+{
+    
+    
+    
+    
+    
+    
+    NSURL *url = [NSURL URLWithString:@"http://s454555776.onlinehome.fr/boursicoincoin/jsonConnect.php"];
+    
+    
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+    
+    
+    // new_alert.id_Valeur
+    //new_alert.id_alerte
+    // new_alert.param1
+    // new_alert.nom_alerte
+    // NSLog(@"Valeur passé pour creation d alerte : %@", new_alert.cod );
+    //LES PARAM PASSES EN POST
+    
+    
+    
+    NSLog(@"ENVOIE AU SERVEUR INCRIPTION ALERTE SUR VALEUR ID_VAL =%i,  codeBourso=%@,   NOM_ALERTE =%@, PARAM1 =%@ ", self.valeurRecue.idValeur, self.valeurRecue.codeBourso, newAlert.nom_alerte, newAlert.param1);
+    
+    
+  /*  self.valeurRecue.nom
+    
+    self.valeurRecue.idValeur, self.valeurRecue.nb_alertes, self.valeurRecue.codeBourso, self.valeurRecue.codeBourso
+    
+          
+          
+    NSString *nom;
+	NSString *cotation;
+    NSString *variation;
+    NSString *volumEnc;
+    NSString *devise;
+    NSString *codeBourso; //(ISIN OU TICK)
+    NSString *codeIsin;
+    
+    NSInteger idValeur;
+	NSInteger idCompo;
+    NSString *place;
+    NSString *codif;
+    NSInteger nb_alertes;
+    */
+    
+    
+    
+    //GOOD ONE
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @"beb", @"user",
+                            @"beb", @"password",
+                            @"setNewAlert",@"action",
+                            self.valeurRecue.codeBourso, @"codeyf",
+                            @"2", @"idindic", //1 ou 2(seuil)
+                            @"notif", @"typealert", //notif ou mail
+                            newAlert.nom_alerte, @"namealert",
+                            newAlert.param1, @"seuil", //
+                            @"H", @"sens", // H ou B
+                            @"0", @"volume",///
+                            nil];// Autre param a envoyer
+    
+    
+    //TEST ONE
+   /* NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @"beb", @"user",
+                            @"beb", @"password",
+                            @"test",@"action",
+                            nil];// Autre param a envoyer
+*/
+    
+    
+    
+    // user, passwd, action, ticker, typealert, typenotif, tableauparam
+    
+    // user, pwd, action, codeyf, idalert(2 = Seuil) , typealert(mail ,sms ou phone), seuil(numerique), sens(h ou b)
+    
+    
+    
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://s454555776.onlinehome.fr/boursicoincoin/jsonConnect.php"parameters:params];
+    
+    
+    
+    //MISE EN COMMENTAIRE EN VUE DE SUPPRESSION DE LECRAN et DU LOG
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        //  self.movies = [JSON objectForKey:@"NOMVALEUR"];
+        NSLog(@"INSCRIPTION ALERTE OK SUR  SERVEUR");
+        NSLog(@"REQUEST OK JSON");
+        NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
+        NSLog(@"json: %@", JSON);
+        
+        
+        NSString *id_alert_recup =   [JSON objectForKey:@"result"];
+        
+        newAlert.id_alerte=id_alert_recup;
+        
+        NSLog(@"alerte.id_alerte=%@",newAlert.id_alerte);
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alerte Seui Crée "
+                                                            message:newAlert.id_alerte
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
+        NSLog(@"ERREUR INSCRIPTION ALERTE SUR SERVEUR");
+        NSLog(@"BAD REQUEST JSON");
+        NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
+        NSLog(@"json: %@", JSON);
+        
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Réseau non disponible"
+                                                            message:@""
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        
+    }];
+    
+    
+    
+    [operation start];
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    /*UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"SERVEUR"
+                                                        message:@"Inscription Alerte"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+    [alertView show];
+    /
+    
+    NSLog(@"DEMANDE D ALERTE SUR  :  %@, %@, %ld ,%ld ",newAlert.nom_alerte, newAlert.param1, (long)newAlert.id_Valeur, (long)newAlert.id_alerte);
+    
+   
+    //1&1
+  /*  NSURL *url = [NSURL URLWithString:@"http://s454555776.onlinehome.fr/boursicoincoin/jsonConnect.php"];
+    
+      
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+    
+    //LES PARAM PASSES EN POST
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @"beb", @"user",
+                            @"beb", @"password",
+                            @"setNewAlert",@"action",
+                            @"",@"codeyf",
+                            @"", @"idindic",
+                            @"", @"typealert",
+                            @"", @"seuil",
+                            @"", @"sens",
+                            nil];// Autre param a envoyer
+    
+    
+    // user, passwd, action, ticker, typealert, typenotif, tableauparam
+    
+    // user, pwd, action, codeyf, idalert(2 = Seuil) , typealert(mail ,sms ou phone), seuil(numerique), sens(h ou b)
+    
+       
+    
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://s454555776.onlinehome.fr/boursicoincoin/jsonConnect.php"parameters:params];
+    
+      
+    
+     //MISE EN COMMENTAIRE EN VUE DE SUPPRESSION DE LECRAN et DU LOG
+     
+     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+     //  self.movies = [JSON objectForKey:@"NOMVALEUR"];
+     NSLog(@"INSCRIPTION ALERTE OK SUR  SERVEUR");    
+     NSLog(@"REQUEST OK JSON");
+     NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
+     NSLog(@"json: %@", JSON);
+     //LOGID = [JSON objectForKey:@"LOGID"];
+     
+     // [self.activityIndicatorView stopAnimating];
+     // [self.tableView setHidden:NO];
+     // [self.tableView reloadData];
+     
+     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+     NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
+         NSLog(@"ERREUR INSCRIPTION ALERTE SUR SERVEUR"); 
+         NSLog(@"BAD REQUEST JSON");
+         NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
+         NSLog(@"json: %@", JSON);
+
+         
+     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Réseau non disponible"
+     message:@""
+     delegate:nil
+     cancelButtonTitle:@"OK"
+     otherButtonTitles:nil];
+     [alertView show];
+     
+     }];
+     
+     
+     
+     [operation start];
+     
+*/
+  
+    
+    
 }
 
 
 
-//RETOUR MODIF ALERTE SEUIL 
+//RETOUR MODIF ALERTE SEUIL
 
 
 - (void)alertSeuilViewController:(AlerteSeuilViewController *)controller didFinishEditingAlertlist:(Valeurs_Alertes *)newAlert{
@@ -508,10 +799,11 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     UILabel *labelParam1 = (UILabel *)[cell viewWithTag:2000];
     labelParam1.text =   newAlert.param1;
     
+    
+    [self.delegate SAV_ALERT:self];
      [self dismissViewControllerAnimated:YES completion:nil];
-
-
-
+    
+  
 }
 
 

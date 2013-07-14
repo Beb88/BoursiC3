@@ -20,7 +20,9 @@
     [aCoder encodeObject:self.nom forKey:@"Nom"];
     [aCoder encodeObject:self.codeBourso forKey:@"CodeBourso"];
     [aCoder encodeObject:self.listeAlertes forKey:@"listeAlertes"];
-   
+    
+   // self.cotation
+   // self.variation
 }
 
 
@@ -28,6 +30,7 @@
     if ((self = [super init])) {
         self.nom = [aDecoder decodeObjectForKey:@"Nom"];
         self.codeBourso = [aDecoder decodeObjectForKey:@"CodeBourso"];
+        
          self.listeAlertes = [aDecoder decodeObjectForKey:@"listeAlertes"];
     }
     return self; }

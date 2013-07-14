@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "CorePlot-CocoaTouch.h"
 #import "AjoutValeurViewController.h"
+#import "Detail_ActionViewController.h"
 
 @class Valeurs;
 
-@interface ListValViewController : UIViewController <AjoutValeurViewControllerDelegate,UITableViewDelegate, UITableViewDataSource, CPTPlotDataSource >
+@interface ListValViewController : UIViewController <AjoutValeurViewControllerDelegate, Detail_ActionViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, CPTPlotDataSource >
 {
 NSMutableArray *_listValJSON;
 //COREPLOT
@@ -28,6 +29,7 @@ NSMutableArray *dataForPlot;
 
 @property(readwrite, retain, nonatomic) NSMutableArray *dataForPlot;
 @property(weak, nonatomic) IBOutlet UIView *hostingView;
+@property  UIRefreshControl *refreshControl;
 
 
 
