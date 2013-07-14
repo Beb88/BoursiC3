@@ -61,6 +61,8 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     
 }
 
+
+//RECUPERATION DE LA LISTE EN BASE LOCALE
 -(id)initWithCoder:(NSCoder *)aDecoder {
     
     
@@ -139,7 +141,7 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
      NSLog(@"Mise en priorité basse la recherche net %@", [self dataFilePath]);
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
-    
+    //
    for (Valeurs *Val in listVal) {
        [self MAJ_COURS_DU_MOMENT_SOURCE_YAHOO:Val ];
    
@@ -290,21 +292,7 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     
     
     
-    
-    // NSLog(@"ON CHECK LIGNE %@  avec codif %@",valeur.nom, valeur.codif);
-    
-  //  if (valeur.codif==@"ISIN" ) {
-  //      [self MAJ_COURS_DU_MOMENT_SOURCE_ECHOS:valeur ];
-  //  }
-  //  else if (valeur.codif==@"TICK" )
-  //  {
-     //   [self MAJ_COURS_DU_MOMENT_SOURCE_YAHOO:valeur ];
-    
-   // NSLog(@"COURS = %@",valeur.cotation);
-    
-  
-    
-  
+   
     
     //NSLog(@"OUT TABLEVIEW CELLROWFORROWATINDEXPATH");
     return cell;
@@ -319,9 +307,16 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     NSLog(@"RECHERCHE INTERNET YAHOO pour %@", valeur.nom );
     //On construit la requete URL en fonction de la valeur passée
     // On ajoute la codification TICK à la requete URL ( exemple  : UBI.PA pour Ubisoft)
+    
+    
+    //PREVOIR OPTIMISATION CHERCHER TOUTES LES VALEURS EN UNE FOIS
+    /* modele de la requete multi valeurs
+    http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20%3D%20%22GFT.PA,UBI.PA%22&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=cbfunc
+    */
+    
     NSURL *requestUrl = [NSURL URLWithString:[NSString stringWithFormat:yahooLoadStockDetailsURLString, [valeur.codeBourso stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]];
     
-    //NSLog(@"ON BALANCE l URL : %@",requestUrl.absoluteString);
+    NSLog(@"ON BALANCE l URL : %@",requestUrl.absoluteString);
     
     //On execute la requete URL
     NSURLRequest* requestB = [NSURLRequest requestWithURL:requestUrl];
@@ -426,130 +421,6 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     
     
 }
-
-
-
-
-
-//////////////////////////////////////////////////////////////
-//          METHODES POUR LE GRAPHIQUE 
-//////////////////////////////////////////////////////////////
-
-
--(void) ConstructionGraph
-{
-    
-    // Données de test du graph
-	NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:30];
-	NSUInteger i;
-	for ( i = 0; i < 30; i++ ) {
-        id x = [NSNumber numberWithFloat:i];
-        id y = [NSNumber numberWithFloat:1.2*rand()/(float)RAND_MAX + 2.2];
-        [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
-    }
-    
-    
-    
-    self.dataForPlot = contentArray;
-    graph = [[CPTXYGraph alloc] initWithFrame:CGRectZero];
-    
-    
-    
-    
-    // Theme du graphique
-	CPTTheme *theme = [CPTTheme themeNamed:kCPTPlainWhiteTheme];
-    [graph applyTheme:theme];
-    
-    
-    
-    //Style personnalisé de texte ( voir autre CPTMutable....)
-    CPTMutableTextStyle *textStyle = [CPTMutableTextStyle textStyle];
-    textStyle.color = [CPTColor blackColor];
-    textStyle.fontName = @"HelveticaNeue-Thin";
-    textStyle.fontSize = 16.0f;
-    graph.titleTextStyle = textStyle;
-    
-   
-    
-    graph.titleDisplacement = CGPointMake(0.0f, -161);
-    
-    
-    
-    // COORDONNES et TAILLE DU GRAPHiQUE PLACE DANS LE HOSTINGVIEW DU STORYBOARD
-    CPTGraphHostingView *graphHostingView = [[CPTGraphHostingView alloc] initWithFrame:CGRectMake(0, 0, 320, 194)];
-    graphHostingView.collapsesLayers = NO;
-    graphHostingView.hostedGraph = graph;
-   
-    
-    
-    // On ajoute le graph a l UIVIEW placé sur l'ecran
-    [hostingView addSubview:graphHostingView];
-    
-    
-    //definition de l affichage
-    CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)graph.defaultPlotSpace;
-    plotSpace.allowsUserInteraction = YES;
-    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.8) length:CPTDecimalFromFloat(30.0)];
-    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-0.8) length:CPTDecimalFromInt(10)];
-    
-    // Axe X
-    CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
-    CPTXYAxis *x = axisSet.xAxis;
-    x.majorIntervalLength = CPTDecimalFromString(@"5");
-    x.minorTicksPerInterval = 4;
-    
-    // Axe Y
-    CPTXYAxis *y = axisSet.yAxis;
-    y.majorIntervalLength = CPTDecimalFromString(@"5");
-    y.minorTicksPerInterval = 4;
-    
-    
-    
-    // Ligne du graphique
-    CPTScatterPlot *boundLinePlot = [[CPTScatterPlot alloc] init ];
-    CPTMutableLineStyle *lineStyle = [CPTMutableLineStyle lineStyle];
-    lineStyle.miterLimit = 1.0f;
-    lineStyle.lineWidth = 2.0f;
-    lineStyle.lineColor = [CPTColor blackColor];
-    boundLinePlot.dataLineStyle = lineStyle;
-    boundLinePlot.identifier = @"Blue Plot";
-    boundLinePlot.dataSource = self;
-	[graph addPlot:boundLinePlot];
-
-    
-}
-
--(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
-    return [dataForPlot count];
-}
-
-
-
--(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index  {
-    return [[dataForPlot objectAtIndex:index] valueForKey:(fieldEnum == CPTScatterPlotFieldX ? @"x" : @"y")];
-}
-
-/*
-
--(NSUInteger)numberOfRecords {
-    return 51;
-}
-
--(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum
-               recordIndex:(NSUInteger)index
-{
-    double val = (index/5.0)-5;
-    if(fieldEnum == CPTScatterPlotFieldX)
-    { return [NSNumber numberWithDouble:val]; }
-    else
-    {
-        if(plot.identifier == @"X Squared Plot")
-        { return [NSNumber numberWithDouble:val*val]; }
-        else
-        { return [NSNumber numberWithDouble:1/val]; }
-    }
-}
-*/
 
 
 
@@ -680,6 +551,140 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
 
  
  */
+
+
+
+
+//////////////////////////////////////////////////////////////
+//          METHODES POUR LE GRAPHIQUE
+//////////////////////////////////////////////////////////////
+
+
+-(void) ConstructionGraph
+{
+    
+    // Données de test du graph
+	NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:30];
+	NSUInteger i;
+	for ( i = 0; i < 30; i++ ) {
+        id x = [NSNumber numberWithFloat:i];
+        id y = [NSNumber numberWithFloat:1.2*rand()/(float)RAND_MAX + 2.2];
+        [contentArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
+    }
+    
+    
+    
+    self.dataForPlot = contentArray;
+    graph = [[CPTXYGraph alloc] initWithFrame:CGRectZero];
+    
+    
+    // Theme du graphique
+	CPTTheme *theme = [CPTTheme themeNamed:kCPTPlainWhiteTheme];
+    
+
+    
+    /*  graph = (CPTXYGraph *)[theme newGraph];
+     
+     graph.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
+     graph.plotAreaFrame.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
+     
+     */
+    
+    [graph applyTheme:theme];
+    
+    
+    
+    //Style personnalisé de texte ( voir autre CPTMutable....)
+    CPTMutableTextStyle *textStyle = [CPTMutableTextStyle textStyle];
+    textStyle.color = [CPTColor blackColor];
+    textStyle.fontName = @"HelveticaNeue-Thin";
+    textStyle.fontSize = 16.0f;
+    graph.titleTextStyle = textStyle;
+    
+    
+    
+    graph.titleDisplacement = CGPointMake(0.0f, -161);
+    
+    
+    
+    // COORDONNES et TAILLE DU GRAPHiQUE PLACE DANS LE HOSTINGVIEW DU STORYBOARD
+    CPTGraphHostingView *graphHostingView = [[CPTGraphHostingView alloc] initWithFrame:CGRectMake(0, 0, 320, 194)];
+    graphHostingView.collapsesLayers = NO;
+    graphHostingView.hostedGraph = graph;
+    
+    
+    
+    // On ajoute le graph a l UIVIEW placé sur l'ecran
+    [hostingView addSubview:graphHostingView];
+    
+    
+    //definition de l affichage
+    CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)graph.defaultPlotSpace;
+    plotSpace.allowsUserInteraction = YES;
+    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.8) length:CPTDecimalFromFloat(30.0)];
+    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-0.8) length:CPTDecimalFromInt(10)];
+    
+    // Axe X
+    CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
+    CPTXYAxis *x = axisSet.xAxis;
+    x.majorIntervalLength = CPTDecimalFromString(@"5");
+    x.minorTicksPerInterval = 4;
+    
+    // Axe Y
+    CPTXYAxis *y = axisSet.yAxis;
+    y.majorIntervalLength = CPTDecimalFromString(@"5");
+    y.minorTicksPerInterval = 4;
+    
+    
+    
+    // Ligne du graphique
+    CPTScatterPlot *boundLinePlot = [[CPTScatterPlot alloc] init ];
+    CPTMutableLineStyle *lineStyle = [CPTMutableLineStyle lineStyle];
+    lineStyle.miterLimit = 1.0f;
+    lineStyle.lineWidth = 2.0f;
+    lineStyle.lineColor = [CPTColor blackColor];
+    boundLinePlot.dataLineStyle = lineStyle;
+    boundLinePlot.identifier = @"Blue Plot";
+    boundLinePlot.dataSource = self;
+	[graph addPlot:boundLinePlot];
+    
+    
+}
+
+-(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
+    return [dataForPlot count];
+}
+
+
+
+-(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index  {
+    return [[dataForPlot objectAtIndex:index] valueForKey:(fieldEnum == CPTScatterPlotFieldX ? @"x" : @"y")];
+}
+
+/*
+ 
+ -(NSUInteger)numberOfRecords {
+ return 51;
+ }
+ 
+ -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum
+ recordIndex:(NSUInteger)index
+ {
+ double val = (index/5.0)-5;
+ if(fieldEnum == CPTScatterPlotFieldX)
+ { return [NSNumber numberWithDouble:val]; }
+ else
+ {
+ if(plot.identifier == @"X Squared Plot")
+ { return [NSNumber numberWithDouble:val*val]; }
+ else
+ { return [NSNumber numberWithDouble:1/val]; }
+ }
+ }
+ */
+
+
+
 
 
 @end

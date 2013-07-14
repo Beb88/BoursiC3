@@ -8,7 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+
+//@class AppDelegate;
+
+//AppDelegate *appDelegate;
+
 @interface LOGINViewController : UIViewController<UITextFieldDelegate>
+
+
 
 @property (strong, nonatomic) IBOutlet UITextField *TextLOG;
 @property (strong, nonatomic) IBOutlet UITextField *TextPWD;
@@ -16,4 +23,8 @@
 @property (strong, nonatomic) NSString *TextID;
 
 @property (strong,nonatomic) NSString *LOGID;
+
+
+//@property (nonatomic, retain) AppDelegate *appDelegate;
+
 @end

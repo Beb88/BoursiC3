@@ -12,5 +12,6 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property ( nonatomic,retain) NSMutableArray *ValeursArray;
+@property (nonatomic, retain) NSString *ZETOKEN;
 
 @end

@@ -176,7 +176,7 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     
     //LES PARAM PASSES EN POST
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @"beb", @"user",
+                            @"beblouis@gmail.com", @"user",
                             @"beb", @"password",
                             @"deleteAlert",@"action",
                             del_alert.id_alerte,@"idalert",
@@ -618,7 +618,7 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     //GOOD ONE
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @"beb", @"user",
+                            @"beblouis@gmail.com", @"user",
                             @"beb", @"password",
                             @"setNewAlert",@"action",
                             self.valeurRecue.codeBourso, @"codeyf",
