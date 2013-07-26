@@ -16,7 +16,7 @@
 
 static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoincoin/Send_id.php";
 
-
+/*
 - (NSString *) getDBPath {
 	
     
@@ -24,13 +24,13 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
 	NSString *documentsDir = [paths objectAtIndex:0];
 	return [documentsDir stringByAppendingPathComponent:@"BCC.sqlite"];
 }
-
+*/
 + (AppDelegate *)sharedAppDelegate
 {
     return (AppDelegate *) [UIApplication sharedApplication].delegate;
 }
 
-
+/*
 - (void) copyDatabaseIfNeeded {
 	
 	//Using NSFileManager we can perform many file system operations.
@@ -52,7 +52,7 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
 			NSAssert1(0, @"Failed to create writable database file with message '%@'.", [error localizedDescription]);
 	}
 }
-
+*/
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -91,14 +91,14 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
     //[[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButton forState:UIControlStateNormal
       //                                              barMetrics:UIBarMetricsDefault];
     
+    
+    
     // Pour definir que l'appli veut recevoir des push notifications
-    
-    
-    NSLog(@"DEMANDE D'autorisation pour notiification");
+    NSLog(@"DEMANDE D'autorisation pour notification");
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
-    NSLog(@"DEMANDE faite D'autorisation pour notiification");
+    NSLog(@"DEMANDE faite D'autorisation pour notification");
     
     // self.window.rootViewController = self.viewController;
 	[self.window makeKeyAndVisible];
@@ -162,11 +162,59 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
 	NSLog(@"Failed to get token, error: %@", error);
 }
 
+
+
+//FONCTION
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    
+    /*
+     //POUR VOIR LE CONTENU D UN NSDictionnary
+     NSEnumerator *enumerator = [ listValDict keyEnumerator];
+     NSString *key;
+     while (key = [ enumerator nextObject]) {
+     printf("%s\n", [[ listValDict objectForKey:key] UTF8String]);
+     }
+     //FIN //VISU CONTENU D UN DICTIONNAIRE
+     */
+    
+    
+    
+    /*Suppression d'une valeur ds le BCC.plist*/
+    
+    
+    
+   /*  NSString *pathToPlist = @"/Users/H2CO3/my.plist";
+     NSMutableDictionary *plist = [NSMutableDictionary dictionaryWithCOntentsOfFile:pathToPlist];
+     [plist removeObjectForKey:@"MyKeyIWannaDelete"];
+     [plist writeToFile:pathToPlist atomically:YES];
+     
+     */
+    
+   // [dico setObject:dateSettings forKey:@"date"];
+    
+    
     for (id key in userInfo) {
-        NSLog(@"key: %@, value: %@", key, [userInfo objectForKey:key]);
+        NSLog(@"RECEPTION D UNE PUSH NOTIFICATION composee de la key: %@, avec value: %@", key, [userInfo objectForKey:key]);
+       
+        
+        
+        /*UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"COIN"
+                                                            message:[userInfo objectForKey:key]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        */
+        
+        
+        
+        
     }
+    
+   
+
+    
 
 }
 

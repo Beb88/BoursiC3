@@ -42,6 +42,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *TableListAlert;
 @property (weak, nonatomic) IBOutlet UITextField *TextNomAlert;
 
+@property (weak, nonatomic) IBOutlet UITextField *TextEtatAlert;
 @property (nonatomic, strong) Valeurs *valeurRecue;
 
 @property (nonatomic, strong) Valeurs_Alertes *alertes_valeur;

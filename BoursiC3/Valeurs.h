@@ -26,7 +26,6 @@
     NSString *place;
     NSString *codif;
     NSInteger nb_alertes;
-   
     
     
 }

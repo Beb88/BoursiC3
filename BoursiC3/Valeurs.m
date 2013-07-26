@@ -20,6 +20,10 @@
     [aCoder encodeObject:self.nom forKey:@"Nom"];
     [aCoder encodeObject:self.codeBourso forKey:@"CodeBourso"];
     [aCoder encodeObject:self.listeAlertes forKey:@"listeAlertes"];
+    [aCoder encodeObject:self.cotation forKey:@"cotation"];
+    [aCoder encodeObject:self.variation forKey:@"variation"];
+    [aCoder encodeInteger:self.nb_alertes forKey:@"nb_alertes"];
+    
     
    // self.cotation
    // self.variation
@@ -30,8 +34,10 @@
     if ((self = [super init])) {
         self.nom = [aDecoder decodeObjectForKey:@"Nom"];
         self.codeBourso = [aDecoder decodeObjectForKey:@"CodeBourso"];
-        
-         self.listeAlertes = [aDecoder decodeObjectForKey:@"listeAlertes"];
+        self.listeAlertes = [aDecoder decodeObjectForKey:@"listeAlertes"];
+        self.cotation = [aDecoder decodeObjectForKey:@"cotation"];
+        self.variation = [aDecoder decodeObjectForKey:@"variation"];
+        self.nb_alertes = [aDecoder decodeIntegerForKey:@"nb_alertes"];
     }
     return self; }
 

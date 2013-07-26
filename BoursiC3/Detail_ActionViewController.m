@@ -24,7 +24,7 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
 @synthesize TableListAlert,TextNomAlert,delegate;
 
 @synthesize TextValo,TextVolumeEnc,TextEvo,TextNomValeur;
-@synthesize  valeurRecue,alertes_valeur;
+@synthesize  valeurRecue,alertes_valeur,TextEtatAlert;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,11 +42,9 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     NSLog(@"%@",self.valeurRecue.codeBourso);
     NSLog(@"ON a RECU LA VALEUR (nom)%@",self.valeurRecue.nom);
     TextNomValeur.text = self.valeurRecue.nom;
-    NSLog(@"%@",self.valeurRecue.devise);
-    NSLog(@"%@",self.valeurRecue.cotation);
-    NSLog(@"%@",self.valeurRecue.volumeEnc);
-    
-  
+    NSLog(@"DEVISE%@",self.valeurRecue.devise);
+    NSLog(@"COTATION%@",self.valeurRecue.cotation);
+    NSLog(@"VOLUMeEnc%@",self.valeurRecue.volumeEnc);
     
     TextValo.text = self.valeurRecue.cotation;
     TextEvo.text = self.valeurRecue.variation;
@@ -63,47 +61,7 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
         TextEvo.backgroundColor = [UIColor redColor];
     }
     
-    //Fonction de test de remplissage automatique de l'objet list
-    
-    //if (self.valeurRecue.listeAlertes =nil)
-    //[self complete_listalert];
-    
-    //listalert= self.valeurRecue.listeAlertes;
-    
-    //self.valeurRecue.listeAlertes = listalert;
-   /* Valeurs_Alertes *testinsertalert;
-    testinsertalert.nom_alerte =@"POT";
-    [listalert addObject:testinsertalert];
-    */
-    
-   
-    /* pour gerer des listes (pour plus tard
      
-     // Check if there is an error
-     if (jsonResults == nil) {
-     
-     NSLog(@"Erreur lors de la lecture du code JSON (%@).", [ jsonError localizedDescription ]);
-     
-     } else {
-     
-     NSArray *candiesList;
-     NSDictionary *bakery = [ jsonResults objectForKey:@"bakery" ];
-     NSLog(@"Nom : %@", [ bakery objectForKey:@"name" ]);
-     NSLog(@"Adresse : %@", [ bakery objectForKey:@"adress" ]);
-     NSLog(@"Bonbons :");
-     candiesList = [ [ bakery objectForKey:@"candies" ] objectForKey:@"candy" ];
-     for (NSDictionary *candy in candiesList) {
-     
-     NSLog(@"\tNom=%@ et Prix=%@", [ candy objectForKey:@"name" ],
-     [ candy objectForKey:@"price" ]);
-     
-     }
-     
-     }
-     
-     */
-    
-    
     self.TableListAlert.dataSource = self;
     self.TableListAlert.delegate = self;
     
@@ -123,41 +81,6 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
 }
 
 
-
-
--(void) complete_listalert
-{
-    
-    //codeBourso = UBI;
-    //codeIsin = FR0000054470;
-    //deviseValeur = EUR;
-    //idCompo = 1;
-    //idValeur = 1;
-    //nomValeur = UBISOFT
-    
-    //listalert = [[NSMutableArray alloc] initWithCapacity:20];
-    self.valeurRecue.listeAlertes = [[NSMutableArray alloc] initWithCapacity:20];
-   
-        Valeurs_Alertes *alert = [Valeurs_Alertes new];
-        
-        alert.nom_alerte = @"Seuil";
-        alert.param1 = @"8";
-     //   [listalert addObject:alert];
-    [self.valeurRecue.listeAlertes addObject:alert];
-        NSLog(@"On ajoute %@ A listalert",alert.nom_alerte);
-    
-    
-    Valeurs_Alertes *alert2 = [Valeurs_Alertes new];
-
-    alert2.nom_alerte = @"Volumetrie";
-    alert2.param1 = @"100000";
-   // [listalert addObject:alert2];
-    [self.valeurRecue.listeAlertes addObject:alert2];
-    NSLog(@"On ajoute %@ A listalert",alert.nom_alerte);
-    
-    
-    
-}
 
 
 -(void)Desinscription_Alerte_Serveur:(Valeurs_Alertes *)del_alert
@@ -255,22 +178,22 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     
     Valeurs_Alertes *alert_sup = [self.valeurRecue.listeAlertes objectAtIndex:indexPath.row];
     
-    
-    NSLog(@"ENVOIE AU SERVEUR SUPPRESSION ALERTE : ID_VAL =%i,  ID_ALERTE=%@,   NOM_ALERTE =%@, PARAM1 =%@ ", alert_sup.id_Valeur, alert_sup.id_alerte, alert_sup.nom_alerte, alert_sup.param1);
+    NSLog(@"ENVOIE AU SERVEUR SUPPRESSION ALERTE : ID_VAL =%@,  ID_ALERTE=%@,   NOM_ALERTE =%@, PARAM1 =%@ ", alert_sup.id_Valeur, alert_sup.id_alerte, alert_sup.nom_alerte, alert_sup.param1);
    
-   [self Desinscription_Alerte_Serveur:alert_sup];
     
+    //APPEL AU SERVEUR POUR SUPPRESSION
+    [self Desinscription_Alerte_Serveur:alert_sup];
+    
+    // SUPPRESSION DE L ALERTE de L OBJET
     [self.valeurRecue.listeAlertes removeObjectAtIndex:indexPath.row];
-    
-    //[self savelistValeurs];
-    
+   
+    //SUPPRESSION de l alerte de la VUE
     NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
     [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
     
     
-   
-    
-  //  [self DESi]
+     [self.delegate SAV_ALERT:self];
+     //[self savelistValeurs];
     
     
 }
@@ -292,33 +215,47 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     NSLog(@"IN TABLEVIEW listAlert");
     NSLog(@"CONTENU listAlert = %@",self.valeurRecue.listeAlertes );
     
-    /*
-     //VISU CONTENU D UN DICTIONNAIRE
-     NSEnumerator *enumerator = [ listValDict keyEnumerator];
-     NSString *key;
-     while (key = [ enumerator nextObject]) {
-     printf("%s\n", [[ listValDict objectForKey:key] UTF8String]);
-     }
-     //FIN //VISU CONTENU D UN DICTIONNAIRE
-     */
-    
+      
     
     Valeurs_Alertes *alerte_valeur = [self.valeurRecue.listeAlertes objectAtIndex:indexPath.row];
     
+    NSLog(@"ALERTE %@ :   codeBourso=%@, ETAT=%@,  NOM_ALERTE =%@, PARAM1 =%@ , PARAM2 =%@ , PARAM3 =%@ , PARAM4 =%@ ", alerte_valeur.id_alerte, self.valeurRecue.codeBourso,alerte_valeur.etat_alerte, alerte_valeur.nom_alerte, alerte_valeur.param1,alerte_valeur.param2,alerte_valeur.param3,alerte_valeur.param4);
     
+
     
     
     UILabel *labelalert = (UILabel *)[cell viewWithTag:1000];
-    UILabel *labelParam1 = (UILabel *)[cell viewWithTag:2000];
-    //UILabel *labelParam2 = (UILabel *)[cell viewWithTag:3000];
-    //UILabel *labelParam3 = (UILabel *)[cell viewWithTag:4000];
     
+        
+    NSString* compo=@"";
+    //CUSTO AFFICHAGE POUR ALERTE SEUIL
+    if (![alerte_valeur.param1 isEqual:@""]) {
+         compo = [NSString stringWithFormat:@"%@%@", @"A + que : ",alerte_valeur.param1];
+    } else if (![alerte_valeur.param3 isEqual:@""]) {
+         compo = [NSString stringWithFormat:@"%@%@", @"A - que : ",alerte_valeur.param3];
+    }
     
-     NSString* compo = [NSString stringWithFormat:@"%@%@", @"à + que : ",alerte_valeur.param1];
+      UILabel *labelParam1 = (UILabel *)[cell viewWithTag:2000];
+
     ///NSLog(@"VALEUR = %@", valeur);
     labelalert.text =  alerte_valeur.nom_alerte;
     labelParam1.text =   compo;
     
+    
+    UITextView *TextfieldEtat = (UITextView *)[cell viewWithTag:3000];
+    if ([alerte_valeur.etat_alerte isEqualToString:@"ON"]) {
+        TextfieldEtat.backgroundColor = [UIColor greenColor];
+    }
+    else if ([alerte_valeur.etat_alerte isEqualToString:@"OFF"])
+    {
+         TextfieldEtat.backgroundColor = [UIColor grayColor];
+    }
+    else
+         TextfieldEtat.backgroundColor = [UIColor orangeColor];
+    
+    
+    //UILabel *labelParam2 = (UILabel *)[cell viewWithTag:3000];
+    //UILabel *labelParam3 = (UILabel *)[cell viewWithTag:4000];
     NSLog(@"contenant la valeur= %@", alerte_valeur.id_alerte);
     // labelParam2.text = alerte_valeur.param2;
     // labelParam3.text = alerte_valeur.param3;
@@ -369,7 +306,12 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     
     Valeurs_Alertes *indic = [self.valeurRecue.listeAlertes objectAtIndex:indexPath.row];
     //UILabel *labelIndic = (UILabel *)[cell viewWithTag:1000];
+   
     
+    
+    /////////////////////////////////////////////////
+    // A REMPLACER PAR GESTION DU indic.id_indic
+    ////////////////////////////////////////////////
     
     if ([indic.nom_alerte isEqualToString:@"Seuil" ]) {
         
@@ -465,21 +407,6 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)viewDidUnload {
-    [self setTextValo:nil];
-    [self setTextVolumeEnc:nil];
-    [self setTextEvo:nil];
-    [self setTe:nil];
-    [self setTextNomValeur:nil];
-    [super viewDidUnload];
-}
-
 - (void)indicateursViewController:(IndicateursViewController *)controller didFinishAddingAlertlist:(Valeurs_Alertes *)newAlert
 {
     
@@ -537,28 +464,61 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
+/// !!! ALERTE SEUIL
 - (void)listeIndicTableView:(ListeIndicTableViewController *)controller didFinishAddingAlertlist:(Valeurs_Alertes *)newAlert
 {
     
     NSLog(@"ON RECOIT DE LISTE INDIC LA NOUVELLE ALERTE : %@",newAlert);
-    int newRowIndex = [self.valeurRecue.listeAlertes count];
-    NSLog(@"list alert count =  %i",newRowIndex);
+  //  int newRowIndex = [self.valeurRecue.listeAlertes count];
+   // NSLog(@"list alert count =  %i",newRowIndex);
+       
+   // GESTION D UN ECRAN D ALERTE POUVANT GENERER 2 ALERTES ( EX : SEUIL EN H et B )
+    
+    //SPECIFIC AUX ALERTES SEUIL (CAR SENS)
+    if ([newAlert.param2 isEqual:@"ON"])
+    {
+        
+        [self INSCRIPTION_ALERT:self envoiDemandeAlerte:newAlert pourUnSens:@"H"];
+       
+       /* [self.valeurRecue.listeAlertes addObject:newAlert];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:newRowIndex inSection:0];
+        NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+        [self.TableListAlert insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+        */
+        //[self.delegate SAV_ALERT:self];
+    }
+    
+    if ([newAlert.param4 isEqual:@"ON"])
+    {
+        
+        Valeurs_Alertes *alerte_baisse=[[Valeurs_Alertes alloc] init];;
+        
+        //Copy ?
+        
+       
+        alerte_baisse.id_Valeur = newAlert.id_Valeur;
+        alerte_baisse.nom_alerte = newAlert.nom_alerte;
+        alerte_baisse.id_indic = newAlert.id_indic;
+        alerte_baisse.param1 = @"";
+        alerte_baisse.param2 = @"";
+        alerte_baisse.param3 = newAlert.param3;
+        alerte_baisse.param4 = newAlert.param4;
+        
+        
+        [self INSCRIPTION_ALERT:self envoiDemandeAlerte:alerte_baisse pourUnSens:@"B"];
+       
+        /*[self.valeurRecue.listeAlertes addObject:newAlert];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:newRowIndex inSection:0];
+        NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+        [self.TableListAlert insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];*/
+    }
+ 
    
-    [self.valeurRecue.listeAlertes addObject:newAlert];
     
-    [self.delegate SAV_ALERT:self];
     
-    [self INSCRIPTION_ALERT:self envoiDemandeAlerte:newAlert]; // user, pwd, action, ticker, typealert, typenotif, tableauparam
     
-   // user, passwd, action, ticker, typealert, typenotif, tableauparam
+    //[self.delegate SAV_ALERT:self];
     
-   // user, pwd, action, codeyf, idalert(2 = Seuil) , typealert(mail ,sms ou phone), seuil(numerique), sens(h ou b)
-    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:newRowIndex inSection:0];
-    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
-    [self.TableListAlert insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-   
     
     [self dismissViewControllerAnimated:YES completion:nil];
     
@@ -566,11 +526,12 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
 }
 
 
-- (void)INSCRIPTION_ALERT:(Detail_ActionViewController *)controller envoiDemandeAlerte:(Valeurs_Alertes *)newAlert
+
+
+
+
+- (void)INSCRIPTION_ALERT:(Detail_ActionViewController *)controller envoiDemandeAlerte:(Valeurs_Alertes *)newAlert pourUnSens:(NSString*)sens
 {
-    
-    
-    
     
     
     
@@ -589,35 +550,18 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     
     
     
-    NSLog(@"ENVOIE AU SERVEUR INCRIPTION ALERTE SUR VALEUR ID_VAL =%i,  codeBourso=%@,   NOM_ALERTE =%@, PARAM1 =%@ ", self.valeurRecue.idValeur, self.valeurRecue.codeBourso, newAlert.nom_alerte, newAlert.param1);
-    
-    
-  /*  self.valeurRecue.nom
-    
-    self.valeurRecue.idValeur, self.valeurRecue.nb_alertes, self.valeurRecue.codeBourso, self.valeurRecue.codeBourso
-    
-          
-          
-    NSString *nom;
-	NSString *cotation;
-    NSString *variation;
-    NSString *volumEnc;
-    NSString *devise;
-    NSString *codeBourso; //(ISIN OU TICK)
-    NSString *codeIsin;
-    
-    NSInteger idValeur;
-	NSInteger idCompo;
-    NSString *place;
-    NSString *codif;
-    NSInteger nb_alertes;
-    */
-    
+    NSLog(@"ENVOIE AU SERVEUR INCRIPTION ALERTE SUR VALEUR ID_VAL =%i,  codeBourso=%@,   NOM_ALERTE =%@, PARAM1 =%@ , PARAM2 =%@ , PARAM3 =%@ , PARAM4 =%@ ", self.valeurRecue.idValeur, self.valeurRecue.codeBourso, newAlert.nom_alerte, newAlert.param1,newAlert.param2,newAlert.param3,newAlert.param4);
     
     
     //GOOD ONE
+    NSDictionary *params = nil;
+    //SPECIFIC AUX ALERTES SEUIL (CAR SENS)
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+    if ([sens isEqual:@"H"]) // ALERTE A LA HAUSSE
+    {
+        
+    
+     params = [NSDictionary dictionaryWithObjectsAndKeys:
                             @"beblouis@gmail.com", @"user",
                             @"beb", @"password",
                             @"setNewAlert",@"action",
@@ -626,11 +570,27 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
                             @"notif", @"typealert", //notif ou mail
                             newAlert.nom_alerte, @"namealert",
                             newAlert.param1, @"seuil", //
-                            @"H", @"sens", // H ou B
+                            sens, @"sens", // H ou B
                             @"0", @"volume",///
                             nil];// Autre param a envoyer
     
-    
+    }
+    else if ([sens isEqual:@"B"])  //ALERTE A LA BAISSE
+             {
+                 params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         @"beblouis@gmail.com", @"user",
+                                         @"beb", @"password",
+                                         @"setNewAlert",@"action",
+                                         self.valeurRecue.codeBourso, @"codeyf",
+                                         @"2", @"idindic", //1 ou 2(seuil)
+                                         @"notif", @"typealert", //notif ou mail
+                                         newAlert.nom_alerte, @"namealert",
+                                         newAlert.param3, @"seuil", //
+                                         sens, @"sens", // H ou B
+                                         @"0", @"volume",///
+                                         nil];// Autre param a envoyer
+
+             }
     //TEST ONE
    /* NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             @"beb", @"user",
@@ -641,9 +601,6 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     
     
     
-    // user, passwd, action, ticker, typealert, typenotif, tableauparam
-    
-    // user, pwd, action, codeyf, idalert(2 = Seuil) , typealert(mail ,sms ou phone), seuil(numerique), sens(h ou b)
     
     
     
@@ -664,9 +621,61 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
         NSString *id_alert_recup =   [JSON objectForKey:@"result"];
         
         newAlert.id_alerte=id_alert_recup;
-        
+        newAlert.etat_alerte = @"ON";
+
         NSLog(@"alerte.id_alerte=%@",newAlert.id_alerte);
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alerte Seui Crée "
+
+        int newRowIndex = [self.valeurRecue.listeAlertes count];
+         NSLog(@"list alert count =  %i",newRowIndex);
+        
+        
+        NSString *SAVparam1=@"";
+        NSString *SAVparam2=@"";
+        NSString *SAVparam3=@"";
+        NSString *SAVparam4=@"";
+        
+        SAVparam1 = newAlert.param1;
+        SAVparam2 = newAlert.param2;
+        SAVparam3 = newAlert.param3;
+        SAVparam4 = newAlert.param4;
+        
+        
+        if ([sens isEqual:@"H"])// ALERTE A LA HAUSSE
+        {
+           
+            newAlert.param3 =@"";
+            newAlert.param4 =@"";
+            
+            [self.valeurRecue.listeAlertes addObject:newAlert];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:newRowIndex inSection:0];
+            NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+            [self.TableListAlert insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.delegate SAV_ALERT:self];
+            
+            newAlert.param4 = SAVparam4 ;
+            newAlert.param3 = SAVparam3 ;
+            
+            
+            
+        }
+        else if ([sens isEqual:@"B"])  //ALERTE A LA BAISSE
+        {
+            
+            
+            newAlert.param1 =@"";
+            newAlert.param2 =@"";
+            [self.valeurRecue.listeAlertes addObject:newAlert];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:newRowIndex inSection:0];
+            NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+            [self.TableListAlert insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            
+            [self.delegate SAV_ALERT:self];
+            newAlert.param1 = SAVparam1 ;
+            newAlert.param2 =  SAVparam2 ;
+         
+            
+        }
+               UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alerte Seuil crée "
                                                             message:newAlert.id_alerte
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"
@@ -695,93 +704,8 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     
     [operation start];
     
-
     
-    
-    
-    
-    
-    
-    
-    
-    /*UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"SERVEUR"
-                                                        message:@"Inscription Alerte"
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-    [alertView show];
-    /
-    
-    NSLog(@"DEMANDE D ALERTE SUR  :  %@, %@, %ld ,%ld ",newAlert.nom_alerte, newAlert.param1, (long)newAlert.id_Valeur, (long)newAlert.id_alerte);
-    
-   
-    //1&1
-  /*  NSURL *url = [NSURL URLWithString:@"http://s454555776.onlinehome.fr/boursicoincoin/jsonConnect.php"];
-    
-      
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
-    
-    //LES PARAM PASSES EN POST
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @"beb", @"user",
-                            @"beb", @"password",
-                            @"setNewAlert",@"action",
-                            @"",@"codeyf",
-                            @"", @"idindic",
-                            @"", @"typealert",
-                            @"", @"seuil",
-                            @"", @"sens",
-                            nil];// Autre param a envoyer
-    
-    
-    // user, passwd, action, ticker, typealert, typenotif, tableauparam
-    
-    // user, pwd, action, codeyf, idalert(2 = Seuil) , typealert(mail ,sms ou phone), seuil(numerique), sens(h ou b)
-    
-       
-    
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://s454555776.onlinehome.fr/boursicoincoin/jsonConnect.php"parameters:params];
-    
-      
-    
-     //MISE EN COMMENTAIRE EN VUE DE SUPPRESSION DE LECRAN et DU LOG
-     
-     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-     //  self.movies = [JSON objectForKey:@"NOMVALEUR"];
-     NSLog(@"INSCRIPTION ALERTE OK SUR  SERVEUR");    
-     NSLog(@"REQUEST OK JSON");
-     NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
-     NSLog(@"json: %@", JSON);
-     //LOGID = [JSON objectForKey:@"LOGID"];
-     
-     // [self.activityIndicatorView stopAnimating];
-     // [self.tableView setHidden:NO];
-     // [self.tableView reloadData];
-     
-     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-     NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
-         NSLog(@"ERREUR INSCRIPTION ALERTE SUR SERVEUR"); 
-         NSLog(@"BAD REQUEST JSON");
-         NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
-         NSLog(@"json: %@", JSON);
-
-         
-     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Réseau non disponible"
-     message:@""
-     delegate:nil
-     cancelButtonTitle:@"OK"
-     otherButtonTitles:nil];
-     [alertView show];
-     
-     }];
-     
-     
-     
-     [operation start];
-     
-*/
-  
-    
+        
     
 }
 
@@ -797,14 +721,74 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     UITableViewCell *cell = [self.TableListAlert cellForRowAtIndexPath:indexPath];
     
     UILabel *labelParam1 = (UILabel *)[cell viewWithTag:2000];
-    labelParam1.text =   newAlert.param1;
+    
+    
+    
+    UILabel *labelalert = (UILabel *)[cell viewWithTag:1000];
+    NSString* compo=@"";
+    
+    NSLog(@"param 1 = %@  , param3 = %@   ", newAlert.param1, newAlert.param3);
+    
+    
+    //CUSTO DU LIBELLE POUR ALERTE SEUIL
+       if (![newAlert.param1 isEqual:@""]) {
+        compo = [NSString stringWithFormat:@"%@%@", @"A + que : ",newAlert.param1];
+    } else if (![newAlert.param3 isEqual:@""]) {
+        compo = [NSString stringWithFormat:@"%@%@", @"A - que : ",newAlert.param3];
+    }
+    
+    if ([newAlert.param2 isEqualToString:@"ON"]) {
+            newAlert.etat_alerte = @"ON";
+    }
+    else if ([newAlert.param4  isEqualToString:@"ON"])
+    {
+        newAlert.etat_alerte = @"ON";
+    }
+    else newAlert.etat_alerte = @"OFF";
+    
+    
+    
+    UITextView *TextfieldEtat = (UITextView *)[cell viewWithTag:3000];
+    if ([newAlert.etat_alerte isEqualToString:@"ON"]) {
+        TextfieldEtat.backgroundColor = [UIColor greenColor];
+    }
+    else if ([newAlert.etat_alerte isEqualToString:@"OFF"])
+    {
+        TextfieldEtat.backgroundColor = [UIColor grayColor];
+    }
+    else
+        TextfieldEtat.backgroundColor = [UIColor blackColor];
+
+    
+    
+    ///NSLog(@"VALEUR = %@", valeur);
+    labelalert.text =  newAlert.nom_alerte;
+    labelParam1.text =   compo;
+    
     
     
     [self.delegate SAV_ALERT:self];
-     [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
     
-  
+    
 }
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidUnload {
+    [self setTextValo:nil];
+    [self setTextVolumeEnc:nil];
+    [self setTextEvo:nil];
+    [self setTe:nil];
+    [self setTextNomValeur:nil];
+    [super viewDidUnload];
+}
+
 
 
 

@@ -52,6 +52,7 @@
 		85BE932B15C1E19800F06640 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85BE932A15C1E19700F06640 /* MobileCoreServices.framework */; };
 		85BE932D15C1E1B900F06640 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85BE932C15C1E1B900F06640 /* SystemConfiguration.framework */; };
 		85BE932F15C1E1CA00F06640 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85BE932E15C1E1CA00F06640 /* CFNetwork.framework */; };
+		85D129AB17945D5D002E4BFC /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85D129AA17945D5D002E4BFC /* Media.xcassets */; };
 		85D2258A167CAB8100936B00 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D22572167CAB8100936B00 /* NSObject+SBJson.m */; };
 		85D2258B167CAB8100936B00 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D22575167CAB8100936B00 /* SBJsonParser.m */; };
 		85D2258C167CAB8100936B00 /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D22577167CAB8100936B00 /* SBJsonStreamParser.m */; };
@@ -73,7 +74,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8501DD14178CBF0300F158AF /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		8501DD14178CBF0300F158AF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		850E4FB416BD767300E3E4A9 /* Valeurs_Alertes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Valeurs_Alertes.h; sourceTree = "<group>"; };
 		850E4FB516BD767300E3E4A9 /* Valeurs_Alertes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Valeurs_Alertes.m; sourceTree = "<group>"; };
 		854A9C2116D2DFE10042C785 /* AlerteVolumeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlerteVolumeViewController.h; sourceTree = "<group>"; };
@@ -225,6 +226,8 @@
 		85BE932A15C1E19700F06640 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		85BE932C15C1E1B900F06640 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		85BE932E15C1E1CA00F06640 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		85CD66961794B37C006ADD85 /* photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo.png; sourceTree = "<group>"; };
+		85D129AA17945D5D002E4BFC /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = BoursiC3/Media.xcassets; sourceTree = "<group>"; };
 		85D22571167CAB8100936B00 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
 		85D22572167CAB8100936B00 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
 		85D22573167CAB8100936B00 /* SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson.h; sourceTree = "<group>"; };
@@ -463,9 +466,11 @@
 		85BE92A715C1D31C00F06640 = {
 			isa = PBXGroup;
 			children = (
+				85D129AA17945D5D002E4BFC /* Media.xcassets */,
 				85F6876B169E15480000E63A /* Default.png */,
 				85F68769169E15330000E63A /* icon2.png */,
-				8501DD14178CBF0300F158AF /* icon.png */,
+				8501DD14178CBF0300F158AF /* Default@2x.png */,
+				85CD66961794B37C006ADD85 /* photo.png */,
 				85DF80301642A742006647B4 /* libsqlite3.0.dylib */,
 				85DF802E1642A730006647B4 /* libz.1.2.5.dylib */,
 				856DC5DB1614F3FC00C774B3 /* Default-568h@2x.png */,
@@ -697,6 +702,7 @@
 				85BE92C115C1D31C00F06640 /* InfoPlist.strings in Resources */,
 				85BE92CA15C1D31C00F06640 /* MainStoryboard_iPhone.storyboard in Resources */,
 				85BE92CD15C1D31C00F06640 /* MainStoryboard_iPad.storyboard in Resources */,
+				85D129AB17945D5D002E4BFC /* Media.xcassets in Resources */,
 				85BE92D215C1D31C00F06640 /* first.png in Resources */,
 				85BE92D415C1D31C00F06640 /* first@2x.png in Resources */,
 				85BE92D915C1D31C00F06640 /* second.png in Resources */,
@@ -854,9 +860,40 @@
 		85BE92DF15C1D31C00F06640 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = BoursiC3/BoursiC3.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: bertrand louis (49Y5V5Y3XE)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: bertrand louis (49Y5V5Y3XE)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BoursiC3/BoursiC3-Prefix.pch";
+				INFOPLIST_FILE = "BoursiC3/BoursiC3-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/AFNetworking\"",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "C1CD9DA5-842B-4D7A-B769-E0E81FE8288E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos7.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		85BE92E015C1D31C00F06640 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = BoursiC3/BoursiC3.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: bertrand louis (49Y5V5Y3XE)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: bertrand louis (49Y5V5Y3XE)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BoursiC3/BoursiC3-Prefix.pch";
 				INFOPLIST_FILE = "BoursiC3/BoursiC3-Info.plist";
@@ -870,31 +907,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				TARGETED_DEVICE_FAMILY = 1;
-				VALIDATE_PRODUCT = YES;
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		85BE92E015C1D31C00F06640 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = BoursiC3/BoursiC3.entitlements;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "BoursiC3/BoursiC3-Prefix.pch";
-				INFOPLIST_FILE = "BoursiC3/BoursiC3-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/AFNetworking\"",
-				);
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos7.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

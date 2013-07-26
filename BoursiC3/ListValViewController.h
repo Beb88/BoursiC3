@@ -18,6 +18,7 @@
 NSMutableArray *_listValJSON;
 //COREPLOT
 NSMutableArray *dataForPlot;
+        UIActivityIndicatorView *_activityIndicatorView;
 
     CPTXYGraph *graph;
 }
@@ -30,6 +31,7 @@ NSMutableArray *dataForPlot;
 @property(readwrite, retain, nonatomic) NSMutableArray *dataForPlot;
 @property(weak, nonatomic) IBOutlet UIView *hostingView;
 @property  UIRefreshControl *refreshControl;
+@property (nonatomic, retain) UIActivityIndicatorView *activityIndicatorView;
 
 
 

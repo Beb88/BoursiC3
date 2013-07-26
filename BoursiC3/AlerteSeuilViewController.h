@@ -29,6 +29,11 @@
 @property (nonatomic, strong) IBOutlet UITextField *textFranchissementBaisse;
 @property (nonatomic, strong) IBOutlet UITextField *textProchede;
 
+
+//PREVOIR 
+@property (weak, nonatomic) IBOutlet UISwitch *SwitchFranchissementHausse;
+@property (weak, nonatomic) IBOutlet UISwitch *SwithFranchissementBaisse;
+
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *ButtonAjoutAlert;
 @property (nonatomic, weak) id <AlerteSeuilViewControllerDelegate> delegateAlertSeuil;
 @property (nonatomic, strong) Valeurs_Alertes *AlertToEdit;

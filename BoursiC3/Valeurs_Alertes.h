@@ -11,15 +11,17 @@
 @interface Valeurs_Alertes : NSObject<NSCoding>
 {
     NSString *id_alerte;
-    NSInteger id_Valeur;
+    NSString *id_Valeur;
     NSString *nom_alerte;
     
-    NSInteger id_indicateurs;
+    NSString *id_indic;
     
     NSString *param1;
-    NSInteger param2;
-    NSInteger param3;
-    NSInteger param4;
+    NSString *param2;
+    NSString *param3;
+    NSString *param4;
+    
+    NSString *etat_alerte;
     
     
    //@"UBI.PA", @"codeyf",
@@ -32,13 +34,10 @@
 
 }
 
-@property  (nonatomic, retain) NSString *id_alerte;
-@property  NSInteger id_Valeur;
+@property  (nonatomic, retain) NSString *id_alerte,*id_Valeur,*id_indic, *etat_alerte;
 
-@property  NSInteger param2;
-@property  NSInteger param3;
-@property  NSInteger param4;
+
 @property (nonatomic, retain) NSString *nom_alerte;
-@property (nonatomic, retain) NSString *param1;
+@property (nonatomic, retain) NSString *param1, *param2, *param3, *param4;
 
 @end

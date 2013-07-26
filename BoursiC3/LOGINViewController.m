@@ -28,6 +28,38 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
 
 
 
+-(void) viewDidAppear:(BOOL)animated
+{
+    NSString *USER = [[NSUserDefaults standardUserDefaults] objectForKey:@"USER"];
+    NSString *PASSWORD = [[NSUserDefaults standardUserDefaults] objectForKey:@"PASSWORD"];
+    
+    
+    NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
+    NSLog(@"deviceToken recupere=%@",deviceToken);
+    NSLog(@"USER RECUPERE = %@",USER);
+    NSLog(@"PASSWORD RECUPERE = %@",PASSWORD);
+    
+    
+    
+    if (USER.length>0) {
+        
+       /* UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Bienvenue sur boursicoincoin"
+                                                            message:USER
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        */
+        TextLOG.text=USER;
+        TextPWD.text=PASSWORD;
+        
+        [self performSegueWithIdentifier:@"ShowScreen1" sender:nil];
+        //[self Action_Connect:nil];
+        
+    }
+
+}
+
 - (IBAction)Action_Connect:(id)sender {
     
     NSLog(@"CONNECT");
@@ -124,7 +156,6 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
 - (IBAction)Action_Create_Compte:(id)sender {
     
     NSLog(@"CONNECT");
-    
     NSLog(@"LOG=%@",TextLOG.text);
     NSLog(@"PWD=%@",TextPWD.text);
     
@@ -133,6 +164,8 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
     NSLog(@"deviceToken=%@",deviceToken);
     
     
+     /* [[NSUserDefaults standardUserDefaults] setObject:@"6ec0a1b1528e07c0dce6ef9a14a65d804d514aa3137fc5072c863d2bad4d5a23" forKey:@"deviceToken"];
+    */
     
     NSURL *url = [NSURL URLWithString: URLServeurString ];
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
@@ -142,6 +175,7 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
                             TextLOG.text, @"user",
                             TextPWD.text, @"password",
                             deviceToken, @"token",
+                           // @"6ec0a1b1528e07c0dce6ef9a14a65d804d514aa3137fc5072c863d2bad4d5a23",@"token"
                             @"setNewUserWithToken", @"action",
                             nil];
     
@@ -159,13 +193,13 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
         if ([JSON count]==1)
         {
             [self performSegueWithIdentifier:@"ShowScreen1" sender:nil];
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Inscription OK"
+           /* UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Inscription OK"
                                                                 message:@"Bienvenue sur Boursicoincoin"
                                                                delegate:nil
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil];
             [alertView show];
-            
+            */
         }
         // self.listValJSON = JSON;
         //NSLog(@"listVal (OBJET VALEURS EST MERE : %@", self.listValJSON);
@@ -210,39 +244,76 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
     return self;
 }
 
-- (void)viewDidLoad
+/*
+-(void) viewDidAppear:(BOOL)animated
+
 {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    //[self performSegueWithIdentifier:@"ShowScreen1" sender:nil];
-    NSLog(@"vue chargee");
-    //[self Action_Connect:(this) ];
-    
+    NSLog(@"VIEWDIDAPPEAR");
     
     NSString *USER = [[NSUserDefaults standardUserDefaults] objectForKey:@"USER"];
-     NSString *PASSWORD = [[NSUserDefaults standardUserDefaults] objectForKey:@"PASSWORD"];
+    NSString *PASSWORD = [[NSUserDefaults standardUserDefaults] objectForKey:@"PASSWORD"];
     
+    
+    NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
+    NSLog(@"deviceToken recupere=%@",deviceToken);
     NSLog(@"USER RECUPERE = %@",USER);
     NSLog(@"PASSWORD RECUPERE = %@",PASSWORD);
     
     
     if (USER.length>0) {
         
-       /* UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Bienvenue sur boursicoincoin"
+         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Bienvenue sur boursicoincoin"
+         message:USER
+         delegate:nil
+         cancelButtonTitle:@"OK"
+         otherButtonTitles:nil];
+         [alertView show];
+         
+        TextLOG.text=USER;
+        TextPWD.text=PASSWORD;
+        
+        [self performSegueWithIdentifier:@"ShowScreen1" sender:nil];
+}
+*/
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view.
+    //[self performSegueWithIdentifier:@"ShowScreen1" sender:nil];
+    NSLog(@"vue chargee");
+    
+    
+     NSLog(@"viewDidLoad");
+    
+  /*  NSString *USER = [[NSUserDefaults standardUserDefaults] objectForKey:@"USER"];
+    NSString *PASSWORD = [[NSUserDefaults standardUserDefaults] objectForKey:@"PASSWORD"];
+    
+    
+    NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
+    NSLog(@"deviceToken recupere=%@",deviceToken);
+    NSLog(@"USER RECUPERE = %@",USER);
+    NSLog(@"PASSWORD RECUPERE = %@",PASSWORD);
+    
+    
+    if (USER.length>0) {
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Bienvenue sur boursicoincoin"
                                                             message:USER
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
         [alertView show];
-        */
+        
         TextLOG.text=USER;
         TextPWD.text=PASSWORD;
         
-        [self Action_Connect:nil];
-        
-        
-
+        [self performSegueWithIdentifier:@"ShowScreen1" sender:nil];
+        //[self Action_Connect:nil];
+  
     }
+   
+   */
 }
     
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
