@@ -20,7 +20,7 @@
 @implementation LOGINViewController
 @synthesize TextLOG;
 @synthesize TextPWD;
-@synthesize TextID, LOGID;
+@synthesize TextID, LOGID, ActivityIndicatorLog;
 //@synthesize appDelegate;
 
 
@@ -40,7 +40,7 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
     NSLog(@"PASSWORD RECUPERE = %@",PASSWORD);
     
     
-    
+    // MODE LOGIN SAUVEGARDE
     if (USER.length>0) {
         
        /* UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Bienvenue sur boursicoincoin"
@@ -53,8 +53,8 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
         TextLOG.text=USER;
         TextPWD.text=PASSWORD;
         
-        [self performSegueWithIdentifier:@"ShowScreen1" sender:nil];
-        //[self Action_Connect:nil];
+        //[self performSegueWithIdentifier:@"ShowScreen1" sender:nil];
+        [self Action_Connect:nil];
         
     }
 
@@ -87,7 +87,7 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
     //On interroge le serveur avec la requete
   
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:URLServeurString parameters:params];
-    
+      [self.ActivityIndicatorLog startAnimating];
     
     //On recupere la reponse du serveur
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
@@ -95,7 +95,7 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
         NSLog(@"ENVOI LOG  OK");
         NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
         NSLog(@"RESULT DU json DU LOG: %@", JSON);
-        
+          [self.ActivityIndicatorLog stopAnimating];
         if ([JSON count]==1)
         {
             [[NSUserDefaults standardUserDefaults] setObject:TextLOG.text forKey:@"USER"];
@@ -113,12 +113,14 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
         else
         {
             //[self performSegueWithIdentifier:@"ShowScreen1" sender:nil];
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Pb Connection"
-                                                                message:@"Veuillez recommencer"
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"SERVER OFF"
+                                                                message:@""
                                                                delegate:nil
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil];
             [alertView show];
+            [self performSegueWithIdentifier:@"ShowScreen1" sender:nil];
+
             
 
         }
@@ -134,13 +136,16 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"Request ENVOI LOG Failed with Error: %@, %@", error, error.userInfo);
+         [self.ActivityIndicatorLog stopAnimating];
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Pb Connection"
-                                                            message:@"Veuillez recommencer"
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Mode Offline"
+                                                            message:@"Pas de connexion internet"
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
          [alertView show];
+        [self performSegueWithIdentifier:@"ShowScreen1" sender:nil];
+
         
     }];
     

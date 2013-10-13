@@ -168,35 +168,117 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
     
-    /*
+    /*Suppression d'une valeur ds le BCC.plist*/
+    
+    //[data se]
+    //  NSString *pathToPlist = @"/Users/H2CO3/my.plist";
+    //  NSMutableDictionary *plist = [NSMutableDictionary dictionaryWithCOntentsOfFile:pathToPlist];
+    //  [data removeObjectForKey:@"MyKeyIWannaDelete"];
+    //  [data writeToFile:pathToPlist atomically:YES];
+    
+    
+    
+    
+    // [dict setObject:dateSettings forKey:@"date"];
+    /*  NSDictionary *dict_TEST = [[NSDictionary alloc] initWithContentsOfFile:path];
+     
      //POUR VOIR LE CONTENU D UN NSDictionnary
-     NSEnumerator *enumerator = [ listValDict keyEnumerator];
+     NSEnumerator *enumerator = [ dict_TEST keyEnumerator];
      NSString *key;
      while (key = [ enumerator nextObject]) {
-     printf("%s\n", [[ listValDict objectForKey:key] UTF8String]);
+     printf("DICO TEST : %s\n", [[ dict_TEST objectForKey:key] UTF8String]);
      }
      //FIN //VISU CONTENU D UN DICTIONNAIRE
      */
     
-    
-    
-    /*Suppression d'une valeur ds le BCC.plist*/
-    
-    
-    
-   /*  NSString *pathToPlist = @"/Users/H2CO3/my.plist";
-     NSMutableDictionary *plist = [NSMutableDictionary dictionaryWithCOntentsOfFile:pathToPlist];
-     [plist removeObjectForKey:@"MyKeyIWannaDelete"];
-     [plist writeToFile:pathToPlist atomically:YES];
+    /* for (Valeurs *Val in listVal) {
+     //NSLog(@"  %@",  )
      
+     }
      */
+
+    //ON RECOIT L ID
     
-   // [dico setObject:dateSettings forKey:@"date"];
     
     
     for (id key in userInfo) {
         NSLog(@"RECEPTION D UNE PUSH NOTIFICATION composee de la key: %@, avec value: %@", key, [userInfo objectForKey:key]);
-       
+        
+        //RECEPTION D UNE PUSH NOTIFICATION composee de la key: idAlert, avec value: 285
+        
+        
+        //RECEPTION D UNE PUSH NOTIFICATION composee de la key: aps, avec value: {alert = "Boursicoincoin vous informe que le 8/12/2013  00311:35amla valeur UBI.PA a franchi le cours 5  006ca hausse.";
+      //  sound = default;
+        
+        
+        
+    }
+        
+    // EXEMPLE DE GESTION SI L APP EST ACTIVE OU PAS
+
+    /*
+    UIApplicationState state = [application applicationState];
+    if (state == UIApplicationStateActive)
+    {
+        
+     UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"xxx" message:yourMessage delegate:self cancelButtonTitle:@"Done" otherButtonTitles: @"Anzeigen", nil] autorelease];
+     [alert setTag: 2];
+     [alert show];
+    }
+}
+else
+{
+    // just ignore it…
+}
+     
+     */
+      NSString *message = nil; 
+    id APS = [userInfo objectForKey:@"aps"];
+    if ([APS isKindOfClass:[NSString class]]) {
+        message = APS;
+    } else if ([APS isKindOfClass:[NSDictionary class]]) {
+        message = [APS objectForKey:@"alert"];
+    }
+    if (APS) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"NOTIF RECUE"
+                                                            message:message delegate:self
+                                                  cancelButtonTitle:@"CANCEL"
+                                                  otherButtonTitles:@"OK", nil];
+        [alertView show];
+        
+    }
+    
+   
+    id alert = [userInfo objectForKey:@"idAlert"];
+    if ([alert isKindOfClass:[NSString class]]) {
+        message = alert;
+    } else if ([alert isKindOfClass:[NSDictionary class]]) {
+        message = [alert objectForKey:@"alert"];
+    }
+    if (alert) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"ALERTE"
+                                                            message:message delegate:self
+                                                  cancelButtonTitle:@"CANCEL"
+                                                  otherButtonTitles:@"OK", nil];
+        [alertView show];
+        
+    }
+
+
+    
+    
+    // ATTENTION : INSCRIT LE JOURNAL(msg pushé du serveur ) ET l'id de l'alerte déclenchée dans le
+    //NSUserDefaults
+    
+    //ON SAUVEGARDE LE DERNIER MESSAGE DONC L ID ALERT
+     [[NSUserDefaults standardUserDefaults] setObject:message forKey:message];
+    
+    
+    //RAJOUTER GESTION D UN COMPTEUR D ALERTE DECLENCHE
+
+    
+    
+       // [[NSUserDefaults standardUserDefaults] removeObjectForKey:<#(NSString *)#>
         
         
         /*UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"COIN"
@@ -210,7 +292,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo {
         
         
         
-    }
+     
     
    
 

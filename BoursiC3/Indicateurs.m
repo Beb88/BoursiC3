@@ -10,6 +10,6 @@
 
 @implementation Indicateurs
 
-@synthesize nom_indic;
+@synthesize nom_indic,idIndic;
 
 @end

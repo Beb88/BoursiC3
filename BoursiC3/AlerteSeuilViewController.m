@@ -16,7 +16,7 @@
 
 @implementation AlerteSeuilViewController
 
-@synthesize textFranchissementBaisse,textFranchissementHausse,textProchede,ButtonAjoutAlert,delegateAlertSeuil,AlertToEdit,labelValeur, SwitchFranchissementHausse, SwithFranchissementBaisse;
+@synthesize textFranchissementBaisse,textFranchissementHausse,textProchede,ButtonAjoutAlert,delegateAlertSeuil,AlertToEdit,labelValeur, SwitchFranchissementHausse, SwithFranchissementBaisse,textBaisse,textHausse,textNomAlerte;
 
 
 
@@ -40,19 +40,21 @@
     // SI MODIFICATION D UNE ALERTE
     if (self.AlertToEdit != nil) {
         
-        ButtonAjoutAlert.title = @"Modif Alerte";
+        //self.ButtonAjoutAlert.titleLabel = @"Modif Alerte";
         
-        
+        //ButtonAjoutAlert.titleLabel = @"ded";
         NSLog(@"ALERTE EDITEE : %@", self.AlertToEdit.id_alerte );
         textFranchissementHausse.text = AlertToEdit.param1;
         textFranchissementBaisse.text = AlertToEdit.param3;
+        textNomAlerte.text= AlertToEdit.nom_alerte;
         //ALERTE ACTIVE
         if ( [self.AlertToEdit.etat_alerte  isEqual: @"ON"] ) {
             //SI ALERTE HAUSSE ACTIVE
             if ( [self.AlertToEdit.param2  isEqual: @"ON"] ) {
                 //ON DESACTIVE L ALERTE BAISSE
-                [self.SwithFranchissementBaisse setHidden:NO];
-                [self.textFranchissementBaisse setHidden:NO];
+                [self.SwithFranchissementBaisse setHidden:YES];
+                [self.textFranchissementBaisse setHidden:YES];
+                [self.textBaisse setHidden:YES];
                 AlertToEdit.param3=@"";
                 AlertToEdit.param4=@"OFF";
               
@@ -64,8 +66,9 @@
             //SI ALERTE BASSE ACTIVE
             if ( [self.AlertToEdit.param4 isEqual: @"ON"] ) {
                  //ON DESACTIVE L ALERTE HAUSSE
-                [self.SwitchFranchissementHausse setHidden:NO];
-                [self.textFranchissementHausse setHidden:NO];
+                [self.SwitchFranchissementHausse setHidden:YES];
+                [self.textFranchissementHausse setHidden:YES];
+                [self.textHausse setHidden:YES];
                 //ON RESTITUE L ETAT ON
                 [self.SwithFranchissementBaisse setOn:YES ];
                 [self.SwitchFranchissementHausse setOn:NO ];
@@ -100,20 +103,15 @@
     
     //ON RECUPERE LES DONNEES DE L ECRAN
     
-   
-  
-    
     // SI AJOUT D UNE ALERTE SEUIL
     if (self.AlertToEdit == nil) {
         
-        
         Valeurs_Alertes *alerte = [[Valeurs_Alertes alloc] init];
-        
         alerte.id_indic=@"2";
         
-        
         //self.AlertToEdit.nom_alerte = @"Seuil";
-        alerte.nom_alerte = @"Seuil";
+        alerte.nom_alerte = self.textNomAlerte.text;
+        
         
         alerte.param1 = self.textFranchissementHausse.text;
         if ( [self.SwitchFranchissementHausse isOn]) {
@@ -150,7 +148,8 @@
         //GESTION MONO ALERTE QD EDITION  D UNE ALERTE
         self.AlertToEdit.param1 = self.textFranchissementHausse.text;
         self.AlertToEdit.param3 = self.textFranchissementBaisse.text;
-        
+        self.AlertToEdit.nom_alerte = self.textNomAlerte.text;
+        //self.ButtonAjoutAlert.titleLabel = @"Modification Alerte";
         
         if ( [self.SwitchFranchissementHausse isOn]) {
             self.AlertToEdit.param2 = @"ON";

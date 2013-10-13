@@ -12,7 +12,7 @@
 
 
 @implementation Valeurs
-@synthesize nom,cotation,devise,idCompo,idValeur,place,codif,codeBourso,nb_alertes,listeAlertes;
+@synthesize nom,cotation,devise,idCompo,idValeur,place,codif,codeBourso,nb_alertes,listeAlertes,dateMaj,heureMaj;
 
 
 
@@ -22,6 +22,8 @@
     [aCoder encodeObject:self.listeAlertes forKey:@"listeAlertes"];
     [aCoder encodeObject:self.cotation forKey:@"cotation"];
     [aCoder encodeObject:self.variation forKey:@"variation"];
+    [aCoder encodeObject:self.dateMaj forKey:@"dateMaj"];
+    [aCoder encodeObject:self.heureMaj forKey:@"heureMaj"];
     [aCoder encodeInteger:self.nb_alertes forKey:@"nb_alertes"];
     
     
@@ -37,6 +39,8 @@
         self.listeAlertes = [aDecoder decodeObjectForKey:@"listeAlertes"];
         self.cotation = [aDecoder decodeObjectForKey:@"cotation"];
         self.variation = [aDecoder decodeObjectForKey:@"variation"];
+         self.dateMaj = [aDecoder decodeObjectForKey:@"dateMaj"];
+         self.heureMaj = [aDecoder decodeObjectForKey:@"heureMaj"];
         self.nb_alertes = [aDecoder decodeIntegerForKey:@"nb_alertes"];
     }
     return self; }
@@ -44,7 +48,7 @@
 - (id)init
 {
     if ((self = [super init])) {
-        self.listeAlertes = [[NSMutableArray alloc] initWithCapacity:20];
+        self.listeAlertes = [[NSMutableArray alloc] initWithCapacity:80];
     }
     return self;
 }

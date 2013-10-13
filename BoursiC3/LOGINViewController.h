@@ -24,6 +24,7 @@
 
 @property (strong,nonatomic) NSString *LOGID;
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *ActivityIndicatorLog;
 
 //@property (nonatomic, retain) AppDelegate *appDelegate;
 

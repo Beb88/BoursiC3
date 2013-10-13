@@ -7,7 +7,8 @@
 //
 
 #import "ListeIndicTableViewController.h"
-
+#import "AFNetworking.h"
+#import "SBJson.h"
 @interface ListeIndicTableViewController ()
 
 @end
@@ -45,6 +46,7 @@
     
     self.TableListIndic.dataSource = self;
     self.TableListIndic.delegate = self;
+   //  [self.TableListIndic setHidden:YES];
     
     [self TransfertJSON_Vers_Objet_ListIndic];
     // [self.activityIndicatorView stopAnimating];
@@ -60,25 +62,78 @@
         
     listIndic = [[NSMutableArray alloc] initWithCapacity:20];
     
-    for ( int i=0; i< 1; i=i+1)
-    {
-        
-        Indicateurs *indic =  [Indicateurs new];
-        
-        indic.nom_indic=@"Seuil";
-        [listIndic addObject:indic];
-        NSLog(@"On ajoute %@ A listIndic",indic.nom_indic);
-       
-        Indicateurs *indic2 =  [Indicateurs new];
-        
-        indic2.nom_indic=@"Volumetrie";
-        [listIndic addObject:indic2];
-        NSLog(@"On ajoute %@ A listIndic",indic2.nom_indic);
-        
-    }
+    //1&1
+    NSURL *url = [NSURL URLWithString:@"http://s454555776.onlinehome.fr/boursicoincoin/jsonConnect.php"];
     
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+    
+    //LES PARAM PASSES EN POST
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @"beblouis@gmail.com", @"user",
+                            @"beb", @"password",
+                            @"getAllIndicateurs",@"action",
+                            nil];// Autre param a envoyer
+    
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://s454555776.onlinehome.fr/boursicoincoin/jsonConnect.php"parameters:params];
+    
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        NSLog(@"RECUPERATION ALERTE OK SUR  SERVEUR");
+        NSLog(@"REQUEST OK JSON");
+        NSLog(@"json: %@", JSON);
+        NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
+        
+        
+        self.listIndicJSON = [JSON objectForKey:@"result"];
+    
+        for ( int i=0; i< [self.listIndicJSON count]; i=i+1)
+        {
+            
+            Indicateurs *indic =  [Indicateurs new];
+           
+            NSDictionary *listIndicDict = [self.listIndicJSON objectAtIndex:i];
+            indic.nom_indic=[listIndicDict objectForKey:@"nameIndic"];
+            indic.idIndic =[listIndicDict objectForKey:@"idIndic"];
+            
+            [listIndic addObject:indic];
+            NSLog(@"On ajoute %@ A slistIndic",indic.nom_indic);
+            
+        }
+        
+        NSLog(@"listIndic globale = %@ ",listIndic);
+
+        
+        [self.TableListIndic setHidden:NO];
+        [self.TableListIndic reloadData];
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Synchro serveur OK"
+                                                            message:@"Récupation des indicateurs"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
+        NSLog(@"ERREUR RECUPERATION DES indicateurs SUR SERVEUR");
+        NSLog(@"BAD REQUEST JSON");
+        NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
+        NSLog(@"json: %@", JSON);
+        
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Réseau non disponible"
+                                                            message:@""
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        
+    }];
+    
+    [operation start];
     NSLog(@"listIndic globale = %@ ",listIndic);
-    
     
 }
 
@@ -220,37 +275,59 @@
     //UILabel *labelIndic = (UILabel *)[cell viewWithTag:1000];
    
     
-    if ([indic.nom_indic isEqualToString:@"Seuil" ]) {
+    if ([indic.idIndic isEqualToString:@"2" ]) { //SEUIL
         
    
         UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"AS"];
-        
         AlerteSeuilViewController *controller = (AlerteSeuilViewController *)navigationController;
         controller.delegateAlertSeuil = self;
-        
-        //Checklist *checklist = [lists objectAtIndex:indexPath.row];
-        //controller.checklistToEdit = checklist;
-        
         [self presentViewController:navigationController animated:YES completion:nil];
     
    }
     
     
-    if ([indic.nom_indic isEqualToString:@"Volumetrie"])
+    if ([indic.idIndic isEqualToString:@"1"]) //VOLUMETRIE
     {
         UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"AV"];
-        
         AlerteVolumeViewController *controller = (AlerteVolumeViewController *)navigationController;
-        
         controller.delegateAlertVolume = self;
-        
-        //Checklist *checklist = [lists objectAtIndex:indexPath.row];
-        //controller.checklistToEdit = checklist;
-        
         [self presentViewController:navigationController animated:YES completion:nil];
       
 
     }
+    
+    if ([indic.idIndic isEqualToString:@"6"]) //MM
+    {
+        UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"AMM"];
+        AlerteMMViewController *controller = (AlerteMMViewController *)navigationController;
+        controller.delegateAlertMM = self;
+        [self presentViewController:navigationController animated:YES completion:nil];
+        
+        
+    }
+    
+    if ([indic.idIndic isEqualToString:@"7"]) //MACD
+    {
+        UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"AMACD"];
+        AlerteMACDViewController *controller = (AlerteMACDViewController *)navigationController;
+        controller.delegateAlertMACD = self;
+        [self presentViewController:navigationController animated:YES completion:nil];
+        
+        
+    }
+    
+    if ([indic.idIndic isEqualToString:@"8"]) //RSI
+    {
+        UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"ARSI"];
+        AlerteRSIViewController *controller = (AlerteRSIViewController *)navigationController;
+        controller.delegateAlertRSI = self;
+        [self presentViewController:navigationController animated:YES completion:nil];
+        
+        
+    }
+
+
+    
     
         
     
@@ -317,12 +394,68 @@ if (1==1)
     
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//  METHODES DELEGATE VENANT DU PROTOCOLE DE L ECRAN ALERTE MM  IMPLEMENTEES ICI
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (void)alertMMViewController:(AlerteMMViewController *)controller didFinishAddingAlertlist:(Valeurs_Alertes *)newAlert
+{
+    NSLog(@"LISTE INDIC :ON RECOIT LA NOUVELLE ALERTE MM : %@",newAlert);
+    
+    [self.delegateListeIndic listeIndicTableView:self didFinishAddingAlertlist:newAlert];
+
+
+}
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//  METHODES DELEGATE VENANT DU PROTOCOLE DE L ECRAN ALERTE MACD  IMPLEMENTEES ICI
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (void)alertMACDViewController:(AlerteMACDViewController *)controller didFinishAddingAlertlist:(Valeurs_Alertes *)newAlert
+{
+    NSLog(@"LISTE INDIC :ON RECOIT LA NOUVELLE ALERTE MACD : %@",newAlert);
+    
+    [self.delegateListeIndic listeIndicTableView:self didFinishAddingAlertlist:newAlert];
+    
+    
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//  METHODES DELEGATE VENANT DU PROTOCOLE DE L ECRAN ALERTE RSI  IMPLEMENTEES ICI
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (void)alertRSIViewController:(AlerteRSIViewController *)controller didFinishAddingAlertlist:(Valeurs_Alertes *)newAlert
+{
+    NSLog(@"LISTE INDIC :ON RECOIT LA NOUVELLE ALERTE RSI : %@",newAlert);
+    
+    [self.delegateListeIndic listeIndicTableView:self didFinishAddingAlertlist:newAlert];
+    
+    
+}
+
+
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//  METHODES DELEGATE VENANT DU PROTOCOLE DE L ECRAN ALERTE VOLUMETRIE  IMPLEMENTEES ICI
+//  METHODES DELEGATE VENANT DU PROTOCOLE DE L ECRAN ALERTE VOLUME  IMPLEMENTEES ICI
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

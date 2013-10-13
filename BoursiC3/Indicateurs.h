@@ -11,5 +11,6 @@
 @interface Indicateurs : NSObject
 
 @property (nonatomic, retain) NSString *nom_indic;
+@property (nonatomic, retain) NSString *idIndic;
 
 @end

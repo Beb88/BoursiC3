@@ -11,6 +11,9 @@
 #import "Valeurs.h"
 #import "AlerteSeuilViewController.h"
 #import "AlerteVolumeViewController.h"
+#import "AlerteMMViewController.h"
+#import "AlerteMACDViewController.h"
+#import "AlerteRSIViewController.h"
 
 @class ListeIndicTableViewController;
 @class Valeurs;
@@ -18,13 +21,14 @@
 
 
 @protocol ListeIndicTableViewControllerDelegate <NSObject>
+
 //- (void)listeIndicTableViewDidCancel:(ListeIndicTableViewController *)controller;
 - (void)listeIndicTableView:(ListeIndicTableViewController *)controller didFinishAddingAlertlist:(Valeurs_Alertes *)newAlert;
-//- (void)listeIndicTableView:(ListeIndicTableViewController *)controller didFinishEditingAlertlist:(Valeurs_Alertes *)newAlert;
+
 @end
 
 
-@interface ListeIndicTableViewController : UITableViewController<AlerteSeuilViewControllerDelegate  ,AlerteVolumeViewControllerDelegate, UITableViewDelegate, UITableViewDataSource>{
+@interface ListeIndicTableViewController : UITableViewController<AlerteSeuilViewControllerDelegate , AlerteRSIViewControllerDelegate, AlerteMMViewControllerDelegate ,AlerteVolumeViewControllerDelegate, AlerteMACDViewControllerDelegate, UITableViewDelegate, UITableViewDataSource>{
 NSMutableArray *_listIndicJSON;
 }
 

@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		85065AD2180AAD7F003E9CD7 /* AlerteMACDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85065AD1180AAD7F003E9CD7 /* AlerteMACDViewController.m */; };
+		85065AD6180ACB96003E9CD7 /* AlerteRSIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85065AD5180ACB96003E9CD7 /* AlerteRSIViewController.m */; };
 		850E4FB616BD767300E3E4A9 /* Valeurs_Alertes.m in Sources */ = {isa = PBXBuildFile; fileRef = 850E4FB516BD767300E3E4A9 /* Valeurs_Alertes.m */; };
 		854A9C2416D2DFE10042C785 /* AlerteVolumeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 854A9C2216D2DFE10042C785 /* AlerteVolumeViewController.m */; };
+		855704C81809FCC20073F393 /* AlerteMMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 855704C71809FCC20073F393 /* AlerteMMViewController.m */; };
 		8557050A16E71F4D0046A6BF /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8557050916E71F4D0046A6BF /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		855FDC7016C6A0EC003CEFFA /* ListeIndicTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 855FDC6F16C6A0EC003CEFFA /* ListeIndicTableViewController.m */; };
 		855FDC7416C6B1BB003CEFFA /* Indicateurs.m in Sources */ = {isa = PBXBuildFile; fileRef = 855FDC7316C6B1BB003CEFFA /* Indicateurs.m */; };
@@ -75,10 +78,16 @@
 
 /* Begin PBXFileReference section */
 		8501DD14178CBF0300F158AF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		85065AD0180AAD7F003E9CD7 /* AlerteMACDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlerteMACDViewController.h; sourceTree = "<group>"; };
+		85065AD1180AAD7F003E9CD7 /* AlerteMACDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlerteMACDViewController.m; sourceTree = "<group>"; };
+		85065AD4180ACB96003E9CD7 /* AlerteRSIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlerteRSIViewController.h; sourceTree = "<group>"; };
+		85065AD5180ACB96003E9CD7 /* AlerteRSIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlerteRSIViewController.m; sourceTree = "<group>"; };
 		850E4FB416BD767300E3E4A9 /* Valeurs_Alertes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Valeurs_Alertes.h; sourceTree = "<group>"; };
 		850E4FB516BD767300E3E4A9 /* Valeurs_Alertes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Valeurs_Alertes.m; sourceTree = "<group>"; };
 		854A9C2116D2DFE10042C785 /* AlerteVolumeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlerteVolumeViewController.h; sourceTree = "<group>"; };
 		854A9C2216D2DFE10042C785 /* AlerteVolumeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlerteVolumeViewController.m; sourceTree = "<group>"; };
+		855704C61809FCC20073F393 /* AlerteMMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlerteMMViewController.h; sourceTree = "<group>"; };
+		855704C71809FCC20073F393 /* AlerteMMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlerteMMViewController.m; sourceTree = "<group>"; };
 		8557050816E71F4D0046A6BF /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		8557050916E71F4D0046A6BF /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		855FDC6E16C6A0EC003CEFFA /* ListeIndicTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListeIndicTableViewController.h; sourceTree = "<group>"; };
@@ -262,6 +271,7 @@
 		85F68767169E151A0000E63A /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		85F68769169E15330000E63A /* icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2.png; sourceTree = "<group>"; };
 		85F6876B169E15480000E63A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		85F816C017A5CE0D00E9A0CF /* IconHal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconHal.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,6 +296,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		85065ACF180AACE4003E9CD7 /* ECRAN 9 : Alerte MACD */ = {
+			isa = PBXGroup;
+			children = (
+				85065AD0180AAD7F003E9CD7 /* AlerteMACDViewController.h */,
+				85065AD1180AAD7F003E9CD7 /* AlerteMACDViewController.m */,
+			);
+			name = "ECRAN 9 : Alerte MACD";
+			sourceTree = "<group>";
+		};
+		85065AD3180ACB79003E9CD7 /* ECRAN 10 : Alerte RSI */ = {
+			isa = PBXGroup;
+			children = (
+				85065AD4180ACB96003E9CD7 /* AlerteRSIViewController.h */,
+				85065AD5180ACB96003E9CD7 /* AlerteRSIViewController.m */,
+			);
+			name = "ECRAN 10 : Alerte RSI";
+			sourceTree = "<group>";
+		};
 		852AD6B81767D5B1005EA075 /* iPad */ = {
 			isa = PBXGroup;
 			children = (
@@ -300,6 +328,15 @@
 				854A9C2216D2DFE10042C785 /* AlerteVolumeViewController.m */,
 			);
 			name = "ECRAN 7 : Alerte VOLUMETRIE";
+			sourceTree = "<group>";
+		};
+		855704C51809FC3F0073F393 /* ECRAN 8 ; Alerte MM */ = {
+			isa = PBXGroup;
+			children = (
+				855704C61809FCC20073F393 /* AlerteMMViewController.h */,
+				855704C71809FCC20073F393 /* AlerteMMViewController.m */,
+			);
+			name = "ECRAN 8 ; Alerte MM";
 			sourceTree = "<group>";
 		};
 		8557050B16E71F540046A6BF /* MBProgressHUD */ = {
@@ -467,6 +504,7 @@
 			isa = PBXGroup;
 			children = (
 				85D129AA17945D5D002E4BFC /* Media.xcassets */,
+				85F816C017A5CE0D00E9A0CF /* IconHal.png */,
 				85F6876B169E15480000E63A /* Default.png */,
 				85F68769169E15330000E63A /* icon2.png */,
 				8501DD14178CBF0300F158AF /* Default@2x.png */,
@@ -519,6 +557,9 @@
 				855FDC7116C6A0F5003CEFFA /* ECRAN 5 : LISTE INDICATEURS */,
 				855FDC7816C6D73E003CEFFA /* ECRAN 6 : Alerte Seuil */,
 				854A9C1F16D2DF700042C785 /* ECRAN 7 : Alerte VOLUMETRIE */,
+				855704C51809FC3F0073F393 /* ECRAN 8 ; Alerte MM */,
+				85065ACF180AACE4003E9CD7 /* ECRAN 9 : Alerte MACD */,
+				85065AD3180ACB79003E9CD7 /* ECRAN 10 : Alerte RSI */,
 				85F68760169DB3B80000E63A /* Ecran X Indicateurs generaux */,
 				85DF802A1642A2DD006647B4 /* Images */,
 				85BE92C515C1D31C00F06640 /* AppDelegate.h */,
@@ -738,10 +779,12 @@
 				8592337715CAF5BA00EB0ACF /* AFNetworkActivityIndicatorManager.m in Sources */,
 				8592337815CAF5BA00EB0ACF /* AFPropertyListRequestOperation.m in Sources */,
 				8592337915CAF5BA00EB0ACF /* AFURLConnectionOperation.m in Sources */,
+				85065AD6180ACB96003E9CD7 /* AlerteRSIViewController.m in Sources */,
 				8592337A15CAF5BA00EB0ACF /* AFXMLRequestOperation.m in Sources */,
 				8592337B15CAF5BA00EB0ACF /* UIImageView+AFNetworking.m in Sources */,
 				856DC5841614D39100C774B3 /* Detail_ActionViewController.m in Sources */,
 				85DF802D1642A3AB006647B4 /* Valeurs.m in Sources */,
+				855704C81809FCC20073F393 /* AlerteMMViewController.m in Sources */,
 				85D2258A167CAB8100936B00 /* NSObject+SBJson.m in Sources */,
 				85D2258B167CAB8100936B00 /* SBJsonParser.m in Sources */,
 				85D2258C167CAB8100936B00 /* SBJsonStreamParser.m in Sources */,
@@ -759,6 +802,7 @@
 				850E4FB616BD767300E3E4A9 /* Valeurs_Alertes.m in Sources */,
 				855FDC7016C6A0EC003CEFFA /* ListeIndicTableViewController.m in Sources */,
 				855FDC7416C6B1BB003CEFFA /* Indicateurs.m in Sources */,
+				85065AD2180AAD7F003E9CD7 /* AlerteMACDViewController.m in Sources */,
 				855FDC7B16C6D7A7003CEFFA /* AlerteSeuilViewController.m in Sources */,
 				854A9C2416D2DFE10042C785 /* AlerteVolumeViewController.m in Sources */,
 				8557050A16E71F4D0046A6BF /* MBProgressHUD.m in Sources */,

@@ -374,8 +374,6 @@ static NSString *yahooSymbolSearchURLString = @"http://d.yimg.com/autoc.finance.
     //listVal = [[NSMutableArray alloc] initWithCapacity:20];
     [listVal removeAllObjects];
     
-    
-    
     for ( int i=0; i< [self.listValJSON count]; i=i+1)
     {
         Valeurs *valeur = [Valeurs new];
@@ -387,10 +385,8 @@ static NSString *yahooSymbolSearchURLString = @"http://d.yimg.com/autoc.finance.
         //symbol.symbol = [[symbols objectAtIndex:i] objectForKey:@"symbol"];
         //symbol.name = [[symbols objectAtIndex:i] objectForKey:@"name"];
         
-        
         [listVal addObject:valeur];
         NSLog(@"On ajoute %@ A listVal",valeur.nom);
-        
         
     }
     

@@ -36,5 +36,6 @@ NSMutableArray *dataForPlot;
 
 
 - (IBAction)ajoutValeur;
+- (IBAction)detailValeur:(id)sender;
 
 @end

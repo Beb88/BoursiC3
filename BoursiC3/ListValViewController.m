@@ -25,22 +25,10 @@
 @synthesize TableListVAL ,listValJSON = _listValJSON;
 @synthesize dataForPlot, hostingView,activityIndicatorView;//,refreshControl;
 
-
 //ANCIENNE DEPUIS TABLE JSON ( PB REACTU )
 static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v1/public/yql?q=select%%20*%%20from%%20yahoo.finance.quotes%%20where%%20symbol%%20%%3D%%20%%22%@%%22&format=json&env=store%%3A%%2F%%2Fdatatables.org%%2Falltableswithkeys&callback=cbfunc";
 
-
-
-
 //@"http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20csv%20where%20url%3D'http%3A%2F%2Fdownload.finance.yahoo.com%2Fd%2Fquotes.csv%3Fs%3D%%22%@%%22%26f%3Dsl1p2d1t1c1ohgva2x%26e%3D.csv'%20and%20columns%3D'symbol%2CLastTradePriceOnly%2CPercentChange%2Cdate%2Ctime%2Cchange%2Couv%2Chigh%2Clow%2CVolume%2CAverageDailyVolume%2CStockExchange'&format=json&diagnostics=true&callback=cbfunc";
-
-
-
-
-
-
-
-
 
 /*http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20csv%20where%20url%3D'http%3A%2F%2Fdownload.finance.yahoo.com%2Fd%2Fquotes.csv%3Fs%3D
  UBI.PA%2CGFT.PA%2CUBIBS.PA
@@ -109,54 +97,29 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
         NSLog(@"NBR DE VALEURS RECUPERES DANS BASE LOCALE = %i", listVal.count);
         
         NSLog(@"listVal = %@",listVal);
-        //[data se]
-      //  NSString *pathToPlist = @"/Users/H2CO3/my.plist";
-      //  NSMutableDictionary *plist = [NSMutableDictionary dictionaryWithCOntentsOfFile:pathToPlist];
-      //  [data removeObjectForKey:@"MyKeyIWannaDelete"];
-      //  [data writeToFile:pathToPlist atomically:YES];
-        
-        
-        
-       
-       // [dict setObject:dateSettings forKey:@"date"];
-      /*  NSDictionary *dict_TEST = [[NSDictionary alloc] initWithContentsOfFile:path];
-      
-        //POUR VOIR LE CONTENU D UN NSDictionnary
-        NSEnumerator *enumerator = [ dict_TEST keyEnumerator];
-        NSString *key;
-        while (key = [ enumerator nextObject]) {
-            printf("DICO TEST : %s\n", [[ dict_TEST objectForKey:key] UTF8String]);
-        }
-        //FIN //VISU CONTENU D UN DICTIONNAIRE
-*/
-        
-       /* for (Valeurs *Val in listVal) {
-        //NSLog(@"  %@",  )
-        
-        }
-        */
-        [unarchiver finishDecoding]; }
+            [unarchiver finishDecoding]; }
     else
     {
         listVal = [[NSMutableArray alloc] initWithCapacity:20];
     } }
 
-
-//FONCTION DE REFRESH
-
+//////////////////////////////////////////
+//FONCTION DE REFRESH DE LA TABLEVIEW
+/////////////////////////////////////////
 - (void)refresh:(UIRefreshControl *)refreshControl {
     
     NSLog(@"REFRESH DE LA LISTE : Mise en priorité basse de la recherche net %@", [self dataFilePath]);
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
-         [self.activityIndicatorView startAnimating];
+         [activityIndicatorView startAnimating];
         for (Valeurs *Val in listVal) {
             [self MAJ_COURS_DU_MOMENT_SOURCE_YAHOO:Val ];
-            
+             
         }
         
         [self.TableListVAL reloadData];
         [self.TableListVAL reloadInputViews];
+        [activityIndicatorView stopAnimating];
     
     });
     
@@ -165,8 +128,8 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     [self.TableListVAL reloadData];
     [self.TableListVAL reloadInputViews];
     [refreshControl endRefreshing];
-        [self.activityIndicatorView stopAnimating];
-    // [self.activityIndicatorView stopAnimating];
+       
+    
 }
 
 
@@ -187,7 +150,7 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     
     
     
-    // Setting Up Activity Indicator View
+    // Implémentation de l' Activity Indicator View
     self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.activityIndicatorView.hidesWhenStopped = YES;
     self.activityIndicatorView.center = self.hostingView.center;
@@ -198,33 +161,8 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     //[self.tableView setBackgroundView:nil];
     //[self.tableView setBackgroundColor: [UIColor blackColor]];
     
-    // [self.activityIndicatorView stopAnimating];
     
-     [self.activityIndicatorView startAnimating];
-    
-    
-     NSLog(@"Mise en priorité basse la recherche net %@", [self dataFilePath]);
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
-    //
    
-    for (Valeurs *Val in listVal) {
-        //[self.activityIndicatorView startAnimating];
-        [self MAJ_COURS_DU_MOMENT_SOURCE_YAHOO:Val ];
-        
-      
-        }
-        
-        [self.TableListVAL reloadData];
-        [self.TableListVAL reloadInputViews];
-    });
-    
-    
-    [self.TableListVAL setHidden:NO];
-    [self.TableListVAL reloadData];
-   [self.activityIndicatorView stopAnimating];
-    // [self.activityIndicatorView stopAnimating];
-
     
     // implémentation du refresh
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -232,7 +170,39 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [self.TableListVAL addSubview:refreshControl];
+
     
+    
+  
+    
+    
+     NSLog(@"Mise en priorité basse la recherche net %@", [self dataFilePath]);
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+    //
+        [self.activityIndicatorView startAnimating];
+   
+    for (Valeurs *Val in listVal) {
+        
+       
+        [self MAJ_COURS_DU_MOMENT_SOURCE_YAHOO:Val ];
+        
+      
+        }
+        
+        [self.TableListVAL reloadData];
+        [self.TableListVAL reloadInputViews];
+         [self.activityIndicatorView stopAnimating];
+    });
+    
+    
+    [self.TableListVAL setHidden:NO];
+    [self.TableListVAL reloadData];
+  
+ 
+
+    
+       
     
     
    // refreshControl
@@ -263,39 +233,6 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     }
 }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-//          TRANSFERT DU JSON RECU DANS UN NSMutableArray CONTENANT TOUS LES OBJETS de type VALEURS
-//
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
--(void) TransfertJSON_Vers_Objet_ListVal
-{
-    
-    //codeBourso = UBI;
-    //codeIsin = FR0000054470;
-    //deviseValeur = EUR;
-    //idCompo = 1;
-    //idValeur = 1;
-    //nomValeur = UBISOFT
-    
-    listVal = [[NSMutableArray alloc] initWithCapacity:20];
-    
-    for ( int i=0; i< [self.listValJSON count]; i=i+1)
-    {
-         Valeurs *valeur = [Valeurs new];
-        NSDictionary *listValDict3 = [self.listValJSON objectAtIndex:i];
-        valeur.codeBourso = [listValDict3 objectForKey:@"codeIsin"];
-        valeur.nom = [listValDict3 objectForKey:@"nomValeur"];
-        [listVal addObject:valeur];
-        NSLog(@"On ajoute %@ A listVal",valeur.nom);
-        
-    }
-   
-}
-
-*/
 
 //////////////////////////////////////////////////////////////
 //          Table View Data Source Methods
@@ -345,6 +282,10 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     labelCours.text = valeur.cotation;
     labelEvo.text = valeur.variation;
     
+    int count = [valeur.listeAlertes count];
+    labelNbAlert.text =[NSString stringWithFormat:@"%d Alerte(s)", count];
+
+
     
     
     
@@ -392,14 +333,14 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
  }
  */
 
-/*
+
  // Override to support conditional rearranging of the table view.
  - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
  {
  // Return NO if you do not want the item to be re-orderable.
  return YES;
  }
- */
+ 
 
 
 
@@ -414,30 +355,63 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
 {
    
     //[self.navigationController pushViewController:detailValeur animated:YES];
-    NSLog(@"On clic  ");
+   
     
     Valeurs *valeur  = [listVal objectAtIndex:indexPath.row];
     
+    NSLog(@"On SELECTION  ");
+    NSLog(@"ON SELECTIONNE  LA VALEUR : %@",valeur.nom);
+    
     //NSLog(@"ON PASSE LA VALEUR : %@",valeur.nom);
-    graph.title = valeur.nom;
+    
+    NSString* Title = [NSString stringWithFormat:@"%@ - %@ --  %@", valeur.dateMaj,valeur.heureMaj, valeur.cotation];
+    graph.title = Title;
+    
+    //
     
     
-    [self performSegueWithIdentifier:@"showDetailValeur" sender:valeur];
+    
+    
+    //[self performSegueWithIdentifier:@"showDetailValeur" sender:valeur];
     
 }
 
 //ON SELECTIONNE LE DETAIL 
-/*
+
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
 	
-    // NSLog(@"CLIC DETAIL");
-    Valeurs *valeur  = [listVal objectAtIndex:indexPath.row];
-   NSLog(@"ON PASSE LA VALEUR : %@",valeur.nom);
-    [self performSegueWithIdentifier:@"showDetailValeur" sender:valeur];
+   //  NSLog(@"CLIC DETAIL");
+   Valeurs *valeur_det  = [listVal objectAtIndex:indexPath.row];
+  // NSLog(@"ON VEUT LE DETAIL DE LA VALEUR : %@",valeur_det.nom);
+    
+    [self.TableListVAL selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewRowAnimationTop];
+   // UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"detailStoryboardID"];
+    
+	//Detail_ActionViewController *controller = (Detail_ActionViewController *)navigationController.topViewController;
+    //controller.valeurRecue = valeur_det;
+    //controller.delegate = self;
+    
+  
+    
+    
+    
+    
+  // [self performSegueWithIdentifier:@"showDetailValeur" sender:valeur_det];
+    
+    
+    /*UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"detailStoryboardID"];
+    
+	Detail_ActionViewController *controller = (Detail_ActionViewController *)navigationController.topViewController;
+	controller.delegate = self;
+    
+	Valeurs *valeurdetail = [listVal objectAtIndex:indexPath.row];;
+	controller.valeurRecue = valeurdetail;
+    
+	[self presentViewController:navigationController animated:YES completion:nil];*/
 
 }
-*/
+
 
 
 
@@ -448,11 +422,23 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     NSLog(@"Destination Controller = %@", [segue destinationViewController]);
     NSLog(@"Segue Identifier = %@", [segue identifier]);
    
+   //if([sender isKindOfClass:[Valeurs class]])
     if ([segue.identifier isEqualToString:@"showDetailValeur"]) {
+       
         Detail_ActionViewController *controller = segue.destinationViewController;
-        controller.valeurRecue = sender;
-        controller.delegate= self;
         
+        //UINavigationController *navigationController = segue.destinationViewController;
+        //Detail_ActionViewController *controller = (Detail_ActionViewController *)navigationController.topViewController;
+        
+        //ON RECUPERE LA VALEUR DEPUIS LE PREPAREFOR SEGUE ( PAS BESOIN DE LE FAIRE DANS LE DIDSELECT OU ACCESSORYTAPPED
+        
+        NSIndexPath *indexPath = [self.TableListVAL indexPathForSelectedRow];
+           Valeurs *valeur_test = [listVal objectAtIndex:indexPath.row];
+        
+        NSLog(@"le sender est  %@",sender);
+        //controller.valeurRecue = sender;
+        controller.valeurRecue = valeur_test;
+        controller.delegate= self;
         
     }
     
@@ -539,6 +525,13 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
             valeur.volumeEnc = [[ stockInfo objectForKey:@"quote"]
                                 objectForKey:@"Volume" ];
             
+            valeur.dateMaj = [[ stockInfo objectForKey:@"quote"]
+                             objectForKey:@"LastTradeDate" ];
+            valeur.heureMaj =    [[ stockInfo objectForKey:@"quote"] objectForKey:@"LastTradeTime" ];
+            
+            // RAF DATEHIGH, DATELOW, YEARLOW , YEARHIGH
+            
+            //valeur.devise =
             NSLog(@"FIN DE RECHERCHE INTERNET YAHOO pour %@", valeur.nom );
             
         }
@@ -626,6 +619,25 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
   [self savelistValeurs];
 }
 
+/*
+- (IBAction)detailValeur:(id)sender
+{
+    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"ShowDetailValeur"];
+    
+    Detail_ActionViewController *controller = (Detail_ActionViewController *)navigationController;
+    controller.valeurRecue = sender;
+    controller.delegate= self;
+    
+    //Checklist *checklist = [lists objectAtIndex:indexPath.row];
+    //controller.checklistToEdit = checklist;
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
+    
+    [self performSegueWithIdentifier:@"showDetailValeur" sender:sender];
+
+
+}
+*/
 
 /*
  

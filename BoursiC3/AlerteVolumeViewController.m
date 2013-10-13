@@ -14,7 +14,7 @@
 
 @implementation AlerteVolumeViewController
 
-@synthesize delegateAlertVolume;
+@synthesize delegateAlertVolume,AlertToEdit;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
