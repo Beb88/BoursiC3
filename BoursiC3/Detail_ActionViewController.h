@@ -32,7 +32,7 @@
 @end
 
 
-@interface Detail_ActionViewController : UIViewController<UITableViewDelegate, UITableViewDataSource,IndicateursViewControllerDelegate, AlerteSeuilViewControllerDelegate,  AlerteVolumeViewControllerDelegate, AlerteMACDViewControllerDelegate, AlerteRSIViewControllerDelegate,  ListeIndicTableViewControllerDelegate>
+@interface Detail_ActionViewController : UIViewController<UITableViewDelegate, UITableViewDataSource,IndicateursViewControllerDelegate, AlerteSeuilViewControllerDelegate,  AlerteVolumeViewControllerDelegate, AlerteMMViewControllerDelegate, AlerteMACDViewControllerDelegate, AlerteRSIViewControllerDelegate,  ListeIndicTableViewControllerDelegate>
 
 //PROPRIETE DELEGATE
 

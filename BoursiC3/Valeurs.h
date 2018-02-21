@@ -17,11 +17,13 @@
 	NSString *cotation;
     NSString *variation;
     NSString *volumEnc;
+    NSString *volumeMoy;
     NSString *devise;
     NSString *codeBourso; //(ISIN OU TICK)
     NSString *codeIsin;
     NSString *dateMaj;
     NSString *heureMaj;
+ 
     
     NSInteger idValeur;
 	NSInteger idCompo;
@@ -35,6 +37,8 @@
 @property (nonatomic, retain) NSString *nom;
 @property (nonatomic, retain) NSString *cotation;
 @property (nonatomic, retain) NSString *volumeEnc;
+@property (nonatomic, retain) NSString *volumeMoy;
+
 @property (nonatomic, retain) NSString *variation;
 @property (nonatomic, retain) NSString *devise;
 @property (nonatomic, retain) NSString *codeBourso;
@@ -42,6 +46,7 @@
 @property (nonatomic, retain) NSString *codif;
 @property (nonatomic, retain) NSString *dateMaj;
 @property (nonatomic, retain) NSString *heureMaj;
+
 
 // A RAJOUTER
 //  DaysHigh = "4.13";

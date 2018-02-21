@@ -63,7 +63,7 @@
     listIndic = [[NSMutableArray alloc] initWithCapacity:20];
     
     //1&1
-    NSURL *url = [NSURL URLWithString:@"http://s454555776.onlinehome.fr/boursicoincoin/jsonConnect.php"];
+    NSURL *url = [NSURL URLWithString:@"http://88.191.209.98:80/BCC/BCC/jsonConnect.php"];
     
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
     
@@ -74,7 +74,7 @@
                             @"getAllIndicateurs",@"action",
                             nil];// Autre param a envoyer
     
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://s454555776.onlinehome.fr/boursicoincoin/jsonConnect.php"parameters:params];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://88.191.209.98:80/BCC/BCC/jsonConnect.php" parameters:params];
     
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
@@ -95,6 +95,7 @@
             NSDictionary *listIndicDict = [self.listIndicJSON objectAtIndex:i];
             indic.nom_indic=[listIndicDict objectForKey:@"nameIndic"];
             indic.idIndic =[listIndicDict objectForKey:@"idIndic"];
+            indic.descIndic =[listIndicDict objectForKey:@"descIndicateur"];
             
             [listIndic addObject:indic];
             NSLog(@"On ajoute %@ A slistIndic",indic.nom_indic);
@@ -107,12 +108,12 @@
         [self.TableListIndic setHidden:NO];
         [self.TableListIndic reloadData];
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Synchro serveur OK"
+       /* UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Synchro serveur OK"
                                                             message:@"Récupation des indicateurs"
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
-        [alertView show];
+        [alertView show];*/
         
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
@@ -123,7 +124,7 @@
         NSLog(@"json: %@", JSON);
         
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Réseau non disponible"
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Serveur non disponible"
                                                             message:@""
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"
@@ -280,6 +281,8 @@
    
         UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"AS"];
         AlerteSeuilViewController *controller = (AlerteSeuilViewController *)navigationController;
+        controller.Valeur_recue_ByListIndic = valeurInEcranListeindic;
+        controller.Indicateur_infos = indic;
         controller.delegateAlertSeuil = self;
         [self presentViewController:navigationController animated:YES completion:nil];
     
@@ -290,6 +293,8 @@
     {
         UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"AV"];
         AlerteVolumeViewController *controller = (AlerteVolumeViewController *)navigationController;
+        controller.Valeur_recue_ByListIndic = valeurInEcranListeindic;
+        controller.Indicateur_infos = indic;
         controller.delegateAlertVolume = self;
         [self presentViewController:navigationController animated:YES completion:nil];
       
@@ -300,6 +305,8 @@
     {
         UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"AMM"];
         AlerteMMViewController *controller = (AlerteMMViewController *)navigationController;
+        controller.Valeur_recue_ByListIndic = valeurInEcranListeindic;
+        controller.Indicateur_infos = indic;
         controller.delegateAlertMM = self;
         [self presentViewController:navigationController animated:YES completion:nil];
         
@@ -310,7 +317,8 @@
     {
         UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"AMACD"];
         AlerteMACDViewController *controller = (AlerteMACDViewController *)navigationController;
-        controller.delegateAlertMACD = self;
+        controller.Valeur_recue_ByListIndic = valeurInEcranListeindic;
+        controller.Indicateur_infos = indic;        controller.delegateAlertMACD = self;
         [self presentViewController:navigationController animated:YES completion:nil];
         
         
@@ -320,8 +328,43 @@
     {
         UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"ARSI"];
         AlerteRSIViewController *controller = (AlerteRSIViewController *)navigationController;
-        controller.delegateAlertRSI = self;
+        controller.Valeur_recue_ByListIndic = valeurInEcranListeindic;
+        controller.Indicateur_infos = indic;        controller.delegateAlertRSI = self;
         [self presentViewController:navigationController animated:YES completion:nil];
+        
+        
+    }
+    if ([indic.idIndic isEqualToString:@"9"]) //Accelération des volumes
+    {
+       
+        
+        
+        
+        Valeurs_Alertes *Alerte_Auto_AccelerationdesVolumes = [[Valeurs_Alertes alloc]init];
+        
+        Alerte_Auto_AccelerationdesVolumes.id_indic =@"9";
+        Alerte_Auto_AccelerationdesVolumes.nom_alerte =@"Accélération des volumes";
+        Alerte_Auto_AccelerationdesVolumes.id_Valeur = valeurInEcranListeindic.codeBourso;
+        Alerte_Auto_AccelerationdesVolumes.etat_alerte = @"ON";
+        Alerte_Auto_AccelerationdesVolumes.isActive = @"1";
+        Alerte_Auto_AccelerationdesVolumes.sens = @"ACCEL_VOLUMES";
+         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:indic.nom_indic
+         message:indic.descIndic
+         delegate:nil
+         cancelButtonTitle:@"OK"
+         otherButtonTitles:nil];
+         [alertView show];
+
+        
+        
+        [self.delegateListeIndic listeIndicTableView:self didFinishAddingAlertlist:Alerte_Auto_AccelerationdesVolumes];
+
+        
+        /* UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"ARSI"];
+        AlerteRSIViewController *controller = (AlerteRSIViewController *)navigationController;
+        controller.Valeur_recue_ByListIndic = valeurInEcranListeindic;
+        controller.Indicateur_infos = indic;        controller.delegateAlertRSI = self;
+        [self presentViewController:navigationController animated:YES completion:nil];*/
         
         
     }
@@ -411,6 +454,10 @@ if (1==1)
 
 }
 
+-(void)alertViewControllerDidCancel:(AlerteMMViewController *)controller
+{
+    [self.delegateListeIndic alertViewControllerDidCancel:self];
+}
 
 
 
@@ -473,6 +520,8 @@ if (1==1)
        
     
 }
+
+
 
 
 @end

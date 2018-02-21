@@ -13,13 +13,17 @@
     NSString *id_alerte;
     NSString *id_Valeur;
     NSString *nom_alerte;
+    NSString *isActive;
     
     NSString *id_indic;
+    
+    NSString *sens;
     
     NSString *param1;
     NSString *param2;
     NSString *param3;
     NSString *param4;
+    NSString *param5;
     
     NSString *etat_alerte;
     
@@ -34,10 +38,10 @@
 
 }
 
-@property  (nonatomic, retain) NSString *id_alerte,*id_Valeur,*id_indic, *etat_alerte;
+@property  (nonatomic, retain) NSString *id_alerte,*id_Valeur,*id_indic, *etat_alerte,*sens,*isActive;
 
 
 @property (nonatomic, retain) NSString *nom_alerte;
-@property (nonatomic, retain) NSString *param1, *param2, *param3, *param4;
+@property (nonatomic, retain) NSString *param1, *param2, *param3, *param4,*param5;
 
 @end

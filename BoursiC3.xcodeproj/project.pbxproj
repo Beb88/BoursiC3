@@ -32,6 +32,7 @@
 		8592337915CAF5BA00EB0ACF /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8592336D15CAF5BA00EB0ACF /* AFURLConnectionOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8592337A15CAF5BA00EB0ACF /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8592336F15CAF5BA00EB0ACF /* AFXMLRequestOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8592337B15CAF5BA00EB0ACF /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 8592337115CAF5BA00EB0ACF /* UIImageView+AFNetworking.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		85A0060E1973E13C00CA1FE5 /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85A0060D1973E13C00CA1FE5 /* libCorePlot-CocoaTouch.a */; };
 		85A0F835178FFEFC00AEA41B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85A0F834178FFEFC00AEA41B /* StoreKit.framework */; };
 		85A45FF216AE7315006F4717 /* back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 85A45FEC16AE7315006F4717 /* back-button.png */; };
 		85A45FF316AE7315006F4717 /* nav-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 85A45FED16AE7315006F4717 /* nav-bar.png */; };
@@ -56,6 +57,7 @@
 		85BE932B15C1E19800F06640 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85BE932A15C1E19700F06640 /* MobileCoreServices.framework */; };
 		85BE932D15C1E1B900F06640 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85BE932C15C1E1B900F06640 /* SystemConfiguration.framework */; };
 		85BE932F15C1E1CA00F06640 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85BE932E15C1E1CA00F06640 /* CFNetwork.framework */; };
+		85C67CEB203C5CBA000E830B /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85C67CEA203C5CB9000E830B /* UserNotifications.framework */; };
 		85D2258A167CAB8100936B00 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D22572167CAB8100936B00 /* NSObject+SBJson.m */; };
 		85D2258B167CAB8100936B00 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D22575167CAB8100936B00 /* SBJsonParser.m */; };
 		85D2258C167CAB8100936B00 /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D22577167CAB8100936B00 /* SBJsonStreamParser.m */; };
@@ -73,11 +75,10 @@
 		85DF80311642A742006647B4 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 85DF80301642A742006647B4 /* libsqlite3.0.dylib */; };
 		85F68764169DB4140000E63A /* IndicateursViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85F68763169DB4140000E63A /* IndicateursViewController.m */; };
 		85F68768169E151A0000E63A /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 85F68767169E151A0000E63A /* icon.png */; };
-		85F6876A169E15330000E63A /* icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 85F68769169E15330000E63A /* icon2.png */; };
+		85F6D3AA197C474100C38EFA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85F6D3A9197C474100C38EFA /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8501DD14178CBF0300F158AF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		85065AD0180AAD7F003E9CD7 /* AlerteMACDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlerteMACDViewController.h; sourceTree = "<group>"; };
 		85065AD1180AAD7F003E9CD7 /* AlerteMACDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlerteMACDViewController.m; sourceTree = "<group>"; };
 		85065AD4180ACB96003E9CD7 /* AlerteRSIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlerteRSIViewController.h; sourceTree = "<group>"; };
@@ -205,7 +206,8 @@
 		8592336F15CAF5BA00EB0ACF /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		8592337015CAF5BA00EB0ACF /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		8592337115CAF5BA00EB0ACF /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
-		85A0F833178FFEEC00AEA41B /* BoursiC3.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BoursiC3.entitlements; sourceTree = "<group>"; };
+		85A0060D1973E13C00CA1FE5 /* libCorePlot-CocoaTouch.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libCorePlot-CocoaTouch.a"; path = "../CorePlot_1.4/Binaries/iOS/libCorePlot-CocoaTouch.a"; sourceTree = "<group>"; };
+		85A0F833178FFEEC00AEA41B /* BoursiC3_old.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BoursiC3_old.entitlements; sourceTree = "<group>"; };
 		85A0F834178FFEFC00AEA41B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		85A45FEC16AE7315006F4717 /* back-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-button.png"; sourceTree = "<group>"; };
 		85A45FED16AE7315006F4717 /* nav-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-bar.png"; sourceTree = "<group>"; };
@@ -236,7 +238,8 @@
 		85BE932A15C1E19700F06640 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		85BE932C15C1E1B900F06640 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		85BE932E15C1E1CA00F06640 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		85CD66961794B37C006ADD85 /* photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo.png; sourceTree = "<group>"; };
+		85C67CE9203C2B26000E830B /* BoursiC3.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BoursiC3.entitlements; sourceTree = "<group>"; };
+		85C67CEA203C5CB9000E830B /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		85D22571167CAB8100936B00 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
 		85D22572167CAB8100936B00 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
 		85D22573167CAB8100936B00 /* SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson.h; sourceTree = "<group>"; };
@@ -269,9 +272,11 @@
 		85F68762169DB4140000E63A /* IndicateursViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndicateursViewController.h; sourceTree = "<group>"; };
 		85F68763169DB4140000E63A /* IndicateursViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndicateursViewController.m; sourceTree = "<group>"; };
 		85F68767169E151A0000E63A /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
-		85F68769169E15330000E63A /* icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2.png; sourceTree = "<group>"; };
-		85F6876B169E15480000E63A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		85F6D3A9197C474100C38EFA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		85F816C017A5CE0D00E9A0CF /* IconHal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconHal.png; sourceTree = "<group>"; };
+		B97D4CC01EAB5A970056A50A /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = fr; path = fr.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		B97D4CC11EAB5A970056A50A /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = fr; path = fr.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		B97D4CC21EAB5A970056A50A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,11 +284,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85C67CEB203C5CBA000E830B /* UserNotifications.framework in Frameworks */,
 				855309691833544F0091167D /* libCorePlot-CocoaTouch.a in Frameworks */,
 				85A0F835178FFEFC00AEA41B /* StoreKit.framework in Frameworks */,
 				85DF80311642A742006647B4 /* libsqlite3.0.dylib in Frameworks */,
 				85DF802F1642A730006647B4 /* libz.1.2.5.dylib in Frameworks */,
 				856DC5DA1614F3DB00C774B3 /* QuartzCore.framework in Frameworks */,
+				85A0060E1973E13C00CA1FE5 /* libCorePlot-CocoaTouch.a in Frameworks */,
 				85BE932F15C1E1CA00F06640 /* CFNetwork.framework in Frameworks */,
 				85BE932D15C1E1B900F06640 /* SystemConfiguration.framework in Frameworks */,
 				85BE932B15C1E19800F06640 /* MobileCoreServices.framework in Frameworks */,
@@ -371,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				856DC5871614F2AA00C774B3 /* libCorePlot-CocoaTouch.a */,
+				85A0060D1973E13C00CA1FE5 /* libCorePlot-CocoaTouch.a */,
 				856DC5881614F2AA00C774B3 /* CorePlotHeaders */,
 			);
 			name = CorePlot;
@@ -505,10 +513,6 @@
 			isa = PBXGroup;
 			children = (
 				85F816C017A5CE0D00E9A0CF /* IconHal.png */,
-				85F6876B169E15480000E63A /* Default.png */,
-				85F68769169E15330000E63A /* icon2.png */,
-				8501DD14178CBF0300F158AF /* Default@2x.png */,
-				85CD66961794B37C006ADD85 /* photo.png */,
 				85DF80301642A742006647B4 /* libsqlite3.0.dylib */,
 				85DF802E1642A730006647B4 /* libz.1.2.5.dylib */,
 				856DC5DB1614F3FC00C774B3 /* Default-568h@2x.png */,
@@ -533,6 +537,7 @@
 		85BE92B515C1D31C00F06640 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				85C67CEA203C5CB9000E830B /* UserNotifications.framework */,
 				855309681833544F0091167D /* libCorePlot-CocoaTouch.a */,
 				85A0F834178FFEFC00AEA41B /* StoreKit.framework */,
 				85BE932E15C1E1CA00F06640 /* CFNetwork.framework */,
@@ -548,7 +553,8 @@
 		85BE92BC15C1D31C00F06640 /* BoursiC3 */ = {
 			isa = PBXGroup;
 			children = (
-				85A0F833178FFEEC00AEA41B /* BoursiC3.entitlements */,
+				85C67CE9203C2B26000E830B /* BoursiC3.entitlements */,
+				85A0F833178FFEEC00AEA41B /* BoursiC3_old.entitlements */,
 				852AD6B81767D5B1005EA075 /* iPad */,
 				8557050B16E71F540046A6BF /* MBProgressHUD */,
 				85DF80261642A220006647B4 /* ECRAN 1 LOG (ecran log) */,
@@ -574,6 +580,7 @@
 				850E4FB516BD767300E3E4A9 /* Valeurs_Alertes.m */,
 				855FDC7216C6B1BB003CEFFA /* Indicateurs.h */,
 				855FDC7316C6B1BB003CEFFA /* Indicateurs.m */,
+				85F6D3A9197C474100C38EFA /* Images.xcassets */,
 			);
 			path = BoursiC3;
 			sourceTree = "<group>";
@@ -701,15 +708,19 @@
 		85BE92A915C1D31C00F06640 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0800;
 				TargetAttributes = {
 					85BE92B115C1D31C00F06640 = {
 						DevelopmentTeam = 52FXJMCS22;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 1;
 							};
 							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 							com.apple.iCloud = {
@@ -725,6 +736,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				fr,
 			);
 			mainGroup = 85BE92A715C1D31C00F06640;
 			productRefGroup = 85BE92B315C1D31C00F06640 /* Products */;
@@ -742,6 +754,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85BE92C115C1D31C00F06640 /* InfoPlist.strings in Resources */,
+				85F6D3AA197C474100C38EFA /* Images.xcassets in Resources */,
 				85BE92CA15C1D31C00F06640 /* MainStoryboard_iPhone.storyboard in Resources */,
 				85BE92CD15C1D31C00F06640 /* MainStoryboard_iPad.storyboard in Resources */,
 				85BE92D215C1D31C00F06640 /* first.png in Resources */,
@@ -750,7 +763,6 @@
 				85BE92DB15C1D31C00F06640 /* second@2x.png in Resources */,
 				856DC5DC1614F3FC00C774B3 /* Default-568h@2x.png in Resources */,
 				85F68768169E151A0000E63A /* icon.png in Resources */,
-				85F6876A169E15330000E63A /* icon2.png in Resources */,
 				85A45FF216AE7315006F4717 /* back-button.png in Resources */,
 				85A45FF316AE7315006F4717 /* nav-bar.png in Resources */,
 				85A45FF416AE7315006F4717 /* bar-button.png in Resources */,
@@ -816,6 +828,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				85BE92C015C1D31C00F06640 /* en */,
+				B97D4CC21EAB5A970056A50A /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -824,6 +837,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				85BE92C915C1D31C00F06640 /* en */,
+				B97D4CC01EAB5A970056A50A /* fr */,
 			);
 			name = MainStoryboard_iPhone.storyboard;
 			sourceTree = "<group>";
@@ -832,6 +846,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				85BE92CC15C1D31C00F06640 /* en */,
+				B97D4CC11EAB5A970056A50A /* fr */,
 			);
 			name = MainStoryboard_iPad.storyboard;
 			sourceTree = "<group>";
@@ -843,30 +858,39 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: bertrand louis (49Y5V5Y3XE)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: bertrand louis (49Y5V5Y3XE)";
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -877,23 +901,32 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: bertrand louis (49Y5V5Y3XE)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: bertrand louis (49Y5V5Y3XE)";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -904,28 +937,31 @@
 		85BE92DF15C1D31C00F06640 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = BoursiC3/BoursiC3.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: bertrand louis (49Y5V5Y3XE)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 52FXJMCS22;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BoursiC3/BoursiC3-Prefix.pch";
 				INFOPLIST_FILE = "BoursiC3/BoursiC3-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
 					"\\\"$(SRCROOT)/AFNetworking\\\"",
 					/Users/Beb/Downloads/CorePlot_1.4/Binaries/iOS,
+					"$(PROJECT_DIR)/CorePlot_1.4/Binaries/iOS",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = "FBY2.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos7.0;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -935,27 +971,30 @@
 		85BE92E015C1D31C00F06640 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = BoursiC3/BoursiC3.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 52FXJMCS22;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BoursiC3/BoursiC3-Prefix.pch";
 				INFOPLIST_FILE = "BoursiC3/BoursiC3-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
 					"\\\"$(SRCROOT)/AFNetworking\\\"",
 					/Users/Beb/Downloads/CorePlot_1.4/Binaries/iOS,
+					"$(PROJECT_DIR)/CorePlot_1.4/Binaries/iOS",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = "FBY2.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos7.0;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

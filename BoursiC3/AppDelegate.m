@@ -14,7 +14,7 @@
 
 @synthesize window = _window,ValeursArray,ZETOKEN;
 
-static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoincoin/Send_id.php";
+
 
 /*
 - (NSString *) getDBPath {
@@ -95,8 +95,24 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
     
     // Pour definir que l'appli veut recevoir des push notifications
     NSLog(@"DEMANDE D'autorisation pour notification");
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    //IOS 10
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    center.delegate = self;
+    [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error){
+        if(!error){
+            [[UIApplication sharedApplication] registerForRemoteNotifications];
+        }
+     }];
+        
+
+    
+    
+    //IOS8
+    //[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+    // (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
+   // [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:<#(UIUserNotificationType)#> categories:<#(nullable NSSet<UIUserNotificationCategory *> *)#>
+   
     
     NSLog(@"DEMANDE faite D'autorisation pour notification");
     

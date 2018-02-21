@@ -10,7 +10,7 @@
 
 @implementation Valeurs_Alertes
 
-@synthesize id_alerte,id_Valeur,nom_alerte,param1,param2,param3,param4,etat_alerte,id_indic;
+@synthesize id_alerte,id_Valeur,nom_alerte,param1,param2,param3,param4,param5,etat_alerte,id_indic,sens,isActive;
 
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
@@ -23,6 +23,9 @@
     [aCoder encodeObject:self.param2 forKey:@"param2"];
     [aCoder encodeObject:self.param3 forKey:@"param3"];
     [aCoder encodeObject:self.param4 forKey:@"param4"];
+    [aCoder encodeObject:self.param5 forKey:@"param5"];
+    [aCoder encodeObject:self.sens forKey:@"sens"];
+    [aCoder encodeObject:self.isActive forKey:@"isActive"];
 }
 
 
@@ -38,6 +41,9 @@
         self.param2 = [aDecoder decodeObjectForKey:@"param2"];
         self.param3 = [aDecoder decodeObjectForKey:@"param3"];
         self.param4 = [aDecoder decodeObjectForKey:@"param4"];
+        self.param5 = [aDecoder decodeObjectForKey:@"param5"];
+        self.sens = [aDecoder decodeObjectForKey:@"sens"];
+        self.isActive = [aDecoder decodeObjectForKey:@"isActive"];
         
     }
     return self; }

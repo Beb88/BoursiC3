@@ -23,6 +23,7 @@ NSMutableArray *dataForPlot;
     CPTXYGraph *graph;
 }
 @property (nonatomic, strong) Valeurs *valeur;
+@property (weak, nonatomic) IBOutlet UIWebView *yahooWebview;
 
 @property (weak, nonatomic) IBOutlet UITableView *TableListVAL;
 @property (nonatomic, retain) NSMutableArray *listValJSON;

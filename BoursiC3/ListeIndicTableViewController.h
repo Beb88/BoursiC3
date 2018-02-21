@@ -14,6 +14,7 @@
 #import "AlerteMMViewController.h"
 #import "AlerteMACDViewController.h"
 #import "AlerteRSIViewController.h"
+#import "Valeurs_Alertes.h"
 
 @class ListeIndicTableViewController;
 @class Valeurs;
@@ -24,6 +25,10 @@
 
 //- (void)listeIndicTableViewDidCancel:(ListeIndicTableViewController *)controller;
 - (void)listeIndicTableView:(ListeIndicTableViewController *)controller didFinishAddingAlertlist:(Valeurs_Alertes *)newAlert;
+
+- (void)alertViewControllerDidCancel:(AlerteMMViewController *)controller;
+
+
 
 @end
 

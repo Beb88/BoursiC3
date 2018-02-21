@@ -11,10 +11,12 @@
 @class AlerteSeuilViewController;
 @class Valeurs;
 @class Valeurs_Alertes;
+@class Indicateurs;
+
 
 
 @protocol AlerteSeuilViewControllerDelegate <NSObject>
-- (void)alertSeuilViewControllerDidCancel:(AlerteSeuilViewController *)controller;
+- (void)alertViewControllerDidCancel:(AlerteSeuilViewController *)controller;
 - (void)alertSeuilViewController:(AlerteSeuilViewController *)controller didFinishAddingAlertlist:(Valeurs_Alertes *)newAlert;
 - (void)alertSeuilViewController:(AlerteSeuilViewController *)controller didFinishEditingAlertlist:(Valeurs_Alertes *)newAlert;
 @end
@@ -31,6 +33,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *textBaisse;
 @property (nonatomic, strong) IBOutlet UITextField *textProchede;
 @property (weak, nonatomic) IBOutlet UITextField *textNomAlerte;
+@property (weak, nonatomic) IBOutlet UITextView *textDescIndic;
+
+@property (nonatomic, strong) Indicateurs *Indicateur_infos;
+@property (nonatomic, strong) Valeurs *Valeur_recue_ByListIndic;
+@property (nonatomic,strong)  NSString *CodeYF;
 
 //@property (weak, nonatomic) IBOutlet UIButton *ButtonAjoutAlert;
 

@@ -12,7 +12,7 @@
 
 
 @implementation Valeurs
-@synthesize nom,cotation,devise,idCompo,idValeur,place,codif,codeBourso,nb_alertes,listeAlertes,dateMaj,heureMaj;
+@synthesize nom,cotation,devise,idCompo,idValeur,place,codif,codeBourso,nb_alertes,listeAlertes,dateMaj,heureMaj,variation,volumeEnc,volumeMoy;
 
 
 
@@ -22,6 +22,8 @@
     [aCoder encodeObject:self.listeAlertes forKey:@"listeAlertes"];
     [aCoder encodeObject:self.cotation forKey:@"cotation"];
     [aCoder encodeObject:self.variation forKey:@"variation"];
+     [aCoder encodeObject:self.volumeMoy forKey:@"volumeMoy"];
+     [aCoder encodeObject:self.volumeEnc forKey:@"volumeEnc"];
     [aCoder encodeObject:self.dateMaj forKey:@"dateMaj"];
     [aCoder encodeObject:self.heureMaj forKey:@"heureMaj"];
     [aCoder encodeInteger:self.nb_alertes forKey:@"nb_alertes"];
@@ -39,6 +41,8 @@
         self.listeAlertes = [aDecoder decodeObjectForKey:@"listeAlertes"];
         self.cotation = [aDecoder decodeObjectForKey:@"cotation"];
         self.variation = [aDecoder decodeObjectForKey:@"variation"];
+        self.volumeEnc = [aDecoder decodeObjectForKey:@"volumeEnc"];
+        self.volumeMoy = [aDecoder decodeObjectForKey:@"volumeMoy"];
          self.dateMaj = [aDecoder decodeObjectForKey:@"dateMaj"];
          self.heureMaj = [aDecoder decodeObjectForKey:@"heureMaj"];
         self.nb_alertes = [aDecoder decodeIntegerForKey:@"nb_alertes"];

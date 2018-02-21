@@ -12,5 +12,6 @@
 
 @property (nonatomic, retain) NSString *nom_indic;
 @property (nonatomic, retain) NSString *idIndic;
+@property (nonatomic,retain) NSString *descIndic;
 
 @end

@@ -24,9 +24,9 @@
 //@synthesize appDelegate;
 
 
-static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoincoin/jsonConnect.php";
-
-
+//static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoincoin/jsonConnect.php";
+//http://78.192.193.7:8888/BCC/BCC/
+static NSString *URLServeurString = @"http://88.191.209.98:80/BCC/BCC/jsonConnect.php";
 
 -(void) viewDidAppear:(BOOL)animated
 {
@@ -102,12 +102,12 @@ static NSString *URLServeurString = @"http://s454555776.onlinehome.fr/boursicoin
             [[NSUserDefaults standardUserDefaults] setObject:TextPWD.text forKey:@"PASSWORD"];
             
             [self performSegueWithIdentifier:@"ShowScreen1" sender:nil];
-            /*UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Connection OK"
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Connection SERVER OK"
                                                                 message:@"Bienvenue"
                                                                delegate:nil
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil];
-            [alertView show];*/
+            [alertView show];
             
         }
         else

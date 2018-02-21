@@ -21,7 +21,8 @@
 
 @synthesize delegate, TableListVAL, listValJSON,SearchBarValeurs;
 
-static NSString *yahooSymbolSearchURLString = @"http://d.yimg.com/autoc.finance.yahoo.com/autoc?query=%@&callback=YAHOO.Finance.SymbolSuggest.ssCallback";
+//static NSString *yahooSymbolSearchURLString = @"http://d.yimg.com/autoc.finance.yahoo.com/autoc?query=%@&callback=YAHOO.Finance.SymbolSuggest.ssCallback";
+static NSString *yahooSymbolSearchURLString = @"http://d.yimg.com/autoc.finance.yahoo.com/autoc?query=%@&callback=YAHOO.Finance.SymbolSuggest.ssCallback&lang=en-US";
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -182,6 +183,12 @@ static NSString *yahooSymbolSearchURLString = @"http://d.yimg.com/autoc.finance.
         NSDictionary *listValDict3 = [self.listValJSON objectAtIndex:i];
         valeur.codeBourso = [listValDict3 objectForKey:@"codeIsin"];
         valeur.nom = [listValDict3 objectForKey:@"nomValeur"];
+        
+        NSString *str = valeur.nom;
+        NSData *data = [str dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+        NSString *newStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+        NSLog(@"%@", newStr);
+        valeur.nom =newStr;
         [listVal addObject:valeur];
         NSLog(@"On ajoute %@ A listVal",valeur.nom);
         
@@ -251,7 +258,7 @@ static NSString *yahooSymbolSearchURLString = @"http://d.yimg.com/autoc.finance.
     
   
    
-    NSString* URLString = [NSString stringWithFormat:@"http://d.yimg.com/autoc.finance.yahoo.com/autoc?query=%@&callback=YAHOO.Finance.SymbolSuggest.ssCallback",SearchBarValeurs.text];
+    NSString* URLString = [NSString stringWithFormat:@"http://d.yimg.com/autoc.finance.yahoo.com/autoc?query=%@&callback=YAHOO.Finance.SymbolSuggest.ssCallback&lang=en-US",SearchBarValeurs.text];
     NSLog(@"ON BALANCE l URL : %@",URLString);
     
     /////////////////
@@ -270,12 +277,12 @@ static NSString *yahooSymbolSearchURLString = @"http://d.yimg.com/autoc.finance.
     NSString* jsonStringB = [[NSString alloc] initWithData:responseB encoding:NSASCIIStringEncoding];
     // Remove the jsonp callback
     NSString *cleanJson = [jsonStringB substringFromIndex:39];
-	cleanJson = [cleanJson substringToIndex:[cleanJson length]-1];
+	cleanJson = [cleanJson substringToIndex:[cleanJson length]-2];
     NSLog(@"REQUEST OK JSON");
-    NSLog(@"json: %@", jsonStringB);
+    NSLog(@"cleanjson: %@", cleanJson);
     // On met le resultat en string et purgé des lignes vides dans un NSdictionnaire JSON
-    NSDictionary *jsonResults= [jsonStringB JSONValue];
-    NSLog(@"jsonResults : %@", jsonResults);
+    //NSDictionary *jsonResults= [cleanJson JSONValue];
+    //NSLog(@"jsonResults : %@", jsonResults);
     SBJsonParser *parser = [SBJsonParser new];
 	NSDictionary *parsedDictionary = [parser objectWithString:cleanJson];
 	NSMutableArray *JSON = [[parsedDictionary objectForKey:@"ResultSet"] objectForKey:@"Result"];
@@ -297,65 +304,7 @@ static NSString *yahooSymbolSearchURLString = @"http://d.yimg.com/autoc.finance.
         });
    
     });
-    
-    
-    
-    
-    // [operation start];
-    
-    //END OF YAHOO VERSION
-
-    // ESSAI ASYNCHRONE
-  /*
-    NSString* URLString = [NSString stringWithFormat:@"http://d.yimg.com/autoc.finance.yahoo.com/autoc?query=%@&callback=YAHOO.Finance.SymbolSuggest.ssCallback",SearchBarValeurs.text];
-    NSLog(@"ON BALANCE l URL : %@",URLString);
-    
-    
-    //On execute la requete URL
-    NSURLRequest* requestB = [NSURLRequest requestWithURL:[NSURL URLWithString:URLString]];
-    // On récupère le résultat de la requête JSON ( avec 6 lignes vides avt)
-   
-    
-    [NSURLConnection sendAsynchronousRequest:requestB
-                                       queue:[[NSOperationQueue alloc] init]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-                               // do something with data or handle error
-                            
-                               
-                              
-                               NSString* jsonStringB = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-                               // Remove the jsonp callback
-                               NSString *cleanJson = [jsonStringB substringFromIndex:39];
-                               cleanJson = [cleanJson substringToIndex:[cleanJson length]-1];
-                               NSLog(@"REQUEST OK JSON");
-                               NSLog(@"CLEANjson: %@", cleanJson);
-                               // On met le resultat en string et purgé des lignes vides dans un NSdictionnaire JSON
-                               NSDictionary *jsonResults= [cleanJson JSONValue];
-                               NSLog(@"jsonResults : %@", jsonResults);
-                               
-                               NSMutableArray *JSON = [[jsonResults objectForKey:@"ResultSet"] objectForKey:@"Result"];
-                               
-                               self.listValJSON = JSON;
-                               
-                               NSLog(@"listVal (OBJET VALEURS EST MERE : %@", self.listValJSON);
-                               
-                               
-                               [self TransfertJSONYAHOO_Vers_Objet_ListVal];
-                               
-                               
-                               // [self.activityIndicatorView stopAnimating];
-                               [self.TableListVAL setHidden:NO];
-                               [self.TableListVAL reloadData];
-                               
-
-                               
-                               
-                           }];
-
-   // [self.TableListVAL setHidden:NO];
-   // [self.TableListVAL reloadData];
-    
-   */ 
+ 
     
     
 }
@@ -380,13 +329,19 @@ static NSString *yahooSymbolSearchURLString = @"http://d.yimg.com/autoc.finance.
         NSDictionary *listValDict3 = [self.listValJSON objectAtIndex:i];
         valeur.codeBourso = [listValDict3 objectForKey:@"symbol"];
         valeur.nom = [listValDict3 objectForKey:@"name"];
+        NSString *str = valeur.nom;
+        NSData *data = [str dataUsingEncoding:NSISOLatin1StringEncoding allowLossyConversion:YES];
+        NSString *newStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"%@", newStr);
+        valeur.nom =newStr;
+        
         valeur.codif = @"TICK";
        
         //symbol.symbol = [[symbols objectAtIndex:i] objectForKey:@"symbol"];
         //symbol.name = [[symbols objectAtIndex:i] objectForKey:@"name"];
         
         [listVal addObject:valeur];
-        NSLog(@"On ajoute %@ A listVal",valeur.nom);
+       // NSLog(@"On ajoute %@ A listVal",valeur.nom);
         
     }
     
@@ -394,15 +349,8 @@ static NSString *yahooSymbolSearchURLString = @"http://d.yimg.com/autoc.finance.
 
 - (IBAction)cancel
 {
-    
-    //   Valeurs *valeur = [Valeurs new];
-    //= @"NV";//self.textField.text;
-    //valeur.checked = NO;
-    
     [self.delegate AjoutValeurViewControllerDidCancel:self];
     
-    //Retour sur ecran precedent
-    //[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)done
@@ -570,8 +518,6 @@ static NSString *yahooSymbolSearchURLString = @"http://d.yimg.com/autoc.finance.
     valeur  = [listVal objectAtIndex:indexPath.row]; 
     
 
-    
-    
     NSLog(@"On a cree et on envoie en retour la valeur %@" , valeur.nom);
     [self.delegate AjoutValeurViewController:self ajoutNouvelleValeur:valeur ];
     

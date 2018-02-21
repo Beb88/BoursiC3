@@ -12,9 +12,10 @@
 @class AlerteRSIViewController;
 @class Valeurs;
 @class Valeurs_Alertes;
+@class Indicateurs;
 
 @protocol AlerteRSIViewControllerDelegate <NSObject>
-- (void)alertRSIViewControllerDidCancel:(AlerteRSIViewController *)controller;
+- (void)alertViewControllerDidCancel:(AlerteRSIViewController *)controller;
 - (void)alertRSIViewController:(AlerteRSIViewController *)controller didFinishAddingAlertlist:(Valeurs_Alertes *)newAlert;
 - (void)alertRSIViewController:(AlerteRSIViewController *)controller didFinishEditingAlertlist:(Valeurs_Alertes *)newAlert;
 @end
@@ -29,5 +30,10 @@
 @property (nonatomic, strong) Valeurs_Alertes *AlertToEdit;
 @property (weak, nonatomic) IBOutlet UISwitch *SwitchHausse;
 @property (weak, nonatomic) IBOutlet UITextField *TextRSICible;
+@property (weak, nonatomic) IBOutlet UITextField *textRSIEnCours;
+@property (weak, nonatomic) IBOutlet UITextView *textDescIndic;
+@property (nonatomic, strong) Indicateurs *Indicateur_infos;
+@property (nonatomic, strong) Valeurs *Valeur_recue_ByListIndic;
 
+@property (nonatomic,strong)  NSString *CodeYF;
 @end

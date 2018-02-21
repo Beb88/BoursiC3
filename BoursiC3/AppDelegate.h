@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "Valeurs.h"
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+//2018
+#import <UserNotifications/UserNotifications.h>
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate,UNUserNotificationCenterDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property ( nonatomic,retain) NSMutableArray *ValeursArray;

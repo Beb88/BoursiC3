@@ -1,15 +1,13 @@
-//
+ //
 //  SecondViewController.m
 //  BoursiC3
 //
 //  Created by bertrand louis on 26/07/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
-
 #import "ListValViewController.h"
 #import "AFNetworking.h"
 #import "Detail_ActionViewController.h"
-
 #import "AFNetworking.h"
 #import "SBJson.h"
 
@@ -24,28 +22,14 @@
 
 @synthesize TableListVAL ,listValJSON = _listValJSON;
 @synthesize dataForPlot, hostingView,activityIndicatorView;//,refreshControl;
+@synthesize yahooWebview;
 
-//ANCIENNE DEPUIS TABLE JSON ( PB REACTU )
-static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v1/public/yql?q=select%%20*%%20from%%20yahoo.finance.quotes%%20where%%20symbol%%20%%3D%%20%%22%@%%22&format=json&env=store%%3A%%2F%%2Fdatatables.org%%2Falltableswithkeys&callback=cbfunc";
 
-//@"http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20csv%20where%20url%3D'http%3A%2F%2Fdownload.finance.yahoo.com%2Fd%2Fquotes.csv%3Fs%3D%%22%@%%22%26f%3Dsl1p2d1t1c1ohgva2x%26e%3D.csv'%20and%20columns%3D'symbol%2CLastTradePriceOnly%2CPercentChange%2Cdate%2Ctime%2Cchange%2Couv%2Chigh%2Clow%2CVolume%2CAverageDailyVolume%2CStockExchange'&format=json&diagnostics=true&callback=cbfunc";
-
-/*http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20csv%20where%20url%3D'http%3A%2F%2Fdownload.finance.yahoo.com%2Fd%2Fquotes.csv%3Fs%3D
- UBI.PA%2CGFT.PA%2CUBIBS.PA
- %26f%3Dsl1p2d1t1c1ohgva2x%26e%3D.csv'%20and%20columns%3D'symbol%2CLastTradePriceOnly%2CPercentChange%2Cdate%2Ctime%2Cchange%2Couv%2Chigh%2Clow%2CVolume%2CAverageDailyVolume%2CStockExchange'&format=json&diagnostics=true&callback=cbfunc*/
-
-/*#define QUOTE_QUERY_PREFIX @"http://query.yahooapis.com/v1/public/yql?q=select%20symbol%2C%20BidRealtime%20from%20yahoo.finance.quotes%20where%20symbol%20in%20("
-#define QUOTE_QUERY_SUFFIX @")&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback="
-
-*/
-
-//%%22%@%%22
+static NSString *yahooLoadStockDetailsURLString = @"https://query1.finance.yahoo.com/v7/finance/quote?symbols=%@&lang=fr-FR";
 
 ///////////////////////////////////////////////////
 // CHARGEMENT ET SAUVEGARDE DES DONNEES
 //////////////////////////////////////////////////
-
-
 - (NSString *)documentsDirectory {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -62,22 +46,12 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     [archiver encodeObject:listVal forKey:@"Valeurs"]; [archiver finishEncoding];
     [data writeToFile:[self dataFilePath] atomically:YES];
     
-    // POPUP
-    /*UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"SAV OK"
-                                                        message:@""
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-    [alertView show];*/
-    //
     
 }
 
 
 //RECUPERATION DE LA LISTE EN BASE LOCALE
 -(id)initWithCoder:(NSCoder *)aDecoder {
-    
-    
     if ((self = [super initWithCoder:aDecoder])) {
         
         [self loadlistValeurs];
@@ -86,17 +60,15 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     return self;
 }
 
-
-
 -(void)loadlistValeurs {
     NSString *path = [self dataFilePath];
     if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
         NSData *data = [[NSData alloc] initWithContentsOfFile:path];
         NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
         listVal = [unarchiver decodeObjectForKey:@"Valeurs"];
-        NSLog(@"NBR DE VALEURS RECUPERES DANS BASE LOCALE = %i", listVal.count);
+        //NSLog(@"NBR DE VALEURS RECUPERES DANS BASE LOCALE = %i", listVal.count);
         
-        NSLog(@"listVal = %@",listVal);
+        //NSLog(@"listVal = %@",listVal);
             [unarchiver finishDecoding]; }
     else
     {
@@ -108,7 +80,7 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
 /////////////////////////////////////////
 - (void)refresh:(UIRefreshControl *)refreshControl {
     
-    NSLog(@"REFRESH DE LA LISTE : Mise en priorité basse de la recherche net %@", [self dataFilePath]);
+    //NSLog(@"REFRESH DE LA LISTE : Mise en priorité basse de la recherche net %@", [self dataFilePath]);
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
          [activityIndicatorView startAnimating];
@@ -122,8 +94,6 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
         [activityIndicatorView stopAnimating];
     
     });
-    
-
     
     [self.TableListVAL reloadData];
     [self.TableListVAL reloadInputViews];
@@ -148,8 +118,6 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     self.TableListVAL.dataSource = self;
     self.TableListVAL.delegate = self;
     
-    
-    
     // Implémentation de l' Activity Indicator View
     self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.activityIndicatorView.hidesWhenStopped = YES;
@@ -162,8 +130,6 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     //[self.tableView setBackgroundColor: [UIColor blackColor]];
     
     
-   
-    
     // implémentation du refresh
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     refreshControl.tintColor = [UIColor blackColor];
@@ -171,11 +137,7 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [self.TableListVAL addSubview:refreshControl];
 
-    
-    
-  
-    
-    
+   
      NSLog(@"Mise en priorité basse la recherche net %@", [self dataFilePath]);
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
@@ -183,10 +145,8 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
         [self.activityIndicatorView startAnimating];
    
     for (Valeurs *Val in listVal) {
-        
        
         [self MAJ_COURS_DU_MOMENT_SOURCE_YAHOO:Val ];
-        
       
         }
         
@@ -195,24 +155,11 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
          [self.activityIndicatorView stopAnimating];
     });
     
-    
     [self.TableListVAL setHidden:NO];
     [self.TableListVAL reloadData];
-  
- 
-
+  // refreshControl
+   // [ self ConstructionGraph];
     
-       
-    
-    
-   // refreshControl
-    
-    [ self ConstructionGraph];
-    
-      
-    
-  
-
 }
 
 - (void)viewDidUnload
@@ -279,16 +226,13 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     NSLog(@"contenant la valeur= %@, avec cotation = %@ et variation = %@", valeur.nom,valeur.cotation,valeur.variation);
     labelValeur.text =  valeur.nom;
     labelISIN.text = valeur.codeBourso;
-    labelCours.text = valeur.cotation;
+    labelCours.text =  valeur.cotation;
     labelEvo.text = valeur.variation;
+    
     
     int count = [valeur.listeAlertes count];
     labelNbAlert.text =[NSString stringWithFormat:@"%d Alerte(s)", count];
-
-
-    
-    
-    
+   
     if (labelEvo.text.doubleValue>0)
     {
         NSLog(@"VERT");
@@ -364,14 +308,24 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     
     //NSLog(@"ON PASSE LA VALEUR : %@",valeur.nom);
     
-    NSString* Title = [NSString stringWithFormat:@"%@ - %@ --  %@", valeur.dateMaj,valeur.heureMaj, valeur.cotation];
-    graph.title = Title;
-    
-    //
+   // NSString* Title = [NSString stringWithFormat:@"%@ - %@ --  %@", valeur.dateMaj,valeur.heureMaj, valeur.cotation];
+   // graph.title = Title;
     
     
+    NSString* url_yahoo_dyn = [NSString stringWithFormat:@"%@%@%@", @"https://fr.finance.yahoo.com/quote/", valeur.codeBourso,@"#eyJpbnRlcnZhbCI6NSwicGVyaW9kaWNpdHkiOjEsInRpbWVVbml0IjoibWludXRlIiwiY2FuZGxlV2lkdGgiOjMuOTA5Mzk1OTczMTU0MzYyNCwidm9sdW1lVW5kZXJsYXkiOnRydWUsImFkaiI6dHJ1ZSwiY3Jvc3NoYWlyIjp0cnVlLCJjaGFydFR5cGUiOiJsaW5lIiwiZXh0ZW5kZWQiOnRydWUsIm1hcmtldFNlc3Npb25zIjp7InByZSI6dHJ1ZSwicG9zdCI6dHJ1ZX0sImFnZ3JlZ2F0aW9uVHlwZSI6Im9obGMiLCJjaGFydFNjYWxlIjoibGluZWFyIiwicGFuZWxzIjp7ImNoYXJ0Ijp7InBlcmNlbnQiOjAuNjQsImRpc3BsYXkiOiJVQkkuUEEiLCJjaGFydE5hbWUiOiJjaGFydCIsInRvcCI6MH0sIuKAjHJzaeKAjCAoMTQpIjp7InBlcmNlbnQiOjAuMTYsImRpc3BsYXkiOiLigIxyc2nigIwgKDE0KSIsImNoYXJ0TmFtZSI6ImNoYXJ0IiwidG9wIjoyOTMuMTJ9LCLigIxtYWNk4oCMICgxMiwyNiw5KSI6eyJwZXJjZW50IjowLjE5OTk5OTk5OTk5OTk5OTk2LCJkaXNwbGF5Ijoi4oCMbWFjZOKAjCAoMTIsMjYsOSkiLCJjaGFydE5hbWUiOiJjaGFydCIsInRvcCI6MzY2LjR9fSwic2V0U3BhbiI6eyJtdWx0aXBsaWVyIjo1LCJiYXNlIjoiZGF5IiwicGVyaW9kaWNpdHkiOnsicGVyaW9kIjoxLCJpbnRlcnZhbCI6NSwidGltZVVuaXQiOiJtaW51dGUifSwicmFuZ2UiOiI1X0QiLCJmb3JjZUxvYWQiOnRydWV9LCJsaW5lV2lkdGgiOjIsInN0cmlwZWRCYWNrZ3JvdWQiOnRydWUsImV2ZW50cyI6dHJ1ZSwiY29sb3IiOiIjMDA4MWYyIiwic3ltYm9scyI6W3sic3ltYm9sIjoiVUJJLlBBIiwic3ltYm9sT2JqZWN0Ijp7InN5bWJvbCI6IlVCSS5QQSJ9LCJwZXJpb2RpY2l0eSI6MSwiaW50ZXJ2YWwiOjUsInRpbWVVbml0IjoibWludXRlIiwic2V0U3BhbiI6eyJtdWx0aXBsaWVyIjo1LCJiYXNlIjoiZGF5IiwicGVyaW9kaWNpdHkiOnsicGVyaW9kIjoxLCJpbnRlcnZhbCI6NSwidGltZVVuaXQiOiJtaW51dGUifSwicmFuZ2UiOiI1X0QiLCJmb3JjZUxvYWQiOnRydWV9fV0sImN1c3RvbVJhbmdlIjpudWxsLCJzdHVkaWVzIjp7InZvbCB1bmRyIjp7InR5cGUiOiJ2b2wgdW5kciIsImlucHV0cyI6eyJpZCI6InZvbCB1bmRyIiwiZGlzcGxheSI6InZvbCB1bmRyIn0sIm91dHB1dHMiOnsiVXAgVm9sdW1lIjoiIzAwYjA2MSIsIkRvd24gVm9sdW1lIjoiI0ZGMzMzQSJ9LCJwYW5lbCI6ImNoYXJ0IiwicGFyYW1ldGVycyI6eyJoZWlnaHRQZXJjZW50YWdlIjowLjI1LCJ3aWR0aEZhY3RvciI6MC40NSwiY2hhcnROYW1lIjoiY2hhcnQifX0sIuKAjHJzaeKAjCAoMTQpIjp7InR5cGUiOiJyc2kiLCJpbnB1dHMiOnsiUGVyaW9kIjoxNCwiaWQiOiLigIxyc2nigIwgKDE0KSIsImRpc3BsYXkiOiLigIxyc2nigIwgKDE0KSJ9LCJvdXRwdXRzIjp7IlJTSSI6IiNhZDZlZmYifSwicGFuZWwiOiLigIxyc2nigIwgKDE0KSIsInBhcmFtZXRlcnMiOnsic3R1ZHlPdmVyWm9uZXNFbmFibGVkIjp0cnVlLCJzdHVkeU92ZXJCb3VnaHRWYWx1ZSI6ODAsInN0dWR5T3ZlckJvdWdodENvbG9yIjoiIzc5ZjRiZCIsInN0dWR5T3ZlclNvbGRWYWx1ZSI6MjAsInN0dWR5T3ZlclNvbGRDb2xvciI6IiNmZjgwODQiLCJjaGFydE5hbWUiOiJjaGFydCJ9fSwi4oCMbWFjZOKAjCAoMTIsMjYsOSkiOnsidHlwZSI6Im1hY2QiLCJpbnB1dHMiOnsiRmFzdCBNQSBQZXJpb2QiOjEyLCJTbG93IE1BIFBlcmlvZCI6MjYsIlNpZ25hbCBQZXJpb2QiOjksImlkIjoi4oCMbWFjZOKAjCAoMTIsMjYsOSkiLCJkaXNwbGF5Ijoi4oCMbWFjZOKAjCAoMTIsMjYsOSkifSwib3V0cHV0cyI6eyJNQUNEIjoiI2FkNmVmZiIsIlNpZ25hbCI6IiNmZmEzM2YiLCJJbmNyZWFzaW5nIEJhciI6IiM3OWY0YmQiLCJEZWNyZWFzaW5nIEJhciI6IiNmZjgwODQifSwicGFuZWwiOiLigIxtYWNk4oCMICgxMiwyNiw5KSIsInBhcmFtZXRlcnMiOnsiY2hhcnROYW1lIjoiY2hhcnQifX0sIuKAjEJvbGxpbmdlciBCYW5kc%2BKAjCAoQywyMCwyLG1hLHkpIjp7InR5cGUiOiJCb2xsaW5nZXIgQmFuZHMiLCJpbnB1dHMiOnsiRmllbGQiOiJDbG9zZSIsIlBlcmlvZCI6MjAsIlN0YW5kYXJkIERldmlhdGlvbnMiOjIsIk1vdmluZyBBdmVyYWdlIFR5cGUiOiJzaW1wbGUiLCJDaGFubmVsIEZpbGwiOnRydWUsImlkIjoi4oCMQm9sbGluZ2VyIEJhbmRz4oCMIChDLDIwLDIsbWEseSkiLCJkaXNwbGF5Ijoi4oCMQm9sbGluZ2VyIEJhbmRz4oCMIChDLDIwLDIsbWEseSkifSwib3V0cHV0cyI6eyJCb2xsaW5nZXIgQmFuZHMgVG9wIjoiI2ZmZGI0OCIsIkJvbGxpbmdlciBCYW5kcyBNZWRpYW4iOiIjZmZhMzNmIiwiQm9sbGluZ2VyIEJhbmRzIEJvdHRvbSI6IiNmZmJkNzQifSwicGFuZWwiOiJjaGFydCIsInBhcmFtZXRlcnMiOnsiY2hhcnROYW1lIjoiY2hhcnQifX0sIuKAjG1h4oCMICg1MCxDLG1hLDAsbikiOnsidHlwZSI6Im1hIiwiaW5wdXRzIjp7IlBlcmlvZCI6NTAsIkZpZWxkIjoiQ2xvc2UiLCJUeXBlIjoic2ltcGxlIiwiT2Zmc2V0IjowLCJVbmRlcmxheSI6ZmFsc2UsImlkIjoi4oCMbWHigIwgKDUwLEMsbWEsMCxuKSIsImRpc3BsYXkiOiLigIxtYeKAjCAoNTAsQyxtYSwwLG4pIn0sIm91dHB1dHMiOnsiTUEiOiIjYWQ2ZWZmIn0sInBhbmVsIjoiY2hhcnQiLCJwYXJhbWV0ZXJzIjp7ImNoYXJ0TmFtZSI6ImNoYXJ0In19LCLigIxCb2xsaW5nZXIgQmFuZHPigIwgKEMsMjAsMixtYSx5KS0yIjp7InR5cGUiOiJCb2xsaW5nZXIgQmFuZHMiLCJpbnB1dHMiOnsiRmllbGQiOiJDbG9zZSIsIlBlcmlvZCI6MjAsIlN0YW5kYXJkIERldmlhdGlvbnMiOjIsIk1vdmluZyBBdmVyYWdlIFR5cGUiOiJzaW1wbGUiLCJDaGFubmVsIEZpbGwiOnRydWUsImlkIjoi4oCMQm9sbGluZ2VyIEJhbmRz4oCMIChDLDIwLDIsbWEseSktMiIsImRpc3BsYXkiOiLigIxCb2xsaW5nZXIgQmFuZHPigIwgKEMsMjAsMixtYSx5KS0yIn0sIm91dHB1dHMiOnsiQm9sbGluZ2VyIEJhbmRzIFRvcCI6IiNmZmRiNDgiLCJCb2xsaW5nZXIgQmFuZHMgTWVkaWFuIjoiI2ZmYTMzZiIsIkJvbGxpbmdlciBCYW5kcyBCb3R0b20iOiIjZmZiZDc0In0sInBhbmVsIjoiY2hhcnQiLCJwYXJhbWV0ZXJzIjp7ImNoYXJ0TmFtZSI6ImNoYXJ0In19fX0%3D"];
     
+    /*
+     
+     https://fr.finance.yahoo.com/quote/UBI.PA/chart?p=UBI.PA#eyJpbnRlcnZhbCI6NSwicGVyaW9kaWNpdHkiOjEsInRpbWVVbml0IjoibWludXRlIiwiY2FuZGxlV2lkdGgiOjQuOTc3OTczNTY4MjgxOTM4LCJ2b2x1bWVVbmRlcmxheSI6dHJ1ZSwiYWRqIjp0cnVlLCJjcm9zc2hhaXIiOnRydWUsImNoYXJ0VHlwZSI6ImxpbmUiLCJleHRlbmRlZCI6dHJ1ZSwibWFya2V0U2Vzc2lvbnMiOnsicHJlIjp0cnVlLCJwb3N0Ijp0cnVlfSwiYWdncmVnYXRpb25UeXBlIjoib2hsYyIsImNoYXJ0U2NhbGUiOiJsaW5lYXIiLCJwYW5lbHMiOnsiY2hhcnQiOnsicGVyY2VudCI6MC42NCwiZGlzcGxheSI6IlVCSS5QQSIsImNoYXJ0TmFtZSI6ImNoYXJ0IiwidG9wIjowfSwi4oCMcnNp4oCMICgxNCkiOnsicGVyY2VudCI6MC4xNiwiZGlzcGxheSI6IuKAjHJzaeKAjCAoMTQpIiwiY2hhcnROYW1lIjoiY2hhcnQiLCJ0b3AiOjI5My4xMn0sIuKAjG1hY2TigIwgKDEyLDI2LDkpIjp7InBlcmNlbnQiOjAuMTk5OTk5OTk5OTk5OTk5OTYsImRpc3BsYXkiOiLigIxtYWNk4oCMICgxMiwyNiw5KSIsImNoYXJ0TmFtZSI6ImNoYXJ0IiwidG9wIjozNjYuNH19LCJzZXRTcGFuIjpudWxsLCJsaW5lV2lkdGgiOjIsInN0cmlwZWRCYWNrZ3JvdWQiOnRydWUsImV2ZW50cyI6dHJ1ZSwiY29sb3IiOiIjMDA4MWYyIiwic3ltYm9scyI6W3sic3ltYm9sIjoiVUJJLlBBIiwic3ltYm9sT2JqZWN0Ijp7InN5bWJvbCI6IlVCSS5QQSJ9LCJwZXJpb2RpY2l0eSI6MSwiaW50ZXJ2YWwiOjUsInRpbWVVbml0IjoibWludXRlIiwic2V0U3BhbiI6bnVsbH1dLCJjdXN0b21SYW5nZSI6bnVsbCwic3R1ZGllcyI6eyJ2b2wgdW5kciI6eyJ0eXBlIjoidm9sIHVuZHIiLCJpbnB1dHMiOnsiaWQiOiJ2b2wgdW5kciIsImRpc3BsYXkiOiJ2b2wgdW5kciJ9LCJvdXRwdXRzIjp7IlVwIFZvbHVtZSI6IiMwMGIwNjEiLCJEb3duIFZvbHVtZSI6IiNGRjMzM0EifSwicGFuZWwiOiJjaGFydCIsInBhcmFtZXRlcnMiOnsiaGVpZ2h0UGVyY2VudGFnZSI6MC4yNSwid2lkdGhGYWN0b3IiOjAuNDUsImNoYXJ0TmFtZSI6ImNoYXJ0In19LCLigIxyc2nigIwgKDE0KSI6eyJ0eXBlIjoicnNpIiwiaW5wdXRzIjp7IlBlcmlvZCI6MTQsImlkIjoi4oCMcnNp4oCMICgxNCkiLCJkaXNwbGF5Ijoi4oCMcnNp4oCMICgxNCkifSwib3V0cHV0cyI6eyJSU0kiOiIjYWQ2ZWZmIn0sInBhbmVsIjoi4oCMcnNp4oCMICgxNCkiLCJwYXJhbWV0ZXJzIjp7InN0dWR5T3ZlclpvbmVzRW5hYmxlZCI6dHJ1ZSwic3R1ZHlPdmVyQm91Z2h0VmFsdWUiOjgwLCJzdHVkeU92ZXJCb3VnaHRDb2xvciI6IiM3OWY0YmQiLCJzdHVkeU92ZXJTb2xkVmFsdWUiOjIwLCJzdHVkeU92ZXJTb2xkQ29sb3IiOiIjZmY4MDg0IiwiY2hhcnROYW1lIjoiY2hhcnQifX0sIuKAjG1hY2TigIwgKDEyLDI2LDkpIjp7InR5cGUiOiJtYWNkIiwiaW5wdXRzIjp7IkZhc3QgTUEgUGVyaW9kIjoxMiwiU2xvdyBNQSBQZXJpb2QiOjI2LCJTaWduYWwgUGVyaW9kIjo5LCJpZCI6IuKAjG1hY2TigIwgKDEyLDI2LDkpIiwiZGlzcGxheSI6IuKAjG1hY2TigIwgKDEyLDI2LDkpIn0sIm91dHB1dHMiOnsiTUFDRCI6IiNhZDZlZmYiLCJTaWduYWwiOiIjZmZhMzNmIiwiSW5jcmVhc2luZyBCYXIiOiIjNzlmNGJkIiwiRGVjcmVhc2luZyBCYXIiOiIjZmY4MDg0In0sInBhbmVsIjoi4oCMbWFjZOKAjCAoMTIsMjYsOSkiLCJwYXJhbWV0ZXJzIjp7ImNoYXJ0TmFtZSI6ImNoYXJ0In19LCLigIxCb2xsaW5nZXIgQmFuZHPigIwgKEMsMjAsMixtYSx5KSI6eyJ0eXBlIjoiQm9sbGluZ2VyIEJhbmRzIiwiaW5wdXRzIjp7IkZpZWxkIjoiQ2xvc2UiLCJQZXJpb2QiOjIwLCJTdGFuZGFyZCBEZXZpYXRpb25zIjoyLCJNb3ZpbmcgQXZlcmFnZSBUeXBlIjoic2ltcGxlIiwiQ2hhbm5lbCBGaWxsIjp0cnVlLCJpZCI6IuKAjEJvbGxpbmdlciBCYW5kc%2BKAjCAoQywyMCwyLG1hLHkpIiwiZGlzcGxheSI6IuKAjEJvbGxpbmdlciBCYW5kc%2BKAjCAoQywyMCwyLG1hLHkpIn0sIm91dHB1dHMiOnsiQm9sbGluZ2VyIEJhbmRzIFRvcCI6IiNmZmRiNDgiLCJCb2xsaW5nZXIgQmFuZHMgTWVkaWFuIjoiI2ZmYTMzZiIsIkJvbGxpbmdlciBCYW5kcyBCb3R0b20iOiIjZmZiZDc0In0sInBhbmVsIjoiY2hhcnQiLCJwYXJhbWV0ZXJzIjp7ImNoYXJ0TmFtZSI6ImNoYXJ0In19LCLigIxtYeKAjCAoNTAsQyxtYSwwLG4pIjp7InR5cGUiOiJtYSIsImlucHV0cyI6eyJQZXJpb2QiOjUwLCJGaWVsZCI6IkNsb3NlIiwiVHlwZSI6InNpbXBsZSIsIk9mZnNldCI6MCwiVW5kZXJsYXkiOmZhbHNlLCJpZCI6IuKAjG1h4oCMICg1MCxDLG1hLDAsbikiLCJkaXNwbGF5Ijoi4oCMbWHigIwgKDUwLEMsbWEsMCxuKSJ9LCJvdXRwdXRzIjp7Ik1BIjoiI2FkNmVmZiJ9LCJwYW5lbCI6ImNoYXJ0IiwicGFyYW1ldGVycyI6eyJjaGFydE5hbWUiOiJjaGFydCJ9fSwi4oCMQm9sbGluZ2VyIEJhbmRz4oCMIChDLDIwLDIsbWEseSktMiI6eyJ0eXBlIjoiQm9sbGluZ2VyIEJhbmRzIiwiaW5wdXRzIjp7IkZpZWxkIjoiQ2xvc2UiLCJQZXJpb2QiOjIwLCJTdGFuZGFyZCBEZXZpYXRpb25zIjoyLCJNb3ZpbmcgQXZlcmFnZSBUeXBlIjoic2ltcGxlIiwiQ2hhbm5lbCBGaWxsIjp0cnVlLCJpZCI6IuKAjEJvbGxpbmdlciBCYW5kc%2BKAjCAoQywyMCwyLG1hLHkpLTIiLCJkaXNwbGF5Ijoi4oCMQm9sbGluZ2VyIEJhbmRz4oCMIChDLDIwLDIsbWEseSktMiJ9LCJvdXRwdXRzIjp7IkJvbGxpbmdlciBCYW5kcyBUb3AiOiIjZmZkYjQ4IiwiQm9sbGluZ2VyIEJhbmRzIE1lZGlhbiI6IiNmZmEzM2YiLCJCb2xsaW5nZXIgQmFuZHMgQm90dG9tIjoiI2ZmYmQ3NCJ9LCJwYW5lbCI6ImNoYXJ0IiwicGFyYW1ldGVycyI6eyJjaGFydE5hbWUiOiJjaGFydCJ9fX19
+     
+     
+     */
+	// Faire une requête sur cette URL
+	//NSURLRequest *requestObject = [NSURLRequest requestWithURL:url_yahoo_dyn];
     
+	// Charger la requête dans la UIWebView
+	//[yahooWebview loadRequest:requestObject];
+
     //[self performSegueWithIdentifier:@"showDetailValeur" sender:valeur];
     
 }
@@ -385,34 +339,10 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
    Valeurs *valeur_det  = [listVal objectAtIndex:indexPath.row];
   // NSLog(@"ON VEUT LE DETAIL DE LA VALEUR : %@",valeur_det.nom);
     
-    [self.TableListVAL selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewRowAnimationTop];
-   // UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"detailStoryboardID"];
-    
-	//Detail_ActionViewController *controller = (Detail_ActionViewController *)navigationController.topViewController;
-    //controller.valeurRecue = valeur_det;
-    //controller.delegate = self;
-    
-  
-    
-    
-    
-    
-  // [self performSegueWithIdentifier:@"showDetailValeur" sender:valeur_det];
-    
-    
-    /*UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"detailStoryboardID"];
-    
-	Detail_ActionViewController *controller = (Detail_ActionViewController *)navigationController.topViewController;
-	controller.delegate = self;
-    
-	Valeurs *valeurdetail = [listVal objectAtIndex:indexPath.row];;
-	controller.valeurRecue = valeurdetail;
-    
-	[self presentViewController:navigationController animated:YES completion:nil];*/
+  [self.TableListVAL selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewRowAnimationTop];
+
 
 }
-
-
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -426,9 +356,7 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     if ([segue.identifier isEqualToString:@"showDetailValeur"]) {
        
         Detail_ActionViewController *controller = segue.destinationViewController;
-        
-        //UINavigationController *navigationController = segue.destinationViewController;
-        //Detail_ActionViewController *controller = (Detail_ActionViewController *)navigationController.topViewController;
+    
         
         //ON RECUPERE LA VALEUR DEPUIS LE PREPAREFOR SEGUE ( PAS BESOIN DE LE FAIRE DANS LE DIDSELECT OU ACCESSORYTAPPED
         
@@ -478,12 +406,7 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     NSLog(@"RECHERCHE INTERNET YAHOO pour %@", valeur.nom );
     //On construit la requete URL en fonction de la valeur passée
     // On ajoute la codification TICK à la requete URL ( exemple  : UBI.PA pour Ubisoft)
-    
-    
-    //PREVOIR OPTIMISATION CHERCHER TOUTES LES VALEURS EN UNE FOIS
-    /* modele de la requete multi valeurs
-     http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20%3D%20%22GFT.PA,UBI.PA%22&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=cbfunc
-     */
+  
     
     NSURL *requestUrl = [NSURL URLWithString:[NSString stringWithFormat:yahooLoadStockDetailsURLString, [valeur.codeBourso stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]];
     
@@ -500,40 +423,35 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
         NSString* jsonStringB = [[NSString alloc] initWithData:responseB encoding:NSASCIIStringEncoding];
         
         // Remove the jsonp callback ( specifique au renvoi de YAHOO FINANCE
-        NSString *cleanJson = [jsonStringB substringFromIndex:7];
-        cleanJson = [cleanJson substringToIndex:[cleanJson length]-2];
+        //NSString *cleanJson = [jsonStringB substringFromIndex:11];
+        //cleanJson = [cleanJson substringToIndex:[cleanJson length]-2];
         
         //  NSDictionary *jsonResults= [cleanJson JSONValue];
-        //NSLog(@"jsonResults : %@", cleanJson);
+        NSLog(@"jsonResults : %@", jsonStringB);
         
         SBJsonParser *parser = [SBJsonParser new];
-        NSDictionary *parsedDictionary = [parser objectWithString:cleanJson];
-        
-        
-        //ATTENTION CA PEUT BUGGER
-        NSDictionary *stockInfo = [[parsedDictionary objectForKey:@"query"] objectForKey:@"results"] ;
-        NSLog(@"DICO STOCKINFO = %@",stockInfo);
-       
-        NSString *count_local = [[parsedDictionary objectForKey:@"query"] objectForKey:@"count"] ;
+        NSDictionary *parsedDictionary = [parser objectWithString:jsonStringB];
+        NSMutableArray *JSON = [[parsedDictionary objectForKey:@"quoteResponse"]objectForKey:@"result"];
+        NSDictionary *DictJson = [JSON objectAtIndex:0];
+     
+
+        //NSString *count_local = [parsedDictionary objectForKey:@"result"];
        // NSLog(@"COUNT STOCKINFO = %i",count_local);
                // SI marché fermé LastTradePriceOnly
-        if (!count_local.intValue==0) {
-            valeur.cotation =  [[ stockInfo objectForKey:@"quote"]
-                                objectForKey:@"LastTradePriceOnly" ];
-            valeur.variation = [[ stockInfo objectForKey:@"quote"]
-                                objectForKey:@"PercentChange" ];
-            valeur.volumeEnc = [[ stockInfo objectForKey:@"quote"]
-                                objectForKey:@"Volume" ];
-            
-            valeur.dateMaj = [[ stockInfo objectForKey:@"quote"]
-                             objectForKey:@"LastTradeDate" ];
-            valeur.heureMaj =    [[ stockInfo objectForKey:@"quote"] objectForKey:@"LastTradeTime" ];
+        if (0==0) {
+            //valeur.cotation = stockInfo[0];
+            valeur.cotation =  [[DictJson valueForKey:@"regularMarketPrice"] stringValue];    //[0]["regularMarketPrice"];
+            valeur.variation = [[DictJson valueForKey:@"regularMarketChangePercent"] stringValue];
+            valeur.volumeEnc = [[DictJson valueForKey:@"regularMarketVolume"] stringValue];
+            valeur.volumeMoy =[[DictJson valueForKey:@"averageDailyVolume3Month"] stringValue];
+            valeur.dateMaj = [[DictJson valueForKey:@"regularMarketTime"] stringValue];
+            valeur.heureMaj =   [[DictJson valueForKey:@"regularMarketTime"] stringValue];
             
             // RAF DATEHIGH, DATELOW, YEARLOW , YEARHIGH
             
             //valeur.devise =
             NSLog(@"FIN DE RECHERCHE INTERNET YAHOO pour %@", valeur.nom );
-            
+           
         }
         else
         //ECHEC DU BLOC COUNT = 0 
@@ -564,28 +482,17 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
         
     }
     
-   
-    
 }
-
-
-
-
-
 
 
 ///////////////////////////////////////////////////////////
 //METHODES DELEGUES POUR LE RETOUR D ECRAN AJOUT VALEUR (declarés dans l ecran AjoutValeur
 /////////////////////////////////////////////////////////
 
-
-
 -(void) AjoutValeurViewControllerDidCancel:(AjoutValeurViewController *)controller
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
-
 
 // AJOUT D UNE VALEUR
 -(void) AjoutValeurViewController:(AjoutValeurViewController *)controller ajoutNouvelleValeur:(Valeurs *)valeur
@@ -704,7 +611,7 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
 {
     
     // Données de test du graph
-	NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:30];
+	/*NSMutableArray *contentArray = [NSMutableArray arrayWithCapacity:30];
 	NSUInteger i;
 	for ( i = 0; i < 30; i++ ) {
         id x = [NSNumber numberWithFloat:i];
@@ -722,7 +629,7 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
 	CPTTheme *theme = [CPTTheme themeNamed:kCPTPlainWhiteTheme];
     
 
-    
+    */
     /*  graph = (CPTXYGraph *)[theme newGraph];
      
      graph.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
@@ -730,7 +637,7 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
      
      */
     
-    [graph applyTheme:theme];
+   /* [graph applyTheme:theme];
     
     
     
@@ -788,7 +695,7 @@ static NSString *yahooLoadStockDetailsURLString = @"http://query.yahooapis.com/v
     boundLinePlot.dataSource = self;
 	[graph addPlot:boundLinePlot];
     
-    
+    */
 }
 
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
