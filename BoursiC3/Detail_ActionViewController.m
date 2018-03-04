@@ -45,6 +45,8 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+
 	// Do any additional setup after loading the view.
     NSLog(@"%@",self.valeurRecue.codeBourso);
     NSLog(@"ON a RECU LA VALEUR (nom)%@",self.valeurRecue.nom);
@@ -329,7 +331,7 @@ NSMutableArray *listalert;	 // NE SERT PLUS NORMALEMENT
     
     
     
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://88.191.209.98:80BCC/BCC/jsonConnect.php" parameters:params];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://88.191.209.98:80/BCC/BCC/jsonConnect.php" parameters:params];
     
     //MISE EN COMMENTAIRE EN VUE DE SUPPRESSION DE LECRAN et DU LOG
     

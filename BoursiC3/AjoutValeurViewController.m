@@ -36,118 +36,13 @@ static NSString *yahooSymbolSearchURLString = @"http://d.yimg.com/autoc.finance.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+
     
     // Initializing Data Source
     self.listValJSON = [[NSMutableArray alloc] init];
     NSLog(@"COIN");
      listVal = [[NSMutableArray alloc] initWithCapacity:20];
-      
-    
-    
-    ///// NEW VERSION SERVEUR AVEC JSONCONNECT et sqlfunction.php
-    
-  /*
-    //FLO
-    //NSURL *url = [NSURL URLWithString:@"http://192.168.0.12:8888/jsonConnect.php"];
-    //WAM
-    NSURL *url = [NSURL URLWithString:@"http://192.168.1.46:8888/jssonConnect.php"];
-    // ARKKOX
-    //NSURL *url = [NSURL URLWithString:@"http://arkkox.free.fr/Boursicoincoin/wsgetValeurs.php"];
-    
-   
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
-    
-    //On construit les parametres qui vont etre passes en POST de la requete
-    //VERSION UTILISATEUR FLO  Parametre passé : idPtf =1
-   
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @"beb", @"user",
-                            @"beb", @"password",
-                            @"getAllValeurs", @"action",
-                            @"iphone", @"source",
-                            @"", @"nomValeur",
-                            nil];
-    
-    //On interroge le serveur avec la requete
-    //CHEWAM
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://192.168.1.46:8888/jsonConnect.php"parameters:params];
-    //FLO
-    //NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://192.168.0.12:8888/jsonConnect.php"parameters:params];
-    //ARKKOX
-    //NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://arkkox.free.fr/Boursicoincoin/wsgetValeurs.php"parameters:params];
-
-    
-  
-    
-    //On recupere la reponse du serveur
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
-        NSLog(@"REQUEST OK JSON");
-        //NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
-        NSLog(@"json: %@", JSON);
-        
-        //On recupere l'objet MERE du JSON Renvoyé par le SERVEUR
-        //self.listValJSON = [JSON objectForKey:@"VALEURS"];
-        self.listValJSON = JSON;
-        
-        NSLog(@"listVal (OBJET VALEURS EST MERE : %@", self.listValJSON);
-   
-        [self TransfertJSON_Vers_Objet_ListVal];
-        
-        // [self.activityIndicatorView stopAnimating];
-        [self.TableListVAL setHidden:NO];
-        [self.TableListVAL reloadData];
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
-    }];
-    
-    
-    [operation start];
-    
-    */
-    
-    
-    //YAHOO VERSION
- /*   NSString* URLString = [NSString stringWithFormat:@"%@%@", yahooSymbolSearchURLString,@"UBI"];
-    NSLog(@"ON BALANCE l URL : %@",URLString);
-    //On execute la requete URL
-   NSURLRequest* requestB = [NSURLRequest requestWithURL:[NSURL URLWithString:URLString]];
-    // On récupère le résultat de la requête JSON ( avec 6 lignes vides avt)
-    NSData* responseB = [NSURLConnection sendSynchronousRequest:requestB returningResponse:nil error:nil];
-    // On transforme le résultat en String de type NSASCII (TRAITEMENT SPECIFIQUE pour source leschos)
-    NSString* jsonStringB = [[NSString alloc] initWithData:responseB encoding:NSASCIIStringEncoding];
-        NSLog(@"REQUEST OK JSON");
-        //NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
-      NSLog(@"json: %@", jsonStringB);
-        
-        //On recupere l'objet MERE du JSON Renvoyé par le SERVEUR
-        //self.listValJSON = [JSON objectForKey:@"VALEURS"];
-    
-        //self.listValJSON = JSON;
-        
-       // NSLog(@"listVal (OBJET VALEURS EST MERE : %@", self.listValJSON);
-        
-        
-       // [self TransfertJSON_Vers_Objet_ListVal];
-        
-        
-        // [self.activityIndicatorView stopAnimating];
-        [self.TableListVAL setHidden:NO];
-        [self.TableListVAL reloadData];
-  */      
-        
-        
-   
-    
-    
-   // [operation start];
-    
-    //END OF YAHOO VERSION
-
-    
-
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -201,63 +96,9 @@ static NSString *yahooSymbolSearchURLString = @"http://d.yimg.com/autoc.finance.
 
 {
     ///// NEW VERSION SERVEUR AVEC JSONCONNECT et sqlfunction.php
-    /*
-    
-   
-    //WAM
-    NSURL *url = [NSURL URLWithString:@"http://192.168.1.46:8888/jssonConnect.php"];
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
-    //On construit les parametres qui vont etre passes en POST de la requete
-    //VERSION UTILISATEUR FLO  Parametre passé : idPtf =1
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @"beb", @"user",
-                            @"beb", @"password",
-                            @"getAllValeurs", @"action",
-                            @"iphone", @"source",
-                            SearchBarValeurs.text, @"nomValeur",
-                            nil];
-    
-    //On interroge le serveur avec la requete
-    //CHEWAM
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://192.168.1.46:8888/jsonConnect.php"parameters:params];
-    //FLO
-    //NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://192.168.0.12:8888/jsonConnect.php"parameters:params];
-    //ARKKOX
-    //NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://arkkox.free.fr/Boursicoincoin/wsgetValeurs.php"parameters:params];
-    
-    
-    
-    //On recupere la reponse du serveur
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
-        NSLog(@"REQUEST OK JSON");
-        //NSLog(@"json count: %i, key: %@, value: %@", [JSON count], [JSON allKeys], [JSON allValues]);
-        NSLog(@"json: %@", JSON);
-        self.listValJSON = JSON;
-        NSLog(@"listVal (OBJET VALEURS EST MERE : %@", self.listValJSON);
-        
-        [self TransfertJSON_Vers_Objet_ListVal];
-        
-        // [self.activityIndicatorView stopAnimating];
-        [self.TableListVAL setHidden:NO];
-        [self.TableListVAL reloadData];
-        
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
-    }];
-    
-    
-    [operation start];
-*/
-    
-    
     
     //YAHOO VERSION
     
-    
-  
-   
     NSString* URLString = [NSString stringWithFormat:@"http://d.yimg.com/autoc.finance.yahoo.com/autoc?query=%@&callback=YAHOO.Finance.SymbolSuggest.ssCallback&lang=en-US",SearchBarValeurs.text];
     NSLog(@"ON BALANCE l URL : %@",URLString);
     

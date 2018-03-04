@@ -58,6 +58,7 @@
 		85BE932D15C1E1B900F06640 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85BE932C15C1E1B900F06640 /* SystemConfiguration.framework */; };
 		85BE932F15C1E1CA00F06640 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85BE932E15C1E1CA00F06640 /* CFNetwork.framework */; };
 		85C67CEB203C5CBA000E830B /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85C67CEA203C5CB9000E830B /* UserNotifications.framework */; };
+		85CC657A2045A71800C5BB88 /* coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 85CC65792045A71700C5BB88 /* coin.wav */; };
 		85D2258A167CAB8100936B00 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D22572167CAB8100936B00 /* NSObject+SBJson.m */; };
 		85D2258B167CAB8100936B00 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D22575167CAB8100936B00 /* SBJsonParser.m */; };
 		85D2258C167CAB8100936B00 /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D22577167CAB8100936B00 /* SBJsonStreamParser.m */; };
@@ -240,6 +241,7 @@
 		85BE932E15C1E1CA00F06640 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		85C67CE9203C2B26000E830B /* BoursiC3.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BoursiC3.entitlements; sourceTree = "<group>"; };
 		85C67CEA203C5CB9000E830B /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		85CC65792045A71700C5BB88 /* coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = coin.wav; path = BoursiC3/coin.wav; sourceTree = "<group>"; };
 		85D22571167CAB8100936B00 /* NSObject+SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJson.h"; sourceTree = "<group>"; };
 		85D22572167CAB8100936B00 /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJson.m"; sourceTree = "<group>"; };
 		85D22573167CAB8100936B00 /* SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson.h; sourceTree = "<group>"; };
@@ -512,6 +514,7 @@
 		85BE92A715C1D31C00F06640 = {
 			isa = PBXGroup;
 			children = (
+				85CC65792045A71700C5BB88 /* coin.wav */,
 				85F816C017A5CE0D00E9A0CF /* IconHal.png */,
 				85DF80301642A742006647B4 /* libsqlite3.0.dylib */,
 				85DF802E1642A730006647B4 /* libz.1.2.5.dylib */,
@@ -762,6 +765,7 @@
 				85BE92D915C1D31C00F06640 /* second.png in Resources */,
 				85BE92DB15C1D31C00F06640 /* second@2x.png in Resources */,
 				856DC5DC1614F3FC00C774B3 /* Default-568h@2x.png in Resources */,
+				85CC657A2045A71800C5BB88 /* coin.wav in Resources */,
 				85F68768169E151A0000E63A /* icon.png in Resources */,
 				85A45FF216AE7315006F4717 /* back-button.png in Resources */,
 				85A45FF316AE7315006F4717 /* nav-bar.png in Resources */,
@@ -943,6 +947,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 52FXJMCS22;
+				ENABLE_BITCODE = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BoursiC3/BoursiC3-Prefix.pch";
 				INFOPLIST_FILE = "BoursiC3/BoursiC3-Info.plist";
@@ -977,6 +982,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 52FXJMCS22;
+				ENABLE_BITCODE = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BoursiC3/BoursiC3-Prefix.pch";
 				INFOPLIST_FILE = "BoursiC3/BoursiC3-Info.plist";

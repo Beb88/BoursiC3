@@ -81,7 +81,7 @@
 {
     
     //1&1
-    NSURL *url = [NSURL URLWithString:@"http://78.192.193.7:8888/BCC/BCC/jsonConnect.php"];
+    NSURL *url = [NSURL URLWithString:@"http://88.191.209.98:80/BCC/BCC/jsonConnect.php"];
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
     
     // Moyenne mobile
@@ -98,7 +98,7 @@
                             
                             nil];// Autre param a envoyer
     
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://78.192.193.7:8888/BCC/BCC/jsonConnect.php" parameters:params];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"http://88.191.209.98:80/BCC/BCC/jsonConnect.php" parameters:params];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         

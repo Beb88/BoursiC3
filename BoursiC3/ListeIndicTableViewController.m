@@ -34,7 +34,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+
     NSLog(@"ECRAN LISTE INDIC : ON a RECU LA VALEUR (nom)%@",self.valeurInEcranListeindic.nom);
 
     // Uncomment the following line to preserve selection between presentations.
